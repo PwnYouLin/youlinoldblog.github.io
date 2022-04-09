@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -145,6 +145,135 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" class="post-title-link" itemprop="url">整数溢出</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-04-10 00:23:14 / Modified: 01:31:15" itemprop="dateCreated datePublished" datetime="2022-04-10T00:23:14+08:00">2022-04-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="整数溢出"><a href="#整数溢出" class="headerlink" title="整数溢出"></a>整数溢出</h1><h2 id="各种数据类型的字节大小与范围"><a href="#各种数据类型的字节大小与范围" class="headerlink" title="各种数据类型的字节大小与范围"></a>各种数据类型的字节大小与范围</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>字节</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>short int</td>
+<td>2byte(word)</td>
+<td>0<del>32767(0</del>0x7fff)<br/>-32768<del>-1(0x8000</del>0xffff)</td>
+</tr>
+<tr>
+<td>unsigned short int</td>
+<td>2byte(word)</td>
+<td>0<del>65535(0</del>0xffff)</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4byte(dword)</td>
+<td>0<del>2147483647(0</del>0x7fffffff) -2147483648<del>-1(0x80000000</del>0xffffffff)</td>
+</tr>
+<tr>
+<td>unsigned int</td>
+<td>4byte(dword)</td>
+<td>0<del>4294967295(0</del>0xffffffff)</td>
+</tr>
+<tr>
+<td>long int</td>
+<td>8byte(qword)</td>
+<td>正: 0<del>0x7fffffffffffffff 负: 0x8000000000000000</del>0xffffffffffffffff</td>
+</tr>
+<tr>
+<td>unsigned long int</td>
+<td>8byte(qword)</td>
+<td>0~0xffffffffffffffff</td>
+</tr>
+</tbody></table>
+<p>1、数学上的数字，是没有大小限制的，可以无限的大。但在计算机中，由于硬件的制约，数据都是有长度的限制的（超过最多宽度的数据都会被计算机直接丢弃）</p>
+<p>2、4位宽度表示，假设计算机只能储存4位二进制数对于计算机而言</p>
+<p>无符号数：0 1 2 3 4 5 6 7 8 9 A B C D E F</p>
+<p>有符号数：正数：0 1 2 3 4 5 6 7</p>
+<p>负数-1 -2 -3 -4 -5 -6 -7 -8         </p>
+<p>​        F  E  D  C  B  A  9   8（十六进制数）     </p>
+<p>​        1111（F） 1110(E) 1101(D)…..</p>
+<p>​        所以对于计算机而言二进制第一位为1为负数，第一位为0为正数</p>
+<p>如下图的蓝色圆圈理解</p>
+<p><img src="https://uploader.shimo.im/f/yK2mzBIMYo3g4Mfx.jpg!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk1MjIyMTksImciOiJkUGtwS1pRUnk2Uzc1UHFPIiwiaWF0IjoxNjQ5NTIxOTE5LCJ1c2VySWQiOjc1MDk4NTAxfQ.B6Nnk91FRV8KLblrCmQL7YZCyCAEko7gU76mPv2UxZE" alt="img"></p>
+<h2 id="上界溢出"><a href="#上界溢出" class="headerlink" title="上界溢出"></a>上界溢出</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 伪代码</span><br><span class="line">short int a;</span><br><span class="line"></span><br><span class="line">a = a + 1;</span><br><span class="line"># 对应的汇编</span><br><span class="line">movzx  eax, word ptr [rbp - 0x1c]</span><br><span class="line">add    eax, 1</span><br><span class="line">mov    word ptr [rbp - 0x1c], ax</span><br><span class="line"></span><br><span class="line">unsigned short int b;</span><br><span class="line"></span><br><span class="line">b = b + 1;</span><br><span class="line"># assembly code</span><br><span class="line">add    word ptr [rbp - 0x1a], 1</span><br></pre></td></tr></table></figure>
+
+<p>上界溢出有两种情况，一种是 <code>0x7fff + 1</code>， 另一种是 <code>0xffff + 1</code></p>
+<p>因为对于计算机而言数字是不分有符号和无符号的（都是通过人来定义），数据都是通过二进制形式存在。</p>
+<h3 id="0x7fff-1"><a href="#0x7fff-1" class="headerlink" title="0x7fff+1"></a>0x7fff+1</h3><p>0x7fff+1对于无符号整型是没有影响的，但是对于有符号数0x7fff（32767）+1而言却表示的是0x8000（-32768）</p>
+<h3 id="0xffff-1"><a href="#0xffff-1" class="headerlink" title="0xffff+1"></a>0xffff+1</h3><p>0xffff（65535）+1对于无符号整形是等于0x0000，对于有符号0xffff（-1）+1来说也是等于0x0000</p>
+<h2 id="下界溢出"><a href="#下界溢出" class="headerlink" title="下界溢出"></a>下界溢出</h2><p>下界溢出的原理和上界的溢出的原理是一样的，只是将加法运算改为了减法运算</p>
+<h3 id="0x0000-1-0xffff"><a href="#0x0000-1-0xffff" class="headerlink" title="0x0000-1=0xffff"></a>0x0000-1=0xffff</h3><p>对于有符号整数来说，0-1等于-1没有问题，但是对于无符号整数来说0-1却等于0xffff（65535）</p>
+<h3 id="0x8000-1-0x7fff"><a href="#0x8000-1-0x7fff" class="headerlink" title="0x8000-1=0x7fff"></a>0x8000-1=0x7fff</h3><p>对于无符号整数来说32768-1=32767是正确的，但是对于有符号整数来说就变成了-32768-1=32767</p>
+<h2 id="在wiki的整数溢出的例子中总结为了两种情况"><a href="#在wiki的整数溢出的例子中总结为了两种情况" class="headerlink" title="在wiki的整数溢出的例子中总结为了两种情况"></a>在wiki的整数溢出的例子中总结为了两种情况</h2><h3 id="未限制范围"><a href="#未限制范围" class="headerlink" title="未限制范围"></a>未限制范围</h3><h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stddef.h&gt;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    int len;</span><br><span class="line">    int data_len;</span><br><span class="line">    int header_len;</span><br><span class="line">    char *buf;</span><br><span class="line"></span><br><span class="line">    header_len = 0x10;</span><br><span class="line">    scanf(&quot;%uld&quot;, &amp;data_len);</span><br><span class="line"></span><br><span class="line">    len = data_len+header_len</span><br><span class="line">    buf = malloc(len);</span><br><span class="line">    read(0, buf, data_len);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">$ gcc test.c</span><br><span class="line">$ ./a.out</span><br><span class="line">-1</span><br><span class="line">asdfasfasdfasdfafasfasfasdfasdf</span><br><span class="line"># gdb a.out</span><br><span class="line">► 0x40066d &lt;main+71&gt;    call   malloc@plt &lt;0x400500&gt;</span><br><span class="line">        size: 0xf</span><br></pre></td></tr></table></figure>
+
+<p>只申请了0x20大小的堆，但是能输入的数据0xffffffff长度的数据，可以从整数溢出到堆溢出</p>
+<h3 id="错误的类型转换"><a href="#错误的类型转换" class="headerlink" title="错误的类型转换"></a>错误的类型转换</h3><h4 id="1-范围大的变量赋值给范围小的变量"><a href="#1-范围大的变量赋值给范围小的变量" class="headerlink" title="1.范围大的变量赋值给范围小的变量"></a>1.范围大的变量赋值给范围小的变量</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void check(int n)</span><br><span class="line">&#123;</span><br><span class="line">    if (!n)</span><br><span class="line">        printf(&quot;vuln&quot;);</span><br><span class="line">    else</span><br><span class="line">        printf(&quot;OK&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    long int a;</span><br><span class="line"></span><br><span class="line">    scanf(&quot;%ld&quot;, &amp;a);</span><br><span class="line">    if (a == 0)</span><br><span class="line">        printf(&quot;Bad&quot;);</span><br><span class="line">    else</span><br><span class="line">        check(a);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">$ gcc test2.c</span><br><span class="line">$ ./a.out</span><br><span class="line">4294967296</span><br><span class="line">vuln</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码将一个长整型的数据传入了整型数据中，会造成截断，只将后四位数据传入整型</p>
+<p>在上述例子中，就是把 <code>long: 0x100000000 -&gt; int: 0x00000000</code>。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
