@@ -179,7 +179,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-04-10 00:23:14 / Modified: 01:31:15" itemprop="dateCreated datePublished" datetime="2022-04-10T00:23:14+08:00">2022-04-10</time>
+      <time title="Created: 2022-04-10 00:23:14 / Modified: 01:42:55" itemprop="dateCreated datePublished" datetime="2022-04-10T00:23:14+08:00">2022-04-10</time>
     </span>
 
   
@@ -240,7 +240,7 @@
 <p>​        1111（F） 1110(E) 1101(D)…..</p>
 <p>​        所以对于计算机而言二进制第一位为1为负数，第一位为0为正数</p>
 <p>如下图的蓝色圆圈理解</p>
-<p><img src="https://uploader.shimo.im/f/yK2mzBIMYo3g4Mfx.jpg!thumbnail?accessToken=eyJhbGciOiJIUzI1NiIsImtpZCI6ImRlZmF1bHQiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhY2Nlc3NfcmVzb3VyY2UiLCJleHAiOjE2NDk1MjIyMTksImciOiJkUGtwS1pRUnk2Uzc1UHFPIiwiaWF0IjoxNjQ5NTIxOTE5LCJ1c2VySWQiOjc1MDk4NTAxfQ.B6Nnk91FRV8KLblrCmQL7YZCyCAEko7gU76mPv2UxZE" alt="img"></p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/04/10/67c58a371df2d4ce.jpg"></p>
 <h2 id="上界溢出"><a href="#上界溢出" class="headerlink" title="上界溢出"></a>上界溢出</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 伪代码</span><br><span class="line">short int a;</span><br><span class="line"></span><br><span class="line">a = a + 1;</span><br><span class="line"># 对应的汇编</span><br><span class="line">movzx  eax, word ptr [rbp - 0x1c]</span><br><span class="line">add    eax, 1</span><br><span class="line">mov    word ptr [rbp - 0x1c], ax</span><br><span class="line"></span><br><span class="line">unsigned short int b;</span><br><span class="line"></span><br><span class="line">b = b + 1;</span><br><span class="line"># assembly code</span><br><span class="line">add    word ptr [rbp - 0x1a], 1</span><br></pre></td></tr></table></figure>
 
 <p>上界溢出有两种情况，一种是 <code>0x7fff + 1</code>， 另一种是 <code>0xffff + 1</code></p>
