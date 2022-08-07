@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -145,6 +145,161 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-06 20:47:44" itemprop="dateCreated datePublished" datetime="2022-08-06T20:47:44+08:00">2022-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-07 12:48:59" itemprop="dateModified" datetime="2022-08-07T12:48:59+08:00">2022-08-07</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>title: 利用_IO_2_1_stdout泄露libc<br>date: 2022-08-06 20:47:44<br>tags:</p>
+<h2 id="FILE结构-libc2-23"><a href="#FILE结构-libc2-23" class="headerlink" title="FILE结构(libc2.23)"></a>FILE结构(libc2.23)</h2><p>FILE在linux系统的标准IO库使用来描述文件结构，称之为文件流。这里提及的”流“其实是一种抽象的概念，无论是硬件还是软件其实都没有”流“一说，只是人们为了便于描述数据的流向而创造的名称。比如说当我们要输出磁盘中记录的数据，那么在计算机中首先会将磁盘中的数据加载进内存，那么磁盘–&gt;内存这种流向就被抽象叫做”流“FILE结构在程序执行fopen函数时会自动进行创建，并分配在堆中。我们常定义一个纸箱FILE结构的指针来接收这个返回值</p>
+<p>FILE结构定义在<code>glibc/libio/libio.h</code>中，结构源码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE &#123;</span><br><span class="line">  int _flags;		/* High-order word is _IO_MAGIC; rest is flags. */</span><br><span class="line">#define _IO_file_flags _flags</span><br><span class="line"></span><br><span class="line">  /* The following pointers correspond to the C++ streambuf protocol. */</span><br><span class="line">  /* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span><br><span class="line">  char* _IO_read_ptr;	/* Current read pointer */</span><br><span class="line">  char* _IO_read_end;	/* End of get area. */</span><br><span class="line">  char* _IO_read_base;	/* Start of putback+get area. */</span><br><span class="line">  char* _IO_write_base;	/* Start of put area. */</span><br><span class="line">  char* _IO_write_ptr;	/* Current put pointer. */</span><br><span class="line">  char* _IO_write_end;	/* End of put area. */</span><br><span class="line">  char* _IO_buf_base;	/* Start of reserve area. */</span><br><span class="line">  char* _IO_buf_end;	/* End of reserve area. */</span><br><span class="line">  /* The following fields are used to support backing up and undo. */</span><br><span class="line">  char *_IO_save_base; /* Pointer to start of non-current get area. */</span><br><span class="line">  char *_IO_backup_base;  /* Pointer to first valid character of backup area */</span><br><span class="line">  char *_IO_save_end; /* Pointer to end of non-current get area. */</span><br><span class="line"></span><br><span class="line">  struct _IO_marker *_markers;</span><br><span class="line"></span><br><span class="line">  struct _IO_FILE *_chain;</span><br><span class="line"></span><br><span class="line">  int _fileno;</span><br><span class="line">#if 0</span><br><span class="line">  int _blksize;</span><br><span class="line">#else</span><br><span class="line">  int _flags2;</span><br><span class="line">#endif</span><br><span class="line">  _IO_off_t _old_offset; /* This used to be _offset but it&#x27;s too small.  */</span><br><span class="line"></span><br><span class="line">#define __HAVE_COLUMN /* temporary */</span><br><span class="line">  /* 1+column number of pbase(); 0 is unknown. */</span><br><span class="line">  unsigned short _cur_column;</span><br><span class="line">  signed char _vtable_offset;</span><br><span class="line">  char _shortbuf[1];</span><br><span class="line"></span><br><span class="line">  /*  char* _save_gptr;  char* _save_egptr; */</span><br><span class="line"></span><br><span class="line">  _IO_lock_t *_lock;</span><br><span class="line">#ifdef _IO_USE_OLD_IO_FILE</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>进程中的FILE结构会通过_chain域彼此连接形成一个链表，链表头部用全局变量_IO_list_all表示，通过这个值可以遍历所有的FILE结构，大致的链表结构如下图：</p>
+<p><img src="https://s2.loli.net/2022/08/06/s2uvBVPLgDSjyk4.png" alt="图片.png"></p>
+<p>在标准I/O库中，每个程序启动时有三个文件流是自动打开的：<code>stdin</code>、<code>stdout</code>、<code>stderr</code>。在初始状态下，_IO_list_all指向了一个有这些文件流构成的链表，但是需要注意的是这三个文件流位于的是<code>libc.so的数据段</code></p>
+<h2 id="IO-FILE-plus结构"><a href="#IO-FILE-plus结构" class="headerlink" title="_IO_FILE_plus结构"></a>_IO_FILE_plus结构</h2><p>事实上_IO_FILE结构外包裹着另一种结构_IO_FILE_plus，其中包含了一个重要的指针vtable（虚表）指向了一系列函数指针：</p>
+<p>在 libc2.23 版本下，32 位的 vtable 偏移为 0x94，64 位偏移为 0xd8。位置为glibc/libio/libioP.h</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE_plus</span><br><span class="line">&#123;</span><br><span class="line">  _IO_FILE file;</span><br><span class="line">  const struct _IO_jump_t *vtable;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里说明一下vtable(虚表)是个什么东西，我们在学C语言的时候会学到一个叫做虚函数的东西，具有虚函数的类都会有一张vtable(虚表)，其中记录了本类中所有虚函数的函数指针，也就是说是个函数指针数组的起始位置，通常虚表在编程中所具有的作用是为了标识父类。需要注意的是虚表中值班韩虚函数的指针，没有函数体，虚函数表既有继承性又有多态性<br>vtable 是IO_jump_t 类型的指针，IO_jump_t中保存了一些函数指针，在后面我们会看到在一系列标准 IO 函数中会调用这些函数指针。也就是说，如果使用_IO_FILE_plus去定义一个结构体指针的话，我们既可以使用IO_FILE中的结构体成员变量，也能使用IO_jump_t中的函数指针</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">void * funcs[] = &#123;</span><br><span class="line">   1 NULL, // &quot;extra word&quot;</span><br><span class="line">   2 NULL, // DUMMY</span><br><span class="line">   3 exit, // finish</span><br><span class="line">   4 NULL, // overflow</span><br><span class="line">   5 NULL, // underflow</span><br><span class="line">   6 NULL, // uflow</span><br><span class="line">   7 NULL, // pbackfail</span><br><span class="line">   </span><br><span class="line">   8 NULL, // xsputn  #printf后面讲解执行流程章节会用到此处</span><br><span class="line">   9 NULL, // xsgetn</span><br><span class="line">   10 NULL, // seekoff</span><br><span class="line">   11 NULL, // seekpos</span><br><span class="line">   12 NULL, // setbuf</span><br><span class="line">   13 NULL, // sync</span><br><span class="line">   14 NULL, // doallocate</span><br><span class="line">   15 NULL, // read</span><br><span class="line">   16 NULL, // write</span><br><span class="line">   17 NULL, // seek</span><br><span class="line">   18 pwn,  // close</span><br><span class="line">   19 NULL, // stat</span><br><span class="line">   20 NULL, // showmanyc</span><br><span class="line">   21 NULL, // imbue</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>_flags规则</p>
+<p>那么通过上述对IO_FILE和_IO_FILE_plus结构的了解，这里我们将深入的讲解一下IO_FILE结构体中的第一个成员变量_flag，这个成员变量在利用_IO_2_1_stdout泄露libc的时候具有至关重要的作用。</p>
+<p>先简单介绍一下_flag的规则，_flag的高两位字节是由libc固定的，不同的libc可能存在差异，但是基本上都一样：0xfbad0000。高两位字节其实就是作为一个标识，标志这是一个什么文件。而低两位字节的位数规则决定了程序的执行状态，低两位的规则如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#define _IO_MAGIC 0xFBAD0000 /* Magic number */</span><br><span class="line">#define _OLD_STDIO_MAGIC 0xFABC0000 /* Emulate old stdio. */</span><br><span class="line">#define _IO_MAGIC_MASK 0xFFFF0000</span><br><span class="line">#define _IO_USER_BUF 1 /* User owns buffer; don&#x27;t delete it on close. */</span><br><span class="line">#define _IO_UNBUFFERED 2</span><br><span class="line">#define _IO_NO_READS 4 /* Reading not allowed */</span><br><span class="line">#define _IO_NO_WRITES 8 /* Writing not allowd */</span><br><span class="line">#define _IO_EOF_SEEN 0x10</span><br><span class="line">#define _IO_ERR_SEEN 0x20</span><br><span class="line">#define _IO_DELETE_DONT_CLOSE 0x40 /* Don&#x27;t call close(_fileno) on cleanup. */</span><br><span class="line">#define _IO_LINKED 0x80 /* Set if linked (using _chain) to streambuf::_list_all.*/</span><br><span class="line">#define _IO_IN_BACKUP 0x100</span><br><span class="line">#define _IO_LINE_BUF 0x200</span><br><span class="line">#define _IO_TIED_PUT_GET 0x400 /* Set if put and get pointer logicly tied. */</span><br><span class="line">#define _IO_CURRENTLY_PUTTING 0x800</span><br><span class="line">#define _IO_IS_APPENDING 0x1000</span><br><span class="line">#define _IO_IS_FILEBUF 0x2000</span><br><span class="line">#define _IO_BAD_SEEN 0x4000</span><br><span class="line">#define _IO_USER_LOCK 0x8000</span><br></pre></td></tr></table></figure>
+
+<p>一般在执行流程中会将<code>_flag</code>和定义常量进行<code>按位与</code>运算，并根据与运算的结构进行判断如何执行。后面_IO_2_1_stdout泄露libc章节，我们会一起走一遍输出函数执行流程，在其中就会<code>运用到此处的内容</code></p>
+<h2 id="puts-函数执行流程"><a href="#puts-函数执行流程" class="headerlink" title="puts()函数执行流程"></a>puts()函数执行流程</h2><p>类似的输出函数比如fwrite函数等执行流程都差不多，区别在于由libc库中运行各个输出函数的.c文件不一样，但是流程都相似，并且都会殊途同归进行输出系统调用</p>
+<h3 id="IO-puts-–-gt-IO-new-file-xsputn"><a href="#IO-puts-–-gt-IO-new-file-xsputn" class="headerlink" title="_IO_puts –&gt; _IO_new_file_xsputn"></a>_IO_puts –&gt; _IO_new_file_xsputn</h3><p>puts()函数在源码中的表现形式为_IO_puts，我们一起来看一下源码位置在：<code>glibc/libio/ioputs.c</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">_IO_puts (const char *str)</span><br><span class="line">&#123;</span><br><span class="line">  int result = EOF;</span><br><span class="line">  _IO_size_t len = strlen (str);</span><br><span class="line">  _IO_acquire_lock (_IO_stdout);</span><br><span class="line"></span><br><span class="line">  if ((_IO_vtable_offset (_IO_stdout) != 0</span><br><span class="line">       || _IO_fwide (_IO_stdout, -1) == -1)</span><br><span class="line">      &amp;&amp; _IO_sputn (_IO_stdout, str, len) == len</span><br><span class="line">      &amp;&amp; _IO_putc_unlocked (&#x27;\n&#x27;, _IO_stdout) != EOF)</span><br><span class="line">    result = MIN (INT_MAX, len + 1);</span><br><span class="line"></span><br><span class="line">  _IO_release_lock (_IO_stdout);</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里可以看到_IO_puts在过程当中调用了一个叫做<code>_IO_sputn</code>函数（_IO_fwrite也会调用这个），_IO_sputn其实是一个<code>宏</code>，它的作用就是调用<code>_IO_2_1_stdout_</code>中的<code>vtable</code>所指向的<code>_xsputn</code>，也就是`_IO_new_file_xsputn函数</p>
+<p>_IO_new_file_xsputn –&gt; _IO_OVERFLOW</p>
+<p>_IO_new_file_xsputn函数源码位置在：glibc/libio/fileops.c</p>
+<p>由于_IO_new_file_xsputn函数的源码过长，这里就不大篇幅的贴图了。这里简单的描述一下这个函数的执行过程，在关键部分展示代码：首先进入函数之后判断输出缓冲区还有多少空间，这里是由_IO_write_end - _IO_write_base得来的，这两个是FILE结构体中的两个成员变量，分别是输出结束地址和其实输出地址，由于stdout也是FILE结构，所以后面就直接使用成员变量名称来描述了。接下来如果缓冲区有空间，则先把数据载入输出缓冲区并计算目标输出数据是否还有剩余</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">     if (_IO_OVERFLOW (f, EOF) == EOF)</span><br><span class="line">/* If nothing else has to be written we must not signal the</span><br><span class="line">   caller that everything has been written.  */</span><br><span class="line">return to_do == 0 ? EOF : n - to_do;</span><br></pre></td></tr></table></figure>
+
+<p>经过上述最后一步的判断，如果还有剩余则说明输出缓冲区未建立或者空间已满，那么就需要通过<code>_IO_OVERFLOW</code>函数来建立或清空缓冲区，这个函数主要是实现刷新缓冲区或建立缓冲区的功能。在vtable中为<code>__overflow</code></p>
+<h3 id="IO-new-file-overflow-–-gt-IO-do-write"><a href="#IO-new-file-overflow-–-gt-IO-do-write" class="headerlink" title="_IO_new_file_overflow –&gt; _IO_do_write"></a>_IO_new_file_overflow –&gt; _IO_do_write</h3><p>_IO_new_file_overflow`函数的部分源码如下，位置在：glibc/libio/fileops.c</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">_IO_new_file_overflow (_IO_FILE *f, int ch)</span><br><span class="line">&#123;</span><br><span class="line">  if (f-&gt;_flags &amp; _IO_NO_WRITES) /* SET ERROR */</span><br><span class="line">    &#123;</span><br><span class="line">      f-&gt;_flags |= _IO_ERR_SEEN;</span><br><span class="line">      __set_errno (EBADF);</span><br><span class="line">      return EOF;</span><br><span class="line">    &#125;</span><br><span class="line">  /* If currently reading or no buffer allocated. */</span><br><span class="line">  if ((f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING) == 0 || f-&gt;_IO_write_base == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">      /* Allocate a buffer if needed. */</span><br><span class="line">      if (f-&gt;_IO_write_base == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">	  _IO_doallocbuf (f);</span><br><span class="line">	  _IO_setg (f, f-&gt;_IO_buf_base, f-&gt;_IO_buf_base, f-&gt;_IO_buf_base);</span><br><span class="line">	&#125;</span><br><span class="line">      /* Otherwise must be currently reading.</span><br><span class="line">	 If _IO_read_ptr (and hence also _IO_read_end) is at the buffer end,</span><br><span class="line">	 logically slide the buffer forwards one block (by setting the</span><br><span class="line">	 read pointers to all point at the beginning of the block).  This</span><br><span class="line">	 makes room for subsequent output.</span><br><span class="line">	 Otherwise, set the read pointers to _IO_read_end (leaving that</span><br><span class="line">	 alone, so it can continue to correspond to the external position). */</span><br><span class="line">      if (__glibc_unlikely (_IO_in_backup (f)))</span><br><span class="line">	&#123;</span><br><span class="line">	  size_t nbackup = f-&gt;_IO_read_end - f-&gt;_IO_read_ptr;</span><br><span class="line">	  _IO_free_backup_area (f);</span><br><span class="line">	  f-&gt;_IO_read_base -= MIN (nbackup,</span><br><span class="line">				   f-&gt;_IO_read_base - f-&gt;_IO_buf_base);</span><br><span class="line">	  f-&gt;_IO_read_ptr = f-&gt;_IO_read_base;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">      if (f-&gt;_IO_read_ptr == f-&gt;_IO_buf_end)</span><br><span class="line">	f-&gt;_IO_read_end = f-&gt;_IO_read_ptr = f-&gt;_IO_buf_base;</span><br><span class="line">      f-&gt;_IO_write_ptr = f-&gt;_IO_read_ptr;</span><br><span class="line">      f-&gt;_IO_write_base = f-&gt;_IO_write_ptr;</span><br><span class="line">      f-&gt;_IO_write_end = f-&gt;_IO_buf_end;</span><br><span class="line">      f-&gt;_IO_read_base = f-&gt;_IO_read_ptr = f-&gt;_IO_read_end;</span><br><span class="line"></span><br><span class="line">      f-&gt;_flags |= _IO_CURRENTLY_PUTTING;</span><br><span class="line">      if (f-&gt;_mode &lt;= 0 &amp;&amp; f-&gt;_flags &amp; (_IO_LINE_BUF | _IO_UNBUFFERED))</span><br><span class="line">	f-&gt;_IO_write_end = f-&gt;_IO_write_ptr;</span><br><span class="line">    &#125;</span><br><span class="line">  if (ch == EOF)</span><br></pre></td></tr></table></figure>
+
+<p>上面即是_IO_new_file_overflow`函数的部分代码，我们想要利用的就是最后的_IO_do_write (f, f-&gt;_IO_write_base,f-&gt;_IO_write_ptr - f-&gt;_IO_write_base)，IO_do_write就是我们需要执行的目标函数，这个函数执行后会调用系统调用write输出输出缓冲区，传入_IO_do_write函数的参数为：stdout结构体、_IO_write_base（输出缓冲区起始地址）和size（_IO_write_end - _IO_write_base计算得来）</p>
+<p>如果我们事先在stdout的_IO_write_base的位置部署要输出的起始地址，那么在去利用_IO_do_write函数，即可打印部分内存地址，打印出来的内容就包含我们所需要泄露的libc</p>
+<p>如果我们想要利用_IO_do_write函数的话是需要绕过_IO_new_file_overflow函数的检查的，就是上图中蓝色框中的判断条件，我们一步一步的分解_IO_new_file_overflow函数的这两个判断条件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">_IO_new_file_overflow (_IO_FILE *f, int ch)</span><br><span class="line">&#123;</span><br><span class="line">  if (f-&gt;_flags &amp; _IO_NO_WRITES) /* SET ERROR */</span><br><span class="line">    &#123;</span><br><span class="line">      f-&gt;_flags |= _IO_ERR_SEEN;</span><br><span class="line">      __set_errno (EBADF);</span><br><span class="line">      return EOF;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先我们来看第一个判断条件，这里判断_flags的标志位是否包含<code>_IO_NO_WRITES</code>，将_flags和_IO_NO_WRITES进行一个按位与的操作，我们可以向前翻一下flag规则的章节，_flag与_IO_NO_WRITES各自定义的常量为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000 <span class="comment">/* 魔数 */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_NO_WRITES 8 <span class="comment">/* 不可写 */</span></span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到_flag魔数的常量为0xfbad0000，_IO_NO_WRITES不可写标志位的常量为8，我们返回上图的程序中，如果进行按位与操作之后的结果为真，则返回为错误。一旦返回的是错误，那么后续我们想要利用的_IO_do_write函数就不会再被执行了，所以我们要将此处的与运算为假：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_NO_WRITES 8</span></span><br><span class="line">_flags &amp; _IO_NO_WRITES = <span class="number">0</span> </span><br><span class="line">_flags = <span class="number">0xfbad0000</span></span><br></pre></td></tr></table></figure>
+
+<p>这样一来判断条件中与运算就会为假，就不会执行判断中的语句了。接下来我们看一下第二个判断条件：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210219111014894.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjAyMjM3,size_16,color_FFFFFF,t_70"></p>
+<p>第二个判断是为了检查输出缓冲区是否为空，如果为空则进行分配空间，并且会初始化指针。一旦进行初始化操作，那么就会覆盖掉我们事先在stdout的_IO_write_base的数据，这样一来我们其实是无法完全掌控的。所以这个判断条件分支尽可能的也不进入，那么我们将if判断条件的值为假即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if ((f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING) == 0 || f-&gt;_IO_write_base == NULL)</span><br></pre></td></tr></table></figure>
+
+<p>我们拆开来看这个判断条件，由两部分组成，并用或连接。先看后半部分f-&gt;_IO_write_base == NULL，这里由于会在_IO_write_base中部署数据，所有后半部分的条件判断一定为假。那么这样一来我们将前半部分也为假，即f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING = 1，则整个判断就为假：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_CURRENTLY_PUTTING 0x800</span></span><br><span class="line">f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING = <span class="number">1</span></span><br><span class="line">_flags = <span class="number">0xfbad0800</span></span><br></pre></td></tr></table></figure>
+
+<p>_IO_new_do_write –&gt; new_do_write</p>
+<p>经过前面的_flags的处理，即可顺利执行到_IO_do_write函数，跟进_IO_do_write函数后将会进入_IO_new_do_write函数，我们来看一下这个函数的源码，位置在glibc/libio/fileops.c</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">_IO_new_do_write (_IO_FILE *fp, const char *data, _IO_size_t to_do)</span><br><span class="line">&#123;</span><br><span class="line">  return (to_do == 0</span><br><span class="line">	  || (_IO_size_t) new_do_write (fp, data, to_do) == to_do) ? 0 : EOF;</span><br><span class="line">&#125;</span><br><span class="line">libc_hidden_ver (_IO_new_do_write, _IO_do_write)</span><br></pre></td></tr></table></figure>
+
+<p>可以看到_IO_new_do_write并没有做太多的操作，就调用了new_do_write函数，new_do_write函数的参数其实是和传入的参数是一样的，一参stdout结构体，二参输出缓冲区起始地址，三参输出长度<br>new_do_write –&gt; _IO_SYSWRITE</p>
+<p>我们一起来看一下new_do_write函数中的源码，位置在glibc/libio/fileops.c<br><img src="https://img-blog.csdnimg.cn/20210219151953422.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjAyMjM3,size_16,color_FFFFFF,t_70"></p>
+<p>可以看到上图即是new_do_write函数中的源码了，红色框中的_IO_SYSWRITE函数即是IO_FILE的最终目标，执行系统调用write。但是同时我们还能看到前面又经过了两次判断，其中第一次if判断与_flags相关，else if中的内容同样需要仔细斟酌一下。由于if和else if是幸福二选一，如果两个判断条件都不满足的话，是不会继续执行到518行的系统调用的</p>
+<p>我们先看这个比较复杂的else if判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">else if (fp-&gt;_IO_read_end != fp-&gt;_IO_write_base)</span><br><span class="line">   &#123;</span><br><span class="line">     _IO_off64_t new_pos</span><br><span class="line">= _IO_SYSSEEK (fp, fp-&gt;_IO_write_base - fp-&gt;_IO_read_end, 1);</span><br><span class="line">     if (new_pos == _IO_pos_BAD)</span><br><span class="line">return 0;</span><br><span class="line">     fp-&gt;_offset = new_pos;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这条分支我们尽可能的不碰，原因有两点：</p>
+<pre><code>第一，其实只要满足判断中的条件fp-&gt;_IO_read_end = fp-&gt;_IO_write_base即可绕过这里的判断，使之相等的操作并不是没有可能，但是在实际操作中实现的几率比较小。一般在做这种题的时候都会伴随着随机化保护的开启，进行攻击的时候，我们一般采用的都是覆盖末位字节的方式造成偏移，因为即使随机化偏移也会存在0x1000对齐。但是这时候就会遇到一个很尴尬的情况，_IO_read_end和_IO_write_base存放的地址是由末位字节和其他高字节共同组成的，其他高字节由于随机化的缘故无法确定，所以何谈使两个成员变量中的地址相等呢
+第二，可以看到else if这条分支中调用了_IO_SYSSEEK系统调用，即lssek函数，如果我们将_IO_read_end的值设置为0，那么_IO_SYSSEEK的二参fp-&gt;_IO_write_base - fp-&gt;_IO_read_end得出的数值就有可能非常大，这就会导致sleek函数执行不成功导致退出，这是因为载入内存的数据范围可能并不大，但是经过sleek函数修改过大的偏移之后超过了数据范围的边界。一旦Sleek函数执行不成功导致退出，那么就不会到达我们想要的_IO_SYSWRITE系统调用了
+</code></pre>
+<p>所以综上所述，我们无法完全掌控_IO_read_end和_IO_write_base中的数值，导致进入else if的分支后程序执行流程不可控</p>
+<p>接下来我们看一下if分支：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (fp-&gt;_flags &amp; _IO_IS_APPENDING)</span><br><span class="line">   /* On a system without a proper O_APPEND implementation,</span><br><span class="line">      you would need to sys_seek(0, SEEK_END) here, but is</span><br><span class="line">      not needed nor desirable for Unix- or Posix-like systems.</span><br><span class="line">      Instead, just indicate that offset (before and after) is</span><br><span class="line">      unpredictable. */</span><br><span class="line">   fp-&gt;_offset = _IO_pos_BAD;</span><br></pre></td></tr></table></figure>
+
+<p>if分支相对来说造成的影响就比较小了，内部仅仅将偏移设置为标准值，不会影响后续的输出流程。并且if判断的条件也很容易满足，我们只需要将<code>fp-&gt;_flags &amp; _IO_IS_APPENDING = 1</code>即可，只对_flag修改不会影响其他部分：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_IS_APPENDING 0x1000</span></span><br><span class="line">fp-&gt;_flags &amp; _IO_IS_APPENDING = <span class="number">1</span></span><br><span class="line">_flags = <span class="number">0xfbad1000</span></span><br></pre></td></tr></table></figure>
+
+<p>这样就可以到达_IO_SYSWRITE系统调用了！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>所以通过上述的讲解，我们只需要满足如下几条对_flags的设定，即可利用_IO_2_1_stdout泄露libc</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_NO_WRITES 8</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_CURRENTLY_PUTTING 0x800</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_IS_APPENDING 0x1000</span></span><br></pre></td></tr></table></figure>
+
+<p>1、设置<code>_flags &amp; _IO_NO_WRITES = 0</code><br> 2、设置<code>_flags &amp; _IO_CURRENTLY_PUTTING = 1</code><br> 3、设置<code>_flags &amp; _IO_IS_APPENDING = 1</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_flags = 0xFBAD1800</span><br></pre></td></tr></table></figure>
+
+<p>4、设置_IO_write_base指向想要泄露的位置，_IO_write_ptr指向泄露结束的地址(不需要一定设置指向结尾，程序中自带地址足够泄露libc)</p>
+<p>hollk师傅的：好好说话之IO_FILE利用（1）</p>
+<p>学习笔记</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
