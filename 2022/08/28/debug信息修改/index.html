@@ -18,17 +18,17 @@
   <link 
     rel="icon" 
     href="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
-  <title>Categories</title>
+  <title>debug信息修改</title>
   
     
       <meta 
         property="og:title" 
-        content="Categories">
+        content="debug信息修改">
     
     
       <meta 
         property="og:url" 
-        content="http://example.com/categories/index.html">
+        content="http://example.com/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/index.html">
     
     
       <meta 
@@ -36,6 +36,22 @@
         content="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
     
     
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2022-08-28">
+      <meta 
+        property="og:article:modified_time" 
+        content="2022-08-28">
+      <meta 
+        property="og:article:author" 
+        content="幽林">
+      
+        
+      
     
   
   
@@ -52,6 +68,8 @@
   <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
   
   
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
   
   <script>
     function loadScript(url, cb) {
@@ -292,6 +310,18 @@
                <div class="sticky-tablet">
   
   
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AApwn%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7-%E4%BF%AE%E6%94%B9debug"><span class="toc-text">记录一个pwn常用技巧-修改debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E9%9C%80%E8%A6%81%E5%85%88%E5%B0%86ld%E5%92%8Clibc-so-6%E7%BB%99%E6%9D%83%E9%99%90"><span class="toc-text">首先需要先将ld和libc.so.6给权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%84%B6%E5%90%8E%E5%9C%A8glibc-all-in-one%E9%87%8C%E9%9D%A2%E6%89%BE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84libc%E7%89%88%E6%9C%AC"><span class="toc-text">然后在glibc all in one里面找到对应的libc版本</span></a></li></ol></li></ol>
+      </div>
+    </article>
+  
   
   <article class="card card-content categories-widget">
     <div class="categories-card">
@@ -322,105 +352,115 @@
   </article>
   
   
-    <article class="card card-content widescreen-archive archive-widget">
-      <div class="archive-card">
-  <div class="archive-card-header">
-    <i 
-      class="iconfont icon-wodebaobiao" 
-      style="padding-right: 2px;">
-    </i>Archive
-  </div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a 
-        href="/archives/2022" 
-        class="archive-card-list-item">
-        2022
-        <span class="archive-card-list-item-badge">13</span>
-      </a>
-    
-  </div>
-</div>
-    </article>
-  
 </div>
             </aside>
             <main class="main-column">
               
-<div class="card card-content">
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      debug信息修改
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2022-08-28T14:02:58.000Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2022-08-28</span>
+    </time>
+    
+    
+      <span class="dot"></span>
+      <span>171 words</span>
+    
+  </div>
+  
+  </header>
   <div 
-    class="categories-page-title" 
-    style="margin-bottom: 0.6rem;">
-    Categories
+    id="section" 
+    class="post-content">
+    <h1 id="记录一个pwn常用技巧-修改debug"><a href="#记录一个pwn常用技巧-修改debug" class="headerlink" title="记录一个pwn常用技巧-修改debug"></a>记录一个pwn常用技巧-修改debug</h1><p>一般来说是用在本身提供的pwn题已经patchelf好了libc，并且将ld和libc.so.6都已经提供。但是如果本身虚拟机的版本和题目的版本不一样，那么调试的时候会看不了堆块啥的</p>
+<h2 id="首先需要先将ld和libc-so-6给权限"><a href="#首先需要先将ld和libc-so-6给权限" class="headerlink" title="首先需要先将ld和libc.so.6给权限"></a>首先需要先将ld和libc.so.6给权限</h2><pre class="highlight"><span class="line">chmod 777 libc.so.6</span><br><span class="line">chmod 777 ld-linux-x86-64.so.2</span><br></pre>
+
+<h2 id="然后在glibc-all-in-one里面找到对应的libc版本"><a href="#然后在glibc-all-in-one里面找到对应的libc版本" class="headerlink" title="然后在glibc all in one里面找到对应的libc版本"></a>然后在glibc all in one里面找到对应的libc版本</h2><p>在debs里面找到这个.build-id（注意是个隐藏文件）</p>
+<p>将他提取到主目录</p>
+<pre class="highlight"><span class="line">cd /usr/lib/debug</span><br><span class="line">sudo mv .build-id/ .build-id.bak</span><br><span class="line">cd ~</span><br><span class="line">sudo mv ~/.build-id/ /usr/lib/debug</span><br></pre>
+
+<p>现在就可以正常调试pwn题了</p>
+
   </div>
   <div>
-    Total&nbsp;13&nbsp;posts
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            幽林
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="http://example.com/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/">
+            http://example.com/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+      </div>
+    
   </div>
-</div>
-<div class="card card-content categories-page-card">
+</article>
+<div class="nav">
   
+  
+    <div class="nav-item-next">
+      <a 
+        href="/2022/08/22/house-of-banana/" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">Next</div>
+          
+            <div class="nav-title">house_of_banana </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AApwn%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7-%E4%BF%AE%E6%94%B9debug"><span class="toc-text">记录一个pwn常用技巧-修改debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E9%9C%80%E8%A6%81%E5%85%88%E5%B0%86ld%E5%92%8Clibc-so-6%E7%BB%99%E6%9D%83%E9%99%90"><span class="toc-text">首先需要先将ld和libc.so.6给权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%84%B6%E5%90%8E%E5%9C%A8glibc-all-in-one%E9%87%8C%E9%9D%A2%E6%89%BE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84libc%E7%89%88%E6%9C%AC"><span class="toc-text">然后在glibc all in one里面找到对应的libc版本</span></a></li></ol></li></ol>
 </div>
             </main>
             <aside class="right-column">
               <div class="sticky-widescreen">
   
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AApwn%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7-%E4%BF%AE%E6%94%B9debug"><span class="toc-text">记录一个pwn常用技巧-修改debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E9%9C%80%E8%A6%81%E5%85%88%E5%B0%86ld%E5%92%8Clibc-so-6%E7%BB%99%E6%9D%83%E9%99%90"><span class="toc-text">首先需要先将ld和libc.so.6给权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%84%B6%E5%90%8E%E5%9C%A8glibc-all-in-one%E9%87%8C%E9%9D%A2%E6%89%BE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84libc%E7%89%88%E6%9C%AC"><span class="toc-text">然后在glibc all in one里面找到对应的libc版本</span></a></li></ol></li></ol>
+    </article>
   
   
   <article class="card card-content">
@@ -457,84 +497,6 @@
 </div>
   </article>
   
-  
-    <article class="card card-content">
-      <div class="archive-card">
-  <div class="archive-card-header">
-    <i 
-      class="iconfont icon-wodebaobiao" 
-      style="padding-right: 2px;">
-    </i>Archive
-  </div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a 
-        href="/archives/2022" 
-        class="archive-card-list-item">
-        2022
-        <span class="archive-card-list-item-badge">13</span>
-      </a>
-    
-  </div>
-</div>
-    </article>
   
 </div>
             </aside>
@@ -637,6 +599,36 @@
 </a> 
      
      
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
      
      
     <script src="/js/main.js"></script> 
