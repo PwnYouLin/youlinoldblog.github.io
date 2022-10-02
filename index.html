@@ -1,7 +1,632 @@
-extends includes/layout.pug
 
-block content
-  include ./includes/mixins/post-ui.pug
-  #recent-posts.recent-posts
-    +postUI
-    include includes/pagination.pug
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Hexo" href="http://wscyoulin.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Hexo" href="http://wscyoulin.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Hexo" href="http://wscyoulin.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+
+<link rel="canonical" href="http://wscyoulin.github.io/">
+
+
+
+  <title>Yume Shoka = Hexo</title>
+<meta name="generator" content="Hexo 6.0.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+            <a href="/" class="logo" rel="start"><p class="artboard">Yume Shoka</p>
+              <h1 itemprop="name headline" class="title">Hexo</h1>
+            </a>
+          
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Yume Shoka</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclhnx9glj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicitzannuj20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicm07ih54j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipey84bjtj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicmnywqgpj20zk0m8dwx.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giciuja1j1j20zk0m8kjl.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="index wrap">
+    <h2 class="divider">Post List</h2>
+    <div class="segments posts">
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" itemprop="url" title="堆利用总结"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1giclimtf7dj20zk0m8qav.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-10-02 11:12:46">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-10-02T11:12:46+08:00">2022-10-02</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" itemprop="url" title="堆利用总结">堆利用总结</a></h3>
+    <div class="excerpt">
+        libc-2.23
+在libc2.23的版本下最常用的利用方法就是利用fastbin attack打malloc_hook，写onegadget（注意需要找一个\x7f作为chunk的size字段即malloc_hook-0x23，绕过fastbin的检测）
+劫持bss段的heap数组，劫持为free_hook，稳定getshell
+在relro没完全开启的时候去劫持got表
+
+libc-2.272.27最大的变化就是引入了tcache，tcache...
+    </div>
+    <a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" itemprop="url" title="堆利用总结" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" itemprop="url" title="柏鹭杯"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1gipetlbztpj20zk0m84qp.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-22 20:50:25">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-22T20:50:25+08:00">2022-09-22</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" itemprop="url" title="柏鹭杯">柏鹭杯</a></h3>
+    <div class="excerpt">
+        柏鹭杯复现note1123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687from pwn import *banary = &amp;quot;./note1&amp;quot;elf = ELF(banary)libc =...
+    </div>
+    <a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" itemprop="url" title="柏鹭杯" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/21/aarch64/" itemprop="url" title="aarch64"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-21 18:57:38">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-21T18:57:38+08:00">2022-09-21</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/21/aarch64/" itemprop="url" title="aarch64">aarch64</a></h3>
+    <div class="excerpt">
+        记录aarch64的运行和调试方法以d3招新赛的stack为例运行1qemu-aarch64 -L /usr/aarch64-linux-gnu/ ./stack
+
+调试用gdb-multiarch调试确定溢出长度
+先将程序在指定端口跑起来
+1qemu-aarch64 -g 1234 -L /usr/aarch64-linux-gnu/ ./stack
+
+gdb-multiarch调试
+123gdb-multiarch ./stacktarget remote localhost:1234
+
+按c继续运行程序，用pwntools生成字符串并输入到qemu运行的程序中
+12from pwn...
+    </div>
+    <a href="/2022/09/21/aarch64/" itemprop="url" title="aarch64" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" itemprop="url" title="DASCTF_X_CBCTF_2022九月挑战赛"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1gicmnywqgpj20zk0m8dwx.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-20 16:27:39">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-20T16:27:39+08:00">2022-09-20</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" itemprop="url" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></h3>
+    <div class="excerpt">
+        cyberprinter首先通过溢出覆盖’’\x00’，可以泄露libc.然后是一个格式化字符串漏洞修改puts里面的strlen的libc got
+1234567891011121314151617181920212223242526272829303132333435363738394041424344from pwn import *banary = &amp;quot;./cyberprinter&amp;quot;elf = ELF(banary)#libc =...
+    </div>
+    <a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" itemprop="url" title="DASCTF_X_CBCTF_2022九月挑战赛" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/14/house-of-cat/" itemprop="url" title="house_of_cat"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1giclh0m9pdj20zk0m8hdt.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-14 20:09:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-14T20:09:00+08:00">2022-09-14</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/14/house-of-cat/" itemprop="url" title="house_of_cat">house_of_cat</a></h3>
+    <div class="excerpt">
+        house_of_cat学习记录具体原理：https://bbs.pediy.com/thread-273895.htm#msg_header_h3_6
+攻击介绍在造成任意地址写一个堆地址的基础上，这里的寄存器rdi（fake_IO的地址）、rax和rdx都是我们可以控制的，在开启沙箱的情况下，假如把最后调用的**[rax + 0x18]设置为setcontext，把rdx设置为可控的堆地址，就能执行srop来读取flag；如果未开启沙箱，则只需把最后调用的[rax +...
+    </div>
+    <a href="/2022/09/14/house-of-cat/" itemprop="url" title="house_of_cat" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/12/%E5%91%A8%E6%8A%A5%E6%A8%A1%E6%9D%BF/" itemprop="url" title="周报模板"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-12 21:40:19">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-12T21:40:19+08:00">2022-09-12</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/12/%E5%91%A8%E6%8A%A5%E6%A8%A1%E6%9D%BF/" itemprop="url" title="周报模板">周报模板</a></h3>
+    <div class="excerpt">
+        2022年9月第二周周报-幽林完成事项ciscn华东北和预赛的复现，利用_IO_2_1_stdout_进行任意写和读（利用方法）
+未完成事项awd的pwn还是没怎么掌握，写批量脚本还有利用ida的keypatch加固pwn题
+下周待做事项继续研究下awd的pwn（抱抱e4l4师傅大腿），学一学house_of_cat和house_of_apple（希望能学明白）（有时间的话看一看《揭秘家用路由器0day漏洞挖掘技术》）
+本周知识分享利用io链进行任意读和写
+记录给我自己看的一些技巧：https://wscyoulin.github.io/2022/09/07/io-file%E5%88%A9%...
+    </div>
+    <a href="/2022/09/12/%E5%91%A8%E6%8A%A5%E6%A8%A1%E6%9D%BF/" itemprop="url" title="周报模板" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" itemprop="url" title="io_file利用"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1giclimtf7dj20zk0m8qav.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-07 20:32:27">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-07T20:32:27+08:00">2022-09-07</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" itemprop="url" title="io_file利用">io_file利用</a></h3>
+    <div class="excerpt">
+        io_file的利用io_file的具体原理在前面已经搬运hollk师傅的文章了，所以就不写了，直接写下io_file的利用姿势
+这里就是为了达到泄露libc最终需要调用的
+_IO_do_write函数三个参数分别为
+stdout结构体，缓冲区基址，输出的size
+如果将write_base改掉，就能泄露libc的目的了
+具体的看这个文章
+https://le0f.github.io/2022/06/14/IO-FILE-leak/
+io_file泄露
+这里面关键的地方是_flags=0xfbad1800...
+    </div>
+    <a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" itemprop="url" title="io_file利用" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" itemprop="url" title="awd_pwn总结"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1gipevarprfj20zk0m8npd.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-09-04 16:10:54">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-09-04T16:10:54+08:00">2022-09-04</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" itemprop="url" title="awd_pwn总结">awd_pwn总结</a></h3>
+    <div class="excerpt">
+        bugku的一场awd自定义赛总结首先比赛方会给出自己队伍的靶机ip和ssh端口
+对于其他队伍会给出一个范围的网段（可以用nmap扫出来（不会），也可以用脚本扫出来（嫖了kento师傅的一个脚本））
+先用finalshell登上自己的靶机
+登上之后是类似上面这张图片这样的，可以找到有一个pwn题(自己靶机的pwn题和别人靶机上的题目是一样的，除非别人进行了加固)，可以先下载下来并且顺便还可以查看一下靶机的libc版本（strings libc.so.6|grep...
+    </div>
+    <a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" itemprop="url" title="awd_pwn总结" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" itemprop="url" title="debug信息修改"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1gicitht3xtj20zk0m8k5v.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-08-28 22:02:58">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-08-28T22:02:58+08:00">2022-08-28</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" itemprop="url" title="debug信息修改">debug信息修改</a></h3>
+    <div class="excerpt">
+        记录一个pwn常用技巧-修改debug一般来说是用在本身提供的pwn题已经patchelf好了libc，并且将ld和libc.so.6都已经提供。但是如果本身虚拟机的版本和题目的版本不一样，那么调试的时候会看不了堆块啥的
+首先需要先将ld和libc.so.6给权限12chmod 777 libc.so.6chmod 777 ld-linux-x86-64.so.2
+
+然后在glibc all in one里面找到对应的libc版本在debs里面找到这个.build-id（注意是个隐藏文件）
+将他提取到主目录
+1234cd /usr/lib/debugsudo mv .build-id/...
+    </div>
+    <a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" itemprop="url" title="debug信息修改" class="btn">more...</a>
+  </div>
+</article>
+
+        
+<article class="item">
+  <div class="cover">
+    <a href="/2022/08/22/house-of-banana/" itemprop="url" title="house_of_banana"><img data-src="https://tva3.sinaimg.cn/mw690/6833939bly1gicis081o9j20zk0m8dmr.jpg"></a>
+  </div>
+  <div class="info">
+    
+<div class="meta">
+  <span class="item" title="Created: 2022-08-22 16:21:13">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <time itemprop="dateCreated datePublished" datetime="2022-08-22T16:21:13+08:00">2022-08-22</time>
+  </span>
+</div>
+
+    <h3><a href="/2022/08/22/house-of-banana/" itemprop="url" title="house_of_banana">house_of_banana</a></h3>
+    <div class="excerpt">
+        新版glibc的改进从glibc 2.28开始，增加了对unsorted bin的bk检验，使得unsorted bin attack不再可以使用
+123/* remove from unsorted list */if (__glibc_unlikely (bck-&amp;gt;fd != victim)) malloc_printerr (&amp;quot;malloc(): corrupted unsorted chunks 3&amp;quot;);
+
+此时，我们可以考虑使用large bin attack，使用house of...
+    </div>
+    <a href="/2022/08/22/house-of-banana/" itemprop="url" title="house_of_banana" class="btn">more...</a>
+  </div>
+</article>
+
+    </div>
+
+  </div>
+
+  
+  <nav class="pagination">
+    <div class="inner">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="ic i-angle-right" aria-label="Next page"></i></a>
+    </div>
+  </nav>
+
+
+
+        </div>
+        <div id="sidebar">
+          
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="John Doe"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">John Doe</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">21</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/page/2/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/03/31/babyheap/" title="0ctf2017_babyheap（学长的wp微改，学习用）">0ctf2017_babyheap（学长的wp微改，学习用）</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">awd_pwn总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" title="栈迁移">栈迁移</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/01/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" title="利用_IO_2_1_stdout泄露libc">利用_IO_2_1_stdout泄露libc</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" title="柏鹭杯">柏鹭杯</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/12/%E5%91%A8%E6%8A%A5%E6%A8%A1%E6%9D%BF/" title="周报模板">周报模板</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe @ Yume Shoka</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

