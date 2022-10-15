@@ -25,12 +25,12 @@
 
   
 
-<link rel="canonical" href="http://wscyoulin.github.io/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/">
+<link rel="canonical" href="http://wscyoulin.github.io/2022/10/16/docker/">
 
 
 
   <title>
-awd_pwn总结 |
+docker |
 youlin = Hexo</title>
 <meta name="generator" content="Hexo 6.0.0"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -58,16 +58,16 @@ youlin = Hexo</title>
         <div id="brand">
           <div class="pjax">
           
-  <h1 itemprop="name headline">awd_pwn总结
+  <h1 itemprop="name headline">docker
   </h1>
   
 <div class="meta">
-  <span class="item" title="Created: 2022-09-04 16:10:54">
+  <span class="item" title="Created: 2022-10-16 00:02:57">
     <span class="icon">
       <i class="ic i-calendar"></i>
     </span>
     <span class="text">Posted on</span>
-    <time itemprop="dateCreated datePublished" datetime="2022-09-04T16:10:54+08:00">2022-09-04</time>
+    <time itemprop="dateCreated datePublished" datetime="2022-10-16T00:02:57+08:00">2022-10-16</time>
   </span>
 </div>
 
@@ -100,12 +100,12 @@ youlin = Hexo</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipey84bjtj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclfdu6exj20zk0m87hw.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicm07ih54j20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeyonbf9j20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeybxm1pj20zk0m8niv.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciryrr3rj20zk0m8nhk.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipewkhf1zj20zk0m81kx.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclh0m9pdj20zk0m8hdt.jpg"></li>
         </ul>
       </div>
     </header>
@@ -134,7 +134,7 @@ youlin = Hexo</title>
 </div>
 
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/">
+  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/10/16/docker/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -149,13 +149,23 @@ youlin = Hexo</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="bugku的一场awd自定义赛总结"><a href="#bugku的一场awd自定义赛总结" class="headerlink" title="bugku的一场awd自定义赛总结"></a>bugku的一场awd自定义赛总结</h1><h2 id="首先比赛方会给出自己队伍的靶机ip和ssh端口"><a href="#首先比赛方会给出自己队伍的靶机ip和ssh端口" class="headerlink" title="首先比赛方会给出自己队伍的靶机ip和ssh端口"></a>首先比赛方会给出自己队伍的靶机ip和ssh端口</h2><p><img data-src="https://s2.loli.net/2022/09/04/L9SfHEJ1urNa4Zo.png" alt="图片.png"></p>
-<p>对于其他队伍会给出一个范围的网段（可以用nmap扫出来（不会），也可以用脚本扫出来（嫖了kento师傅的一个脚本））</p>
-<h2 id="先用finalshell登上自己的靶机"><a href="#先用finalshell登上自己的靶机" class="headerlink" title="先用finalshell登上自己的靶机"></a>先用finalshell登上自己的靶机</h2><p><img data-src="https://s2.loli.net/2022/09/04/t1zbYpiGcSaZ9Wv.png" alt="图片.png"></p>
-<p>登上之后是类似上面这张图片这样的，可以找到有一个pwn题(自己靶机的pwn题和别人靶机上的题目是一样的，除非别人进行了加固)，可以先下载下来并且顺便还可以查看一下靶机的libc版本（strings libc.so.6|grep GNU)切换到libc的目录看下对应的小版本都可以的。</p>
-<h2 id="pwn进攻思路"><a href="#pwn进攻思路" class="headerlink" title="pwn进攻思路"></a>pwn进攻思路</h2><p>先写下对应pwn的exp（记得在自己的机器上patchelf一下对应的libc版本，不然容易出问题），然后确保本机可以打通后，切换对应的ip和端口去拿flag，对应的端口需要拿nmap扫描出来nmap -F ip（可以先扫自己的靶机，对应的端口是一样的）据说可以写批量攻击的脚本（但是不会，后面学会了再回来补充下）</p>
-<h2 id="pwn防守思路"><a href="#pwn防守思路" class="headerlink" title="pwn防守思路"></a>pwn防守思路</h2><p>使用ida(keypatch插件)对一些明显的漏洞函数进行加固（修改），然后上传靶机可以直接覆盖掉之前的题目。</p>
-<p>推荐看这个文章：<span class="exturl" data-url="aHR0cHM6Ly9iYWlqaWFoYW8uYmFpZHUuY29tL3M/aWQ9MTcwNjk1MDAwODAzMjI5NzYzNCZhbXA7d2ZyPXNwaWRlciZhbXA7Zm9yPXBj">https://baijiahao.baidu.com/s?id=1706950008032297634&amp;wfr=spider&amp;for=pc</span></p>
+    <p>docker理解起来就相当于一个小型的虚拟机， 主要是想学着用来跑一些pwn题</p>
+<p>安装docker:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://get.docker.com/ | sh</span><br></pre></td></tr></table></figure>
+
+<p>启用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service docker start</span><br></pre></td></tr></table></figure>
+
+<p>下面以hello-world和Ubuntu镜像文件为例，演示一些docker的基本操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker image pull library/hello-world #抓取镜像文件</span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from library/hello-world</span><br><span class="line">Digest: sha256:18a657d0cc1c7d0678a3fbea8b7eb4918bba25968d3e1b0adebfa71caddbc346</span><br><span class="line">Status: Image is up to date for hello-world:latest</span><br><span class="line">docker.io/library/hello-world:latest</span><br><span class="line">$ sudo docker image ls #查看本地的镜像文件</span><br><span class="line">REPOSITORY    TAG       IMAGE ID       CREATED         SIZE</span><br><span class="line">youlin666     latest    58500f9d97e4   10 hours ago    359MB</span><br><span class="line">youlin        latest    58500f9d97e4   10 hours ago    359MB</span><br><span class="line">ubuntu        22.04     216c552ea5ba   10 days ago     77.8MB</span><br><span class="line">hello-world   latest    feb5d9fea6a5   12 months ago   13.3kB</span><br><span class="line">$ sudo docker run hello-world #生成容器并运行，该容器输出错误信息后自动终止</span><br><span class="line"></span><br><span class="line">Hello from Docker!</span><br><span class="line">This message shows that your installation appears to be working correctly.</span><br><span class="line"></span><br><span class="line">To generate this message, Docker took the following steps:</span><br><span class="line"> 1. The Docker client contacted the Docker daemon.</span><br><span class="line"> 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.</span><br><span class="line">    (amd64)</span><br><span class="line"> 3. The Docker daemon created a new container from that image which runs the</span><br><span class="line">    executable that produces the output you are currently reading.</span><br><span class="line"> 4. The Docker daemon streamed that output to the Docker client, which sent it</span><br><span class="line">    to your terminal.</span><br><span class="line"></span><br><span class="line">To try something more ambitious, you can run an Ubuntu container with:</span><br><span class="line"> $ docker run -it ubuntu bash</span><br><span class="line"></span><br><span class="line">Share images, automate workflows, and more with a free Docker ID:</span><br><span class="line"> https://hub.docker.com/</span><br><span class="line"></span><br><span class="line">For more examples and ideas, visit:</span><br><span class="line"> https://docs.docker.com/get-started/</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker run -it ubuntu /bin/bash #启动一个不会自动终止的Ubuntu容器 ctrl+P+Q可推出控制台，容器保持后台运行</span><br><span class="line">$ sudo docker ps #列出正在运行的容器</span><br><span class="line">$ sudo docker stop xxxx #停止正在运行的容器</span><br></pre></td></tr></table></figure>
+
+<h1 id="pwn题部署"><a href="#pwn题部署" class="headerlink" title="pwn题部署"></a>pwn题部署</h1><p>板子推荐：<span class="exturl" data-url="aHR0cHM6Ly9wYW4uYmFpZHUuY29tL3MvMTdralJhdzNGaWV0WUEzVXh2SmVpQ3c/cHdkPTBhNWU=">https://pan.baidu.com/s/17kjRaw3FietYA3UxvJeiCw?pwd=0a5e</span> </p>
+<p>首先将pwn题复制到bin目录下，并且改名为pwn</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo docker build -t &quot;test&quot; ./</span><br><span class="line">$ sudo docker run -d -p &quot;0.0.0.0:10005:9999&quot; -h &quot;test&quot; --name &quot;test&quot; test</span><br></pre></td></tr></table></figure>
+
+<p>题目就可以在docker里面跑起来了，占用的是10005的端口</p>
 
   </div>
 
@@ -167,7 +177,7 @@ youlin = Hexo</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-09-04 16:35:12" itemprop="dateModified" datetime="2022-09-04T16:35:12+08:00">2022-09-04</time>
+    <time title="Modified: 2022-10-16 00:20:29" itemprop="dateModified" datetime="2022-10-16T00:20:29+08:00">2022-10-16</time>
   </span>
 </div>
 
@@ -203,7 +213,7 @@ youlin = Hexo</title>
   </li>
   <li class="link">
     <strong>Post link: </strong>
-    <a href="http://wscyoulin.github.io/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">http://wscyoulin.github.io/2022/09/04/awd_pwn总结/</a>
+    <a href="http://wscyoulin.github.io/2022/10/16/docker/" title="docker">http://wscyoulin.github.io/2022/10/16/docker/</a>
   </li>
   <li class="license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
@@ -222,22 +232,14 @@ youlin = Hexo</title>
     <div class="item left">
       
 
-  <a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicis081o9j20zk0m8dmr.jpg" title="debug信息修改">
+  <a href="/2022/10/14/buu-web/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicm0fdw5cj20zk0m8hdt.jpg" title="buu_web">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>debug信息修改</h3>
+  <h3>buu_web</h3>
   </a>
 
     </div>
     <div class="item right">
-      
-
-  <a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclffsa1cj20zk0m811l.jpg" title="io_file利用">
-  <span class="type">Next Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>io_file利用</h3>
-  </a>
-
     </div>
 </div>
 
@@ -254,7 +256,7 @@ youlin = Hexo</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#bugku%E7%9A%84%E4%B8%80%E5%9C%BAawd%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B5%9B%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">bugku的一场awd自定义赛总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E6%AF%94%E8%B5%9B%E6%96%B9%E4%BC%9A%E7%BB%99%E5%87%BA%E8%87%AA%E5%B7%B1%E9%98%9F%E4%BC%8D%E7%9A%84%E9%9D%B6%E6%9C%BAip%E5%92%8Cssh%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.1.</span> <span class="toc-text">首先比赛方会给出自己队伍的靶机ip和ssh端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E7%94%A8finalshell%E7%99%BB%E4%B8%8A%E8%87%AA%E5%B7%B1%E7%9A%84%E9%9D%B6%E6%9C%BA"><span class="toc-number">1.2.</span> <span class="toc-text">先用finalshell登上自己的靶机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn%E8%BF%9B%E6%94%BB%E6%80%9D%E8%B7%AF"><span class="toc-number">1.3.</span> <span class="toc-text">pwn进攻思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pwn%E9%98%B2%E5%AE%88%E6%80%9D%E8%B7%AF"><span class="toc-number">1.4.</span> <span class="toc-text">pwn防守思路</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pwn%E9%A2%98%E9%83%A8%E7%BD%B2"><span class="toc-number">1.</span> <span class="toc-text">pwn题部署</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -300,12 +302,10 @@ youlin = Hexo</title>
 
   <ul id="quick">
     <li class="prev pjax">
-        <a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
     </li>
     <li class="up"><i class="ic i-arrow-up"></i></li>
     <li class="down"><i class="ic i-arrow-down"></i></li>
     <li class="next pjax">
-        <a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
     </li>
     <li class="percent"></li>
   </ul>
@@ -327,19 +327,39 @@ youlin = Hexo</title>
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
 </div>
 
-    <span><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" title="柏鹭杯">柏鹭杯</a></span>
+    <span><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" title="堆利用总结">堆利用总结</a></span>
   </li>
 
       
   <li class="item">
     
 <div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
 </div>
 
-    <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
+    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
+</div>
+
+    <span><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
+</div>
+
+    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
   </li>
 
       
@@ -357,7 +377,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
+    <span><a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" title="debug信息修改">debug信息修改</a></span>
   </li>
 
       
@@ -366,7 +386,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" title="栈迁移">栈迁移</a></span>
+    <span><a href="/2022/10/16/docker/" title="docker">docker</a></span>
   </li>
 
       
@@ -375,7 +395,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" title="利用_IO_2_1_stdout泄露libc">利用_IO_2_1_stdout泄露libc</a></span>
+    <span><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">awd_pwn总结</a></span>
   </li>
 
       
@@ -384,7 +404,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
+    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
   </li>
 
       
@@ -393,27 +413,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></span>
+    <span><a href="/2022/10/14/buu-web/" title="buu_web">buu_web</a></span>
   </li>
 
   </ul>
@@ -444,7 +444,7 @@ youlin = Hexo</title>
   </div>
 <script data-config type="text/javascript">
   var LOCAL = {
-    path: '2022/09/04/awd_pwn总结/',
+    path: '2022/10/16/docker/',
     favicon: {
       show: "（●´3｀●）Goooood",
       hide: "(´Д｀)Booooom"
