@@ -25,12 +25,12 @@
 
   
 
-<link rel="canonical" href="http://wscyoulin.github.io/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/">
+<link rel="canonical" href="http://wscyoulin.github.io/2022/11/19/buu-web/">
 
 
 
   <title>
-debug信息修改 |
+buu_web（21-xx) |
 youlin = Hexo</title>
 <meta name="generator" content="Hexo 6.0.0"></head>
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -58,16 +58,16 @@ youlin = Hexo</title>
         <div id="brand">
           <div class="pjax">
           
-  <h1 itemprop="name headline">debug信息修改
+  <h1 itemprop="name headline">buu_web（21-xx)
   </h1>
   
 <div class="meta">
-  <span class="item" title="Created: 2022-08-28 22:02:58">
+  <span class="item" title="Created: 2022-11-19 01:20:22">
     <span class="icon">
       <i class="ic i-calendar"></i>
     </span>
     <span class="text">Posted on</span>
-    <time itemprop="dateCreated datePublished" datetime="2022-08-28T22:02:58+08:00">2022-08-28</time>
+    <time itemprop="dateCreated datePublished" datetime="2022-11-19T01:20:22+08:00">2022-11-19</time>
   </span>
 </div>
 
@@ -100,12 +100,12 @@ youlin = Hexo</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipevuctzzj20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclgrvbd6j20zk0m8qv5.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicit31ffoj20zk0m8naf.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicljitigmj20zk0m87fp.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph4fomxoj20zk0m8axp.jpg"></li>
           <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicli9lfebj20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicivghyooj20zk0m8dir.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipevarprfj20zk0m8npd.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitspjpbj20zk0m81ky.jpg"></li>
         </ul>
       </div>
     </header>
@@ -134,7 +134,7 @@ youlin = Hexo</title>
 </div>
 
     <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/">
+  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/11/19/buu-web/">
 
   <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="image" content="/images/avatar.jpg">
@@ -149,14 +149,29 @@ youlin = Hexo</title>
   <div class="body md" itemprop="articleBody">
     
 
-    <h1 id="记录一个pwn常用技巧-修改debug"><a href="#记录一个pwn常用技巧-修改debug" class="headerlink" title="记录一个pwn常用技巧-修改debug"></a>记录一个pwn常用技巧-修改debug</h1><p>一般来说是用在本身提供的pwn题已经patchelf好了libc，并且将ld和libc.so.6都已经提供。但是如果本身虚拟机的版本和题目的版本不一样，那么调试的时候会看不了堆块啥的</p>
-<h2 id="首先需要先将ld和libc-so-6给权限"><a href="#首先需要先将ld和libc-so-6给权限" class="headerlink" title="首先需要先将ld和libc.so.6给权限"></a>首先需要先将ld和libc.so.6给权限</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 libc.so.6</span><br><span class="line">chmod 777 ld-linux-x86-64.so.2</span><br></pre></td></tr></table></figure>
+    <h2 id="BJDCTF2020-Easy-MD5"><a href="#BJDCTF2020-Easy-MD5" class="headerlink" title="[BJDCTF2020]Easy MD5"></a>[BJDCTF2020]Easy MD5</h2><p>进入题目是一个提交框</p>
+<p><img data-src="https://img2020.cnblogs.com/blog/2096968/202109/2096968-20210902164007218-300602356.png"></p>
+<p>输入123后发现有个password参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://dfb23547-d218-4f2a-a8bd-27929456beb7.node4.buuoj.cn:81/leveldo4.php?password=123</span><br></pre></td></tr></table></figure>
 
-<h2 id="然后在glibc-all-in-one里面找到对应的libc版本"><a href="#然后在glibc-all-in-one里面找到对应的libc版本" class="headerlink" title="然后在glibc all in one里面找到对应的libc版本"></a>然后在glibc all in one里面找到对应的libc版本</h2><p>在debs里面找到这个.build-id（注意是个隐藏文件）</p>
-<p>将他提取到主目录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/lib/debug</span><br><span class="line">sudo mv .build-id/ .build-id.bak</span><br><span class="line">cd ~</span><br><span class="line">sudo mv ~/.build-id/ /usr/lib/debug</span><br></pre></td></tr></table></figure>
+<p>尝试了下一些常规的sql注入发现没反应，发现响应头有个hint</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hint:select * from &#x27;admin&#x27; where password=md5($pass,true)</span><br></pre></td></tr></table></figure>
 
-<p>现在就可以正常调试pwn题了</p>
+<p>这里的MD5我们用ffifdyop来进行绕过，原理是ffifdyop这个字符串被 md5 哈希了之后会变成<br>276f722736c95d99e921722cf9ed621c，这个字符串前几位刚好是 ‘ or ‘6。而 Mysql 刚好又会吧 hex<br>转成 ascii 解释，因此拼接之后的形式是1select * from ‘admin’ where password=’’ or<br>‘6xxxxx’，进入构成一个永真式。</p>
+<p>绕过后查看源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$a = $GET[&#x27;a&#x27;];</span><br><span class="line">$b = $_GET[&#x27;b&#x27;];</span><br><span class="line"></span><br><span class="line">if($a != $b &amp;&amp; md5($a) == md5($b))&#123;</span><br><span class="line">    // wow, glzjin wants a girl friend.</span><br></pre></td></tr></table></figure>
+
+<p>用get的方式给a和b传参，且进行判断</p>
+<p>这里payload是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/levels91.php?a[]=1&amp;b[]=2</span><br></pre></td></tr></table></figure>
+
+<p>然后又出现一个页面，直接显示源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">include &quot;flag.php&quot;;</span><br><span class="line"></span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line"></span><br><span class="line">if($_POST[&#x27;param1&#x27;]!==$_POST[&#x27;param2&#x27;]&amp;&amp;md5($_POST[&#x27;param1&#x27;])===md5($_POST[&#x27;param2&#x27;]))&#123;</span><br><span class="line">    echo $flag;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>同样的绕过方式只是是通过post方式传参</p>
+<p>flag:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;d7947c55-1a3c-473e-ad6a-00e7ec06cdc6&#125; </span><br></pre></td></tr></table></figure>
+
 
   </div>
 
@@ -168,7 +183,7 @@ youlin = Hexo</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-08-28 22:10:59" itemprop="dateModified" datetime="2022-08-28T22:10:59+08:00">2022-08-28</time>
+    <time title="Modified: 2022-11-19 01:30:59" itemprop="dateModified" datetime="2022-11-19T01:30:59+08:00">2022-11-19</time>
   </span>
 </div>
 
@@ -204,7 +219,7 @@ youlin = Hexo</title>
   </li>
   <li class="link">
     <strong>Post link: </strong>
-    <a href="http://wscyoulin.github.io/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" title="debug信息修改">http://wscyoulin.github.io/2022/08/28/debug信息修改/</a>
+    <a href="http://wscyoulin.github.io/2022/11/19/buu-web/" title="buu_web（21-xx)">http://wscyoulin.github.io/2022/11/19/buu-web/</a>
   </li>
   <li class="license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
@@ -223,22 +238,14 @@ youlin = Hexo</title>
     <div class="item left">
       
 
-  <a href="/2022/08/22/house-of-banana/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeu1usa7j20zk0m8b29.jpg" title="house_of_banana">
+  <a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciuv0socj20zk0m8qes.jpg" title="祥云杯复现">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>house_of_banana</h3>
+  <h3>祥云杯复现</h3>
   </a>
 
     </div>
     <div class="item right">
-      
-
-  <a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexbei4hj20zk0m8npd.jpg" title="awd_pwn总结">
-  <span class="type">Next Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>awd_pwn总结</h3>
-  </a>
-
     </div>
 </div>
 
@@ -255,7 +262,7 @@ youlin = Hexo</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AApwn%E5%B8%B8%E7%94%A8%E6%8A%80%E5%B7%A7-%E4%BF%AE%E6%94%B9debug"><span class="toc-number">1.</span> <span class="toc-text">记录一个pwn常用技巧-修改debug</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E9%9C%80%E8%A6%81%E5%85%88%E5%B0%86ld%E5%92%8Clibc-so-6%E7%BB%99%E6%9D%83%E9%99%90"><span class="toc-number">1.1.</span> <span class="toc-text">首先需要先将ld和libc.so.6给权限</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%84%B6%E5%90%8E%E5%9C%A8glibc-all-in-one%E9%87%8C%E9%9D%A2%E6%89%BE%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84libc%E7%89%88%E6%9C%AC"><span class="toc-number">1.2.</span> <span class="toc-text">然后在glibc all in one里面找到对应的libc版本</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BJDCTF2020-Easy-MD5"><span class="toc-number">1.</span> <span class="toc-text">[BJDCTF2020]Easy MD5</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -301,12 +308,10 @@ youlin = Hexo</title>
 
   <ul id="quick">
     <li class="prev pjax">
-        <a href="/2022/08/22/house-of-banana/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
     </li>
     <li class="up"><i class="ic i-arrow-up"></i></li>
     <li class="down"><i class="ic i-arrow-down"></i></li>
     <li class="next pjax">
-        <a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
     </li>
     <li class="percent"></li>
   </ul>
@@ -330,7 +335,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
+    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
   </li>
 
       
@@ -339,7 +344,16 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" title="栈迁移">栈迁移</a></span>
+    <span><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">awd_pwn总结</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" title="debug信息修改">debug信息修改</a></span>
   </li>
 
       
@@ -357,7 +371,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" title="堆利用总结">堆利用总结</a></span>
+    <span><a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" title="栈迁移">栈迁移</a></span>
   </li>
 
       
@@ -366,26 +380,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" title="利用_IO_2_1_stdout泄露libc">利用_IO_2_1_stdout泄露libc</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></span>
+    <span><a href="/2022/11/19/buu-web/" title="buu_web（21-xx)">buu_web（21-xx)</a></span>
   </li>
 
       
@@ -404,7 +399,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/11/19/buu-web/" title="buu_web（21-xx)">buu_web（21-xx)</a></span>
+    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
   </li>
 
       
@@ -413,7 +408,16 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/" title="buu_web（1-20）">buu_web（1-20）</a></span>
+    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" title="祥云杯复现">祥云杯复现</a></span>
   </li>
 
   </ul>
@@ -444,7 +448,7 @@ youlin = Hexo</title>
   </div>
 <script data-config type="text/javascript">
   var LOCAL = {
-    path: '2022/08/28/debug信息修改/',
+    path: '2022/11/19/buu-web/',
     favicon: {
       show: "（●´3｀●）Goooood",
       hide: "(´Д｀)Booooom"
