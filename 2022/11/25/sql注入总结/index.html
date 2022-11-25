@@ -100,12 +100,12 @@ youlin = Hexo</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeun65urj20zk0m81ii.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giph4baakhj20zk0m8h5q.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giciukx8a7j20zk0m8aio.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipew8gmvyj20zk0m87wh.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicit31ffoj20zk0m8naf.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclh5u05ej20zk0m87df.jpg"></li>
+          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicliierfjj20zk0m8npd.jpg"></li>
           <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipet8c1a2j20zk0m8kct.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeu7txpzj20zk0m81kx.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gicitht3xtj20zk0m8k5v.jpg"></li>
         </ul>
       </div>
     </header>
@@ -306,8 +306,7 @@ youlin = Hexo</title>
 <p>where table_schema=database() and table_name=’flags’),3,1))=97,sleep(1),null) and ‘1’=’1</p>
 <p>拿到数据第四个字符的payload</p>
 <p>?id=1’and if(ascii(substr((select flag from flags limit 0,1),4,1))=103,sleep(1),null) and ‘1’=’1</p>
-<p><strong>绕过技巧</strong></p>
-<p>十六进制、ASCII码绕过引号 char</p>
+<h2 id="绕过技巧"><a href="#绕过技巧" class="headerlink" title="绕过技巧"></a>绕过技巧</h2><p>十六进制、ASCII码绕过引号 char</p>
 <p><span class="exturl" data-url="aHR0cDovL3Rvb2xzLmJ1Z3NjYW5lci5jb20vdGV4dC96aWZ1Y2h1YW56aHVhbmhleC5odG1s">http://tools.bugscaner.com/text/zifuchuanzhuanhex.html</span></p>
 <p>like、in、regex绕过等号：substr(password,1,1) like(‘p’); substr(password,1,1) in(‘p’);</p>
 <p>逗号被过滤：select * from (select 1)a join (select 2)b、substr(password from 1 for 1) </p>
@@ -329,7 +328,7 @@ youlin = Hexo</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-11-25 15:27:08" itemprop="dateModified" datetime="2022-11-25T15:27:08+08:00">2022-11-25</time>
+    <time title="Modified: 2022-11-25 15:30:05" itemprop="dateModified" datetime="2022-11-25T15:30:05+08:00">2022-11-25</time>
   </span>
 </div>
 
@@ -384,7 +383,7 @@ youlin = Hexo</title>
     <div class="item left">
       
 
-  <a href="/2022/11/19/buu-web/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipetlbztpj20zk0m84qp.jpg" title="buu_web（21-xx)">
+  <a href="/2022/11/19/buu-web/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipet4bz0yj20zk0m8e81.jpg" title="buu_web（21-xx)">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>buu_web（21-xx)</h3>
@@ -408,7 +407,7 @@ youlin = Hexo</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E5%88%86%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">注入分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.</span> <span class="toc-text">联合查询注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.2.</span> <span class="toc-text">报错注入</span></a></li></ol></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E5%88%86%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">注入分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.</span> <span class="toc-text">联合查询注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.2.</span> <span class="toc-text">报错注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7"><span class="toc-number">2.</span> <span class="toc-text">绕过技巧</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -479,57 +478,9 @@ youlin = Hexo</title>
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
 </div>
 
-    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
+    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
   </li>
 
       
@@ -547,25 +498,72 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
     <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/11/19/buu-web/" title="buu_web（21-xx)">buu_web（21-xx)</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
+</div>
+
+    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
+</div>
+
+    <span><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" title="柏鹭杯">柏鹭杯</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/22/house-of-banana/" title="house_of_banana">house_of_banana</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" title="debug信息修改">debug信息修改</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
   </li>
 
   </ul>
