@@ -100,12 +100,12 @@ youlin = Hexo</title>
       </div>
       <div id="imgs" class="pjax">
         <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipexj2jgzj20zk0m8b09.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipevuctzzj20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclhfehz7j20zk0m8u0x.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipexbei4hj20zk0m8npd.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclflwv2aj20zk0m84qp.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipev1x5e4j20zk0m8b29.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giciundwu5j20zk0m8n9e.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1giclga70tsj20zk0m84mr.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipexoj0moj20zk0m8kgu.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevuctzzj20zk0m84qp.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipevo9j1jj20zk0m8e81.jpg"></li>
+          <li class="item" data-background-image="https://tva1.sinaimg.cn/large/6833939bly1gipeyvx1d4j20zk0m8hdt.jpg"></li>
         </ul>
       </div>
     </header>
@@ -150,7 +150,8 @@ youlin = Hexo</title>
     
 
     <p>由于有很长一段时间处于摆烂状态，并且分心去学了点web，导致pwn的一些基础的知识点有部分遗忘，刷buu的时候发现unlink这部分的内容记得不是很清楚，尤其是关于”检查”这部分遗忘的挺多，只记得大概的一些东西，因此借助z1r0师傅的博客重新学习一遍unlink这部分的内容</p>
-<h1 id="unlink"><a href="#unlink" class="headerlink" title="unlink"></a>unlink</h1><p>unlink的源码（2.23）unlink其实是libc中定义的一个宏，定义如下：</p>
+<h1 id="unlink"><a href="#unlink" class="headerlink" title="unlink"></a>unlink</h1><p>glibc在线源码查看：<span class="exturl" data-url="aHR0cHM6Ly9lbGl4aXIuYm9vdGxpbi5jb20vZ2xpYmMvZ2xpYmMtMi4yMy9zb3VyY2U=">https://elixir.bootlin.com/glibc/glibc-2.23/source</span></p>
+<p>unlink的源码（2.23）unlink其实是libc中定义的一个宏，定义如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#define unlink(AV, P, BK, FD) &#123;                                            \</span><br><span class="line">    FD = P-&gt;fd;								      \</span><br><span class="line">    BK = P-&gt;bk;								      \</span><br><span class="line">    if (__builtin_expect (FD-&gt;bk != P || BK-&gt;fd != P, 0))		      \</span><br><span class="line">      malloc_printerr (check_action, &quot;corrupted double-linked list&quot;, P, AV);  \</span><br><span class="line">    else &#123;								      \</span><br><span class="line">        FD-&gt;bk = BK;							      \</span><br><span class="line">        BK-&gt;fd = FD;							      \</span><br><span class="line">        if (!in_smallbin_range (P-&gt;size)				      \</span><br><span class="line">            &amp;&amp; __builtin_expect (P-&gt;fd_nextsize != NULL, 0)) &#123;		      \</span><br><span class="line">	    if (__builtin_expect (P-&gt;fd_nextsize-&gt;bk_nextsize != P, 0)	      \</span><br><span class="line">		|| __builtin_expect (P-&gt;bk_nextsize-&gt;fd_nextsize != P, 0))    \</span><br><span class="line">	      malloc_printerr (check_action,				      \</span><br><span class="line">			       &quot;corrupted double-linked list (not small)&quot;,    \</span><br><span class="line">			       P, AV);					      \</span><br><span class="line">            if (FD-&gt;fd_nextsize == NULL) &#123;				      \</span><br><span class="line">                if (P-&gt;fd_nextsize == P)				      \</span><br><span class="line">                  FD-&gt;fd_nextsize = FD-&gt;bk_nextsize = FD;		      \</span><br><span class="line">                else &#123;							      \</span><br><span class="line">                    FD-&gt;fd_nextsize = P-&gt;fd_nextsize;			      \</span><br><span class="line">                    FD-&gt;bk_nextsize = P-&gt;bk_nextsize;			      \</span><br><span class="line">                    P-&gt;fd_nextsize-&gt;bk_nextsize = FD;			      \</span><br><span class="line">                    P-&gt;bk_nextsize-&gt;fd_nextsize = FD;			      \</span><br><span class="line">                  &#125;							      \</span><br><span class="line">              &#125; else &#123;							      \</span><br><span class="line">                P-&gt;fd_nextsize-&gt;bk_nextsize = P-&gt;bk_nextsize;		      \</span><br><span class="line">                P-&gt;bk_nextsize-&gt;fd_nextsize = P-&gt;fd_nextsize;		      \</span><br><span class="line">              &#125;								      \</span><br><span class="line">          &#125;								      \</span><br><span class="line">      &#125;									      \</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在执行free()函数时，调用了unlink，其实通俗易懂点就是：三个chunk，将中间的chunk拿掉，形成<code>chunk1-&gt;fd = chunk3-&gt;prev_size</code>，<code>chunk3-&gt;fd = chunk1-&gt;prev-size</code></p>
@@ -181,7 +182,7 @@ youlin = Hexo</title>
       <i class="ic i-calendar-check"></i>
     </span>
     <span class="text">Edited on</span>
-    <time title="Modified: 2022-11-29 01:00:05" itemprop="dateModified" datetime="2022-11-29T01:00:05+08:00">2022-11-29</time>
+    <time title="Modified: 2022-11-29 01:02:43" itemprop="dateModified" datetime="2022-11-29T01:02:43+08:00">2022-11-29</time>
   </span>
 </div>
 
@@ -236,7 +237,7 @@ youlin = Hexo</title>
     <div class="item left">
       
 
-  <a href="/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giciuv0socj20zk0m8qes.jpg" title="sql注入总结">
+  <a href="/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva1.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclj9410cj20zk0m8h12.jpg" title="sql注入总结">
   <span class="type">Previous Post</span>
   <span class="category"><i class="ic i-flag"></i> </span>
   <h3>sql注入总结</h3>
@@ -331,73 +332,9 @@ youlin = Hexo</title>
   <li class="item">
     
 <div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" title="格式化字符串泄露canary">格式化字符串泄露canary</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" title="祥云杯复现">祥云杯复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
 </div>
 
     <span><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" title="堆利用总结">堆利用总结</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
   </li>
 
       
@@ -415,7 +352,72 @@ youlin = Hexo</title>
 <div class="breadcrumb">
 </div>
 
-    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
+    <span><a href="/2022/10/16/docker/" title="docker">docker</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
+</div>
+
+    <span><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" title="格式化字符串泄露canary">格式化字符串泄露canary</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/22/house-of-banana/" title="house_of_banana">house_of_banana</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" title="祥云杯复现">祥云杯复现</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+<a href="/categories/cometition/" title="In cometition">cometition</a>
+</div>
+
+    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
+  </li>
+
+      
+  <li class="item">
+    
+<div class="breadcrumb">
+</div>
+
+    <span><a href="/2022/08/28/debug%E4%BF%A1%E6%81%AF%E4%BF%AE%E6%94%B9/" title="debug信息修改">debug信息修改</a></span>
   </li>
 
   </ul>
